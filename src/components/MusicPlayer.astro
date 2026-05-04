@@ -23,6 +23,7 @@ const {
     data-collapsed
     role="region"
     aria-label="Music player"
+    transition:persist="music-player"
 >
     <audio src={src} preload="metadata" loop></audio>
 
@@ -262,6 +263,8 @@ const {
 
 <script>
     function initPlayer(root: HTMLElement) {
+        if (root.dataset.playerReady) return;
+        root.dataset.playerReady = "1";
         const audio = root.querySelector("audio") as HTMLAudioElement;
         const trigger = root.querySelector("[data-expand-trigger]") as HTMLElement;
         const playBtn = root.querySelector(".ctrl.play") as HTMLButtonElement;
@@ -416,5 +419,9 @@ const {
         });
     }
 
-    document.querySelectorAll<HTMLElement>(".music-player").forEach(initPlayer);
+    const runPlayer = () =>
+        document.querySelectorAll<HTMLElement>(".music-player").forEach(initPlayer);
+
+    runPlayer();
+    document.addEventListener("astro:page-load", runPlayer);
 </script>

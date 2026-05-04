@@ -1,0 +1,43 @@
+---
+interface Entry {
+    years: string;
+    body: string;
+    current?: boolean;
+}
+
+const entries: Entry[] = [
+    {
+        years: "2024 – Now",
+        body: "Fullstack engineer at Wildberries, promoted to team lead. Leading the migration from Node.js to Go on a team whose work saves the company ≈1bn ₽ a day.",
+        current: true,
+    },
+    {
+        years: "2022 – 2024",
+        body: "Senior frontend at the Social Investment Fund, building procollab.ru. Upgraded Angular 9 to 17 and owned the team's CI/CD.",
+    },
+    {
+        years: "2021 – 2022",
+        body: "Frontend engineer at Kostylworks, a Berlin studio. Led the redesign of litnet.com.",
+    },
+    {
+        years: "2020 – 2021",
+        body: "Started full-time as a frontend engineer at Dabster — Nuxt and Django, end to end.",
+    },
+];
+---
+
+<section class="flex flex-col gap-8">
+    {entries.map((e) => (
+        <div class="flex gap-4 md:gap-8 lg:gap-16">
+            <span
+                class:list={[
+                    "text-sm w-28 shrink-0 pt-1 tabular-nums whitespace-nowrap",
+                    e.current ? "text-mauve-800" : "text-mauve-700/60",
+                ]}
+            >
+                {e.years}
+            </span>
+            <p class="text-base leading-relaxed text-mauve-800">{e.body}</p>
+        </div>
+    ))}
+</section>

@@ -1,7 +1,10 @@
 ---
 import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
 import MusicPlayer from "../components/MusicPlayer.astro";
 import Projects from "../components/Projects.astro";
+import Experience from "../components/Experience.astro";
+import Posts from "../components/Posts.astro";
 ---
 
 <html lang="en">
@@ -19,21 +22,27 @@ import Projects from "../components/Projects.astro";
             crossorigin
         />
         <title>Gregor Tokarev</title>
+        <ClientRouter />
     </head>
     <body class="min-h-screen bg-[#a8e0df]">
         <MusicPlayer />
-        <main class="mx-auto max-w-3xl pt-40 pb-40">
+        <main class="mx-auto space-y-[120px]  max-w-3xl py-40">
             <div class="space-y-4 group">
-                <h1 class="text-3xl font-bold text-mauve-800">Gregor Tokarev</h1>
+                <h1 class="text-3xl font-bold text-mauve-800">
+                    Gregor Tokarev
+                </h1>
                 <p class="text-mauve-700 text-lg">
-                    Software engineer, care about my craft more then anything else in life
+                    Software engineer, care about my craft more then anything
+                    else in life
                     <a href="#" class="underline">link</a>
                 </p>
             </div>
 
-            <div class="mt-20">
-                <Projects />
-            </div>
+            <Projects />
+
+            <Experience />
+
+            <Posts />
         </main>
     </body>
 </html>

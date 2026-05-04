@@ -139,6 +139,8 @@ const previews = await Promise.all(
 
 <script>
     function initProjects(root: HTMLElement) {
+        if (root.dataset.projectsReady) return;
+        root.dataset.projectsReady = "1";
         const list = root.querySelector<HTMLElement>("[data-projects-list]");
         const hoverBg = root.querySelector<HTMLElement>("[data-hover-bg]");
         const links = root.querySelectorAll<HTMLAnchorElement>("[data-project-link]");
@@ -181,5 +183,9 @@ const previews = await Promise.all(
         });
     }
 
-    document.querySelectorAll<HTMLElement>("[data-projects]").forEach(initProjects);
+    const runProjects = () =>
+        document.querySelectorAll<HTMLElement>("[data-projects]").forEach(initProjects);
+
+    runProjects();
+    document.addEventListener("astro:page-load", runProjects);
 </script>
