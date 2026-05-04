@@ -3,6 +3,7 @@ import Base from "../layouts/Base.astro";
 import Projects from "../components/Projects.astro";
 import Experience from "../components/Experience.astro";
 import Posts from "../components/Posts.astro";
+import Socials from "../components/Socials.astro";
 import { personJsonLd, site, websiteJsonLd } from "../lib/site";
 ---
 
@@ -16,13 +17,14 @@ import { personJsonLd, site, websiteJsonLd } from "../lib/site";
         id="main"
         class="mx-auto max-w-3xl space-y-20 px-6 py-24 md:space-y-[120px] md:py-40"
     >
-        <header class="space-y-4">
+        <div class="space-y-4">
             <h1 class="text-3xl font-bold text-mauve-800">Gregor Tokarev</h1>
             <p class="text-mauve-700 text-base md:text-lg">
                 Software engineer who cares about his craft more than anything
                 else in life.
             </p>
-        </header>
+            <Socials />
+        </div>
 
         <Projects />
 
