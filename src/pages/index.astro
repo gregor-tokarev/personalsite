@@ -1,6 +1,28 @@
 ---
 import "../styles/global.css";
 import MusicPlayer from "../components/MusicPlayer.astro";
+import Projects from "../components/Projects.astro";
+import projectOne from "../assets/projects/voxfusion.png";
+import projectTwo from "../assets/projects/profile-left.png";
+import projectThree from "../assets/projects/profile-right.png";
+
+const projects = [
+    {
+        title: "voxfusion",
+        meta: "2026 · macos dictating app",
+        image: projectOne,
+    },
+    {
+        title: "Sit Amet Consectetur",
+        meta: "2024 · Interaction design",
+        image: projectTwo,
+    },
+    {
+        title: "Adipiscing Elit",
+        meta: "2023 · 3D rendering",
+        image: projectThree,
+    },
+];
 ---
 
 <html lang="en">
@@ -19,14 +41,19 @@ import MusicPlayer from "../components/MusicPlayer.astro";
         />
         <title>Gregor Tokarev</title>
     </head>
-    <body class="h-screen bg-[#a8e0df]">
+    <body class="min-h-screen bg-[#a8e0df]">
         <MusicPlayer />
-        <main class="mx-auto max-w-3xl pt-40">
-            <div class="space-y-5">
-                <h1 class="text-2xl font-bold text-mauve-800">Gregor Tokarev</h1>
-                <p class="text-mauve-700 text-md">
-                     Software engineer, care about
+        <main class="mx-auto max-w-3xl pt-40 pb-40">
+            <div class="space-y-4 group">
+                <h1 class="text-3xl font-bold text-mauve-800">Gregor Tokarev</h1>
+                <p class="text-mauve-700 text-lg">
+                    Software engineer, care about my craft more then anything else in life
+                    <a href="#" class="underline">link</a>
                 </p>
+            </div>
+
+            <div class="mt-20">
+                <Projects projects={projects} />
             </div>
         </main>
     </body>

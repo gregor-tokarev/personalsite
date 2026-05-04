@@ -1,14 +1,18 @@
 ---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import defaultCover from "../assets/lofi-cover.jpg";
+
 interface Props {
     src?: string;
-    cover?: string;
+    cover?: ImageMetadata;
     title?: string;
     artist?: string;
 }
 
 const {
     src = "/audio/lofi.mp3",
-    cover = "/images/lofi-cover.jpg",
+    cover = defaultCover,
     title = "Midnight Drive",
     artist = "Lofi Beats",
 } = Astro.props;
@@ -24,7 +28,7 @@ const {
 
     <div class="shell relative bg-[#141022] text-white overflow-hidden">
         <div class="pill-content absolute inset-0 flex items-center pl-1.5 pr-4 py-1.5 cursor-pointer" data-expand-trigger>
-            <img src={cover} alt="" class="w-[26px] h-[26px] rounded-full object-cover shrink-0" />
+            <Image src={cover} alt="" width={52} height={52} format="webp" class="w-[26px] h-[26px] rounded-full object-cover shrink-0" />
             <span aria-hidden="true" class="bars ml-auto inline-flex items-end gap-[1px] h-3.5">
                 <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
                 <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
@@ -39,7 +43,7 @@ const {
 
         <div class="card-content absolute inset-0 p-3">
             <div class="flex items-center gap-2.5 mb-2.5">
-                <img src={cover} alt={`${title} cover`} class="w-11 h-11 rounded-lg object-cover shrink-0" />
+                <Image src={cover} alt={`${title} cover`} width={88} height={88} format="webp" class="w-11 h-11 rounded-lg object-cover shrink-0" />
                 <div class="min-w-0">
                     <div class="text-[13px] font-semibold whitespace-nowrap overflow-hidden text-ellipsis">{title}</div>
                     <div class="text-[11px] text-neutral-400 whitespace-nowrap overflow-hidden text-ellipsis">{artist}</div>
