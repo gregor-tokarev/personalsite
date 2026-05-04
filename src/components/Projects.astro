@@ -60,7 +60,7 @@ const previews = await Promise.all(
     <link rel="preload" as="image" href={img.src} />
 ))}
 
-<section data-projects>
+<section class="relative" data-projects>
     <div class="relative flex flex-col gap-1 -mx-4 w-fit" data-projects-list>
         <span
             aria-hidden="true"
@@ -86,7 +86,7 @@ const previews = await Promise.all(
     </div>
 
     <div
-        class="preview-anchor pointer-events-none fixed top-1/2 hidden md:block"
+        class="preview-anchor pointer-events-none absolute top-1/2 hidden md:block"
         data-preview-wrapper
         aria-hidden="true"
     >
