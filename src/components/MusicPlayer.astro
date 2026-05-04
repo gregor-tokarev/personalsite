@@ -25,25 +25,26 @@ const {
     aria-label="Music player"
     transition:persist="music-player"
 >
-    <audio src={src} preload="metadata" loop></audio>
+    <audio src={src} preload="none" loop></audio>
 
     <div class="shell relative bg-[#141022] text-white overflow-hidden">
         <div class="pill-content absolute inset-0 flex items-center pl-1.5 pr-4 py-1.5 cursor-pointer" data-expand-trigger>
             <Image src={cover} alt="" width={52} height={52} format="webp" class="w-[26px] h-[26px] rounded-full object-cover shrink-0" />
-            <span aria-hidden="true" class="bars ml-auto inline-flex items-end gap-[1px] h-3.5">
-                <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
-                <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
-                <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
-                <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
-                <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
-                <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
-                <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
-                <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
-            </span>
         </div>
 
+        <span aria-hidden="true" class="bars absolute right-4 top-[18px] -translate-y-1/2 inline-flex items-end gap-[1px] h-3.5 z-10 pointer-events-none">
+            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
+            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
+            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
+            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
+            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
+            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
+            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
+            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
+        </span>
+
         <div class="card-content absolute inset-0 p-3">
-            <div class="flex items-center gap-2.5 mb-2.5">
+            <div class="flex items-center gap-2.5 mb-2.5 pr-6">
                 <Image src={cover} alt={`${title} cover`} width={88} height={88} format="webp" class="w-11 h-11 rounded-lg object-cover shrink-0" />
                 <div class="min-w-0">
                     <div class="text-[13px] font-semibold whitespace-nowrap overflow-hidden text-ellipsis">{title}</div>
@@ -157,6 +158,9 @@ const {
     @keyframes bar {
         0%, 100% { height: 25%; }
         50% { height: 100%; }
+    }
+    .bars > span {
+        transition: height 360ms cubic-bezier(0.4, 0, 0.2, 1);
     }
     .music-player[data-playing] .bars > span {
         animation: bar 900ms ease-in-out infinite;
@@ -305,12 +309,18 @@ const {
             else audio.pause();
         });
 
+        const barEls = root.querySelectorAll<HTMLElement>(".bars > span");
         audio.addEventListener("play", () => {
+            barEls.forEach((b) => { b.style.height = ""; });
             root.setAttribute("data-playing", "");
             playBtn.setAttribute("aria-label", "Pause");
         });
         audio.addEventListener("pause", () => {
+            barEls.forEach((b) => { b.style.height = getComputedStyle(b).height; });
             root.removeAttribute("data-playing");
+            requestAnimationFrame(() => {
+                barEls.forEach((b) => { b.style.height = "10%"; });
+            });
             playBtn.setAttribute("aria-label", "Play");
         });
 

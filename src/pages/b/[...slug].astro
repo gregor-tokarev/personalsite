@@ -45,14 +45,14 @@ const fmt = new Intl.DateTimeFormat("en-US", {
         <main class="mx-auto max-w-2xl px-6 py-24 md:py-40">
             <a
                 href="/"
-                class="inline-block text-sm text-mauve-700/70 hover:text-mauve-800 mb-12"
+                class="inline-block text-sm text-mauve-600 hover:text-mauve-800 mb-12"
             >
                 ← Back
             </a>
 
             <article class="space-y-10">
                 <header class="space-y-3">
-                    <p class="text-sm tabular-nums text-mauve-700/60">
+                    <p class="text-sm tabular-nums text-mauve-600">
                         {fmt.format(post.data.date)}
                         {post.data.category && (
                             <span> · {post.data.category}</span>
