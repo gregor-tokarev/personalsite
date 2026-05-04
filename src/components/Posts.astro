@@ -32,17 +32,11 @@ const fmt = new Intl.DateTimeFormat("en-US", {
         <h2 id="posts-heading" class="text-xl font-semibold text-mauve-800">
             {heading}
         </h2>
-        <div class="relative flex flex-col gap-1 -mx-4" data-posts-list>
-            <span
-                aria-hidden="true"
-                class="hover-lens pointer-events-none absolute left-0 top-0 rounded-2xl opacity-0 transition-[transform,width,height,opacity] duration-300 ease-out"
-                data-hover-bg
-            ></span>
-
+        <div class="flex flex-col gap-1 -mx-4">
             {posts.map((p) => (
                 <a
                     href={`/b/${p.id}/`}
-                    data-post-link
+                    data-hover-target
                     class="post-link relative flex flex-col gap-1 px-4 py-3 no-underline text-mauve-800 md:flex-row md:items-baseline md:gap-8"
                 >
                     <span class="text-sm w-28 shrink-0 tabular-nums whitespace-nowrap text-mauve-600">
@@ -74,68 +68,9 @@ const fmt = new Intl.DateTimeFormat("en-US", {
 ) : null}
 
 <style>
-    .hover-lens {
-        box-shadow:
-            inset 0 1px 0 0 rgba(255, 255, 255, 0.55),
-            inset 0 -1px 0 0 rgba(255, 255, 255, 0.18),
-            0 0 0 1px rgba(255, 255, 255, 0.22),
-            0 6px 18px -6px rgba(20, 16, 34, 0.18);
-    }
     .post-link:focus-visible {
         outline: 2px solid var(--color-mauve-800);
         outline-offset: -2px;
         border-radius: 12px;
     }
-    @media (prefers-reduced-motion: reduce) {
-        [data-hover-bg] {
-            transition: opacity 80ms linear !important;
-        }
-    }
 </style>
-
-<script>
-    function initPosts(root: HTMLElement) {
-        const list = root.querySelector<HTMLElement>("[data-posts-list]");
-        const hoverBg = root.querySelector<HTMLElement>("[data-hover-bg]");
-        const links = root.querySelectorAll<HTMLAnchorElement>("[data-post-link]");
-        if (!list || !hoverBg || !links.length) return;
-
-        const moveBgTo = (link: HTMLElement) => {
-            const listRect = list.getBoundingClientRect();
-            const r = link.getBoundingClientRect();
-            hoverBg.style.transform = `translate(${r.left - listRect.left}px, ${r.top - listRect.top}px)`;
-            hoverBg.style.width = `${r.width}px`;
-            hoverBg.style.height = `${r.height}px`;
-            hoverBg.style.opacity = "1";
-        };
-
-        const hide = () => {
-            hoverBg.style.opacity = "0";
-        };
-
-        links.forEach((link) => {
-            link.addEventListener("pointerenter", (e) => {
-                if (e.pointerType === "touch") return;
-                moveBgTo(link);
-            });
-            link.addEventListener("focus", () => {
-                if (!link.matches(":focus-visible")) return;
-                moveBgTo(link);
-            });
-        });
-
-        list.addEventListener("pointerleave", (e) => {
-            if (e.pointerType === "touch") return;
-            hide();
-        });
-        list.addEventListener("focusout", (e) => {
-            if (!list.contains(e.relatedTarget as Node)) hide();
-        });
-    }
-
-    const run = () =>
-        document.querySelectorAll<HTMLElement>("[data-posts]").forEach(initPosts);
-
-    run();
-    document.addEventListener("astro:page-load", run);
-</script>

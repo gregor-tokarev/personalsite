@@ -1,0 +1,109 @@
+---
+// Shared selection lens. Place inside an element marked with `data-hover-root`,
+// and add `data-hover-target` to any descendants that should attract the lens.
+---
+
+<span
+    aria-hidden="true"
+    class="page-hover-lens pointer-events-none absolute left-0 top-0 rounded-2xl opacity-0"
+    data-page-hover-bg
+></span>
+
+<style>
+    .page-hover-lens {
+        box-shadow:
+            inset 0 1px 0 0 rgba(255, 255, 255, 0.55),
+            inset 0 -1px 0 0 rgba(255, 255, 255, 0.18),
+            0 0 0 1px rgba(255, 255, 255, 0.22),
+            0 6px 18px -6px rgba(20, 16, 34, 0.18);
+        transition:
+            transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+            width 520ms cubic-bezier(0.22, 1, 0.36, 1),
+            height 520ms cubic-bezier(0.22, 1, 0.36, 1),
+            opacity 220ms ease-out;
+        will-change: transform, width, height, opacity;
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .page-hover-lens {
+            transition-duration: 80ms !important;
+        }
+    }
+</style>
+
+<script>
+    function initHoverLens() {
+        const root = document.querySelector<HTMLElement>("[data-hover-root]");
+        const lens = root?.querySelector<HTMLElement>("[data-page-hover-bg]");
+        if (!root || !lens) return;
+        if (root.dataset.hoverLensReady) return;
+        root.dataset.hoverLensReady = "1";
+
+        let primed = false;
+        let hideTimer: number | null = null;
+        const HIDE_DELAY = 1500;
+
+        const cancelHide = () => {
+            if (hideTimer !== null) {
+                window.clearTimeout(hideTimer);
+                hideTimer = null;
+            }
+        };
+
+        const moveTo = (el: HTMLElement) => {
+            cancelHide();
+            const rr = root.getBoundingClientRect();
+            const r = el.getBoundingClientRect();
+            const x = r.left - rr.left;
+            const y = r.top - rr.top;
+            if (!primed) {
+                lens.style.transition = "none";
+                lens.style.transform = `translate(${x}px, ${y}px)`;
+                lens.style.width = `${r.width}px`;
+                lens.style.height = `${r.height}px`;
+                void lens.offsetWidth;
+                lens.style.transition = "";
+                primed = true;
+            }
+            lens.style.transform = `translate(${x}px, ${y}px)`;
+            lens.style.width = `${r.width}px`;
+            lens.style.height = `${r.height}px`;
+            lens.style.opacity = "1";
+        };
+
+        const hide = () => {
+            if (hideTimer !== null) return;
+            hideTimer = window.setTimeout(() => {
+                hideTimer = null;
+                lens.style.opacity = "0";
+            }, HIDE_DELAY);
+        };
+
+        const targets = root.querySelectorAll<HTMLElement>("[data-hover-target]");
+        targets.forEach((el) => {
+            el.addEventListener("focus", () => {
+                if (!el.matches(":focus-visible")) return;
+                moveTo(el);
+            });
+        });
+
+        root.addEventListener("pointermove", (e) => {
+            if (e.pointerType === "touch") return;
+            const hit = (e.target as Element | null)?.closest<HTMLElement>(
+                "[data-hover-target]",
+            );
+            if (hit) moveTo(hit);
+            else hide();
+        });
+
+        root.addEventListener("pointerleave", (e) => {
+            if (e.pointerType === "touch") return;
+            hide();
+        });
+        root.addEventListener("focusout", (e) => {
+            if (!root.contains(e.relatedTarget as Node)) hide();
+        });
+    }
+
+    initHoverLens();
+    document.addEventListener("astro:page-load", initHoverLens);
+</script>
