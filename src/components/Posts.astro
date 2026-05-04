@@ -95,12 +95,20 @@ const fmt = new Intl.DateTimeFormat("en-US", {
         };
 
         links.forEach((link) => {
-            const activate = () => moveBgTo(link);
-            link.addEventListener("mouseenter", activate);
-            link.addEventListener("focus", activate);
+            link.addEventListener("pointerenter", (e) => {
+                if (e.pointerType === "touch") return;
+                moveBgTo(link);
+            });
+            link.addEventListener("focus", () => {
+                if (!link.matches(":focus-visible")) return;
+                moveBgTo(link);
+            });
         });
 
-        list.addEventListener("mouseleave", hide);
+        list.addEventListener("pointerleave", (e) => {
+            if (e.pointerType === "touch") return;
+            hide();
+        });
         list.addEventListener("focusout", (e) => {
             if (!list.contains(e.relatedTarget as Node)) hide();
         });

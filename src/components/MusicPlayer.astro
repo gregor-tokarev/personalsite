@@ -387,9 +387,15 @@ const {
             try { hint.hidePopover(); } catch {}
         };
         [prevBtn, playBtn, nextBtn].forEach((btn) => {
-            btn.addEventListener("pointerenter", () => showHint(btn));
+            btn.addEventListener("pointerenter", (e) => {
+                if (e.pointerType === "touch") return;
+                showHint(btn);
+            });
             btn.addEventListener("pointerleave", hideHint);
-            btn.addEventListener("focus", () => showHint(btn));
+            btn.addEventListener("focus", () => {
+                if (!btn.matches(":focus-visible")) return;
+                showHint(btn);
+            });
             btn.addEventListener("blur", hideHint);
         });
         // Make sure the hint disappears whenever the player collapses.

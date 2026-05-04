@@ -173,11 +173,20 @@ const previews = await Promise.all(
                 moveBgTo(link);
                 showPreview(link.dataset.index);
             };
-            link.addEventListener("mouseenter", activate);
-            link.addEventListener("focus", activate);
+            link.addEventListener("pointerenter", (e) => {
+                if (e.pointerType === "touch") return;
+                activate();
+            });
+            link.addEventListener("focus", () => {
+                if (!link.matches(":focus-visible")) return;
+                activate();
+            });
         });
 
-        list.addEventListener("mouseleave", hideAll);
+        list.addEventListener("pointerleave", (e) => {
+            if (e.pointerType === "touch") return;
+            hideAll();
+        });
         list.addEventListener("focusout", (e) => {
             if (!list.contains(e.relatedTarget as Node)) hideAll();
         });
