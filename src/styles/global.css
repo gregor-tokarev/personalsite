@@ -48,4 +48,7 @@
 
 @theme {
     --font-sans: "Cantarell", ui-sans-serif, system-ui, sans-serif;
+
+    --color-mauve-700: #4a4458;
+    --color-mauve-800: #2d2438;
 }
