@@ -60,7 +60,12 @@ const previews = await Promise.all(
     <link rel="preload" as="image" href={img.src} />
 ))}
 
-<section class="relative" data-projects>
+<section
+    class="relative"
+    data-projects
+    aria-labelledby="projects-heading"
+>
+    <h2 id="projects-heading" class="sr-only">Projects</h2>
     <div class="relative flex flex-col gap-1 -mx-4 w-fit" data-projects-list>
         <span
             aria-hidden="true"
@@ -75,10 +80,11 @@ const previews = await Promise.all(
                 rel="noopener noreferrer"
                 data-project-link
                 data-index={i}
-                class="relative flex w-fit flex-col gap-1 px-4 py-2 no-underline text-mauve-800"
+                class="project-link relative flex w-fit flex-col gap-1 px-4 py-2 no-underline text-mauve-800"
             >
-                <span class="underline decoration-mauve-800/15 underline-offset-2 decoration-2">
+                <span class="underline decoration-mauve-800/40 underline-offset-2 decoration-2">
                     {p.title}
+                    <span class="sr-only"> (opens in a new tab)</span>
                 </span>
                 <span class="text-sm text-mauve-600">{p.meta}</span>
             </a>
@@ -134,6 +140,20 @@ const previews = await Promise.all(
         opacity: 1;
         filter: blur(0);
         transform: translate(-50%, -50%) scale(1);
+    }
+    .project-link:focus-visible {
+        outline: 2px solid var(--color-mauve-800);
+        outline-offset: -2px;
+        border-radius: 12px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .hover-lens,
+        .preview-img {
+            transition-duration: 80ms !important;
+        }
+        .preview-img {
+            filter: none;
+        }
     }
 </style>
 

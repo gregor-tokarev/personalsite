@@ -19,7 +19,7 @@ const {
 ---
 
 <div
-    class="music-player fixed top-6 left-1/2 -translate-x-1/2 z-50 font-sans select-none"
+    class="music-player fixed left-1/2 -translate-x-1/2 z-50 font-sans select-none"
     data-collapsed
     role="region"
     aria-label="Music player"
@@ -28,9 +28,16 @@ const {
     <audio src={src} preload="none" loop></audio>
 
     <div class="shell relative bg-[#141022] text-white overflow-hidden">
-        <div class="pill-content absolute inset-0 flex items-center pl-1.5 pr-4 py-1.5 cursor-pointer" data-expand-trigger>
+        <button
+            type="button"
+            class="pill-content absolute inset-0 flex items-center pl-1.5 pr-4 py-1.5 bg-transparent border-0 text-white cursor-pointer"
+            data-expand-trigger
+            aria-label="Expand music player"
+            aria-expanded="false"
+            aria-controls="music-player-card"
+        >
             <Image src={cover} alt="" width={52} height={52} format="webp" class="w-[26px] h-[26px] rounded-full object-cover shrink-0" />
-        </div>
+        </button>
 
         <span aria-hidden="true" class="bars absolute right-4 top-[18px] -translate-y-1/2 inline-flex items-end gap-[1px] h-3.5 z-10 pointer-events-none">
             <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
@@ -43,21 +50,30 @@ const {
             <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
         </span>
 
-        <div class="card-content absolute inset-0 p-3">
+        <div id="music-player-card" class="card-content absolute inset-0 p-3">
             <div class="flex items-center gap-2.5 mb-2.5 pr-6">
-                <Image src={cover} alt={`${title} cover`} width={88} height={88} format="webp" class="w-11 h-11 rounded-lg object-cover shrink-0" />
+                <Image src={cover} alt="" width={88} height={88} format="webp" class="w-11 h-11 rounded-lg object-cover shrink-0" />
                 <div class="min-w-0">
-                    <div class="text-[13px] font-semibold whitespace-nowrap overflow-hidden text-ellipsis">{title}</div>
-                    <div class="text-[11px] text-neutral-400 whitespace-nowrap overflow-hidden text-ellipsis">{artist}</div>
+                    <div translate="no" class="text-[13px] font-semibold whitespace-nowrap overflow-hidden text-ellipsis">{title}</div>
+                    <div translate="no" class="text-[11px] text-neutral-400 whitespace-nowrap overflow-hidden text-ellipsis">{artist}</div>
                 </div>
             </div>
 
-            <div class="mb-2.5" role="progressbar" aria-label="Track progress">
+            <div class="mb-2.5">
                 <div class="flex justify-between text-[10px] text-neutral-400 mb-1 tabular-nums">
                     <span class="time-current">0:00</span>
                     <span class="time-total">0:00</span>
                 </div>
-                <div class="progress-bar relative h-[3px] bg-neutral-800 rounded-full overflow-hidden cursor-pointer">
+                <div
+                    class="progress-bar relative h-[3px] bg-neutral-800 rounded-full overflow-hidden cursor-pointer"
+                    role="slider"
+                    tabindex="0"
+                    aria-label="Seek track position"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow="0"
+                    aria-valuetext="0 seconds"
+                >
                     <div class="progress-fill h-full w-0 bg-white rounded-full transition-[width] duration-100 ease-linear"></div>
                 </div>
             </div>
@@ -68,28 +84,28 @@ const {
                     aria-label="Rewind 15 seconds"
                     aria-keyshortcuts="J"
                     data-hotkey="J"
-                    class="ctrl prev inline-flex items-center justify-center bg-transparent border-0 text-white cursor-pointer p-1.5 rounded-lg transition-colors duration-150 hover:bg-white/10 disabled:opacity-[0.35] disabled:cursor-not-allowed"
+                    class="ctrl prev inline-flex items-center justify-center bg-transparent border-0 text-white cursor-pointer p-1.5 rounded-lg transition-[background-color,transform] duration-150 hover:bg-white/10"
                 >
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12a8.5 8.5 0 1 0 2.5-6"/><polyline points="3 3 3 7.5 7.5 7.5"/><text x="12" y="15.6" text-anchor="middle" font-size="7" font-weight="700" fill="currentColor" stroke="none" font-family="ui-sans-serif, system-ui, sans-serif">15</text></svg>
+                    <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12a8.5 8.5 0 1 0 2.5-6"/><polyline points="3 3 3 7.5 7.5 7.5"/><text x="12" y="15.6" text-anchor="middle" font-size="7" font-weight="700" fill="currentColor" stroke="none" font-family="ui-sans-serif, system-ui, sans-serif">15</text></svg>
                 </button>
                 <button
                     type="button"
                     aria-label="Play"
                     aria-keyshortcuts="K"
                     data-hotkey="K"
-                    class="ctrl play inline-flex items-center justify-center border-0 cursor-pointer transition-colors duration-150 bg-white text-[#141022] w-[38px] h-[38px] rounded-full hover:bg-neutral-100"
+                    class="ctrl play inline-flex items-center justify-center border-0 cursor-pointer transition-[background-color] duration-150 bg-white text-[#141022] w-[38px] h-[38px] rounded-full hover:bg-neutral-100"
                 >
-                    <svg class="play-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M8 6.2v11.6a1.6 1.6 0 0 0 2.45 1.35l9-5.8a1.6 1.6 0 0 0 0-2.7l-9-5.8A1.6 1.6 0 0 0 8 6.2z"/></svg>
-                    <svg class="pause-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><rect x="5.5" y="5" width="5" height="14" rx="2.5"/><rect x="13.5" y="5" width="5" height="14" rx="2.5"/></svg>
+                    <svg aria-hidden="true" class="play-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M8 6.2v11.6a1.6 1.6 0 0 0 2.45 1.35l9-5.8a1.6 1.6 0 0 0 0-2.7l-9-5.8A1.6 1.6 0 0 0 8 6.2z"/></svg>
+                    <svg aria-hidden="true" class="pause-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><rect x="5.5" y="5" width="5" height="14" rx="2.5"/><rect x="13.5" y="5" width="5" height="14" rx="2.5"/></svg>
                 </button>
                 <button
                     type="button"
                     aria-label="Forward 15 seconds"
                     aria-keyshortcuts="L"
                     data-hotkey="L"
-                    class="ctrl next inline-flex items-center justify-center bg-transparent border-0 text-white cursor-pointer p-1.5 rounded-lg transition-colors duration-150 hover:bg-white/10 disabled:opacity-[0.35] disabled:cursor-not-allowed"
+                    class="ctrl next inline-flex items-center justify-center bg-transparent border-0 text-white cursor-pointer p-1.5 rounded-lg transition-[background-color,transform] duration-150 hover:bg-white/10"
                 >
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 1 1-2.5-6"/><polyline points="21 3 21 7.5 16.5 7.5"/><text x="12" y="15.6" text-anchor="middle" font-size="7" font-weight="700" fill="currentColor" stroke="none" font-family="ui-sans-serif, system-ui, sans-serif">15</text></svg>
+                    <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 1 1-2.5-6"/><polyline points="21 3 21 7.5 16.5 7.5"/><text x="12" y="15.6" text-anchor="middle" font-size="7" font-weight="700" fill="currentColor" stroke="none" font-family="ui-sans-serif, system-ui, sans-serif">15</text></svg>
                 </button>
             </div>
         </div>
@@ -106,6 +122,26 @@ const {
         --ease-spring-close-h: cubic-bezier(0.34, 1.15, 0.5, 1);
         --dur-close: 320ms;
         --dur-open: 380ms;
+        top: calc(1.5rem + env(safe-area-inset-top, 0));
+    }
+
+    .pill-content {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .ctrl {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .ctrl:focus-visible,
+    .progress-bar:focus-visible {
+        outline: 2px solid #fff;
+        outline-offset: 2px;
+    }
+    .pill-content:focus-visible {
+        outline: 2px solid #fff;
+        outline-offset: -2px;
+        border-radius: 20px;
     }
 
     .shell {
@@ -225,8 +261,21 @@ const {
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .shell, .pill-content, .card-content {
-            transition-duration: 120ms !important;
+        .shell,
+        .pill-content,
+        .card-content,
+        .ctrl.play .play-icon,
+        .ctrl.play .pause-icon,
+        .hotkey-hint {
+            transition-duration: 80ms !important;
+        }
+        .music-player[data-playing] .bars > span {
+            animation: none;
+            height: 50% !important;
+        }
+        .ctrl.prev svg.spin,
+        .ctrl.next svg.spin {
+            animation: none;
         }
     }
 
@@ -270,7 +319,7 @@ const {
         if (root.dataset.playerReady) return;
         root.dataset.playerReady = "1";
         const audio = root.querySelector("audio") as HTMLAudioElement;
-        const trigger = root.querySelector("[data-expand-trigger]") as HTMLElement;
+        const trigger = root.querySelector("[data-expand-trigger]") as HTMLButtonElement;
         const playBtn = root.querySelector(".ctrl.play") as HTMLButtonElement;
         const prevBtn = root.querySelector(".ctrl.prev") as HTMLButtonElement;
         const nextBtn = root.querySelector(".ctrl.next") as HTMLButtonElement;
@@ -294,13 +343,26 @@ const {
                 root.removeAttribute("data-expanded");
                 root.setAttribute("data-collapsed", "");
             }
+            trigger.setAttribute("aria-expanded", open ? "true" : "false");
+            trigger.setAttribute(
+                "aria-label",
+                open ? "Collapse music player" : "Expand music player",
+            );
         };
 
-        trigger.addEventListener("click", () => setExpanded(true));
+        trigger.addEventListener("click", () => {
+            setExpanded(!root.hasAttribute("data-expanded"));
+        });
 
-        document.addEventListener("click", (e) => {
+        document.addEventListener("pointerdown", (e) => {
             if (root.hasAttribute("data-expanded") && !root.contains(e.target as Node)) {
                 setExpanded(false);
+            }
+        });
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && root.hasAttribute("data-expanded")) {
+                setExpanded(false);
+                trigger.focus();
             }
         });
 
@@ -330,15 +392,54 @@ const {
         if (audio.readyState >= 1 && isFinite(audio.duration)) setDuration();
         audio.addEventListener("loadedmetadata", setDuration);
 
+        const updateProgressAria = () => {
+            const dur = audio.duration;
+            if (!isFinite(dur) || dur <= 0) return;
+            const pct = Math.round((audio.currentTime / dur) * 100);
+            bar.setAttribute("aria-valuenow", String(pct));
+            bar.setAttribute("aria-valuetext", `${fmt(audio.currentTime)} of ${fmt(dur)}`);
+        };
+
         audio.addEventListener("timeupdate", () => {
             const pct = (audio.currentTime / audio.duration) * 100;
             fill.style.width = `${pct}%`;
             tCur.textContent = fmt(audio.currentTime);
+            updateProgressAria();
         });
+        const seekToRatio = (ratio: number) => {
+            if (!isFinite(audio.duration)) return;
+            audio.currentTime = Math.max(0, Math.min(1, ratio)) * audio.duration;
+            updateProgressAria();
+        };
         bar.addEventListener("click", (e) => {
             const rect = bar.getBoundingClientRect();
-            const ratio = (e.clientX - rect.left) / rect.width;
-            audio.currentTime = ratio * audio.duration;
+            seekToRatio((e.clientX - rect.left) / rect.width);
+        });
+        bar.addEventListener("keydown", (e) => {
+            if (!isFinite(audio.duration)) return;
+            const step = e.shiftKey ? 10 : 5;
+            switch (e.key) {
+                case "ArrowLeft":
+                case "ArrowDown":
+                    e.preventDefault();
+                    audio.currentTime = Math.max(0, audio.currentTime - step);
+                    updateProgressAria();
+                    break;
+                case "ArrowRight":
+                case "ArrowUp":
+                    e.preventDefault();
+                    audio.currentTime = Math.min(audio.duration, audio.currentTime + step);
+                    updateProgressAria();
+                    break;
+                case "Home":
+                    e.preventDefault();
+                    seekToRatio(0);
+                    break;
+                case "End":
+                    e.preventDefault();
+                    seekToRatio(1);
+                    break;
+            }
         });
 
         const seek = (delta: number) => {

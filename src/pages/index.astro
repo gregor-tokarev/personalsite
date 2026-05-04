@@ -1,77 +1,55 @@
 ---
-import "../styles/global.css";
-import { ClientRouter } from "astro:transitions";
-import MusicPlayer from "../components/MusicPlayer.astro";
+import Base from "../layouts/Base.astro";
 import Projects from "../components/Projects.astro";
 import Experience from "../components/Experience.astro";
 import Posts from "../components/Posts.astro";
 ---
 
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        <meta
-            name="description"
-            content="Gregor Tokarev — software engineer building thoughtful tools and writing about the craft."
-        />
-        <link
-            rel="preload"
-            href="/fonts/cantarell-400-latin.woff2"
-            as="font"
-            type="font/woff2"
-            crossorigin
-        />
-        <title>Gregor Tokarev</title>
-        <ClientRouter />
-    </head>
-    <body class="min-h-screen bg-[#a8e0df]">
-        <MusicPlayer />
-        <main class="mx-auto max-w-3xl space-y-20 px-6 py-24 md:space-y-[120px] md:py-40">
-            <div class="space-y-4 group">
-                <h1 class="text-3xl font-bold text-mauve-800">
-                    Gregor Tokarev
-                </h1>
-                <p class="text-mauve-700 text-base md:text-lg">
-                    Software engineer, care about my craft more then anything
-                    else in life
-                    <a href="https://example.com" class="underline">link</a>
-                </p>
-            </div>
+<Base
+    title="Gregor Tokarev"
+    description="Gregor Tokarev — software engineer building thoughtful tools and writing about the craft."
+>
+    <main
+        id="main"
+        class="mx-auto max-w-3xl space-y-20 px-6 py-24 md:space-y-[120px] md:py-40"
+    >
+        <header class="space-y-4">
+            <h1 class="text-3xl font-bold text-mauve-800">Gregor Tokarev</h1>
+            <p class="text-mauve-700 text-base md:text-lg">
+                Software engineer who cares about his craft more than anything
+                else in life.
+            </p>
+        </header>
 
-            <Projects />
+        <Projects />
 
-            <Experience />
+        <Experience />
 
-            <Posts limit={5} />
-        </main>
+        <Posts limit={5} />
+    </main>
 
-        <script>
-            const KEY = "index-scroll-y";
-            let currentPath = location.pathname;
+    <script>
+        const KEY = "index-scroll-y";
+        let currentPath = location.pathname;
 
-            const saveIfOnIndex = () => {
-                if (currentPath === "/") {
-                    sessionStorage.setItem(KEY, String(window.scrollY));
-                }
-            };
+        const saveIfOnIndex = () => {
+            if (currentPath === "/") {
+                sessionStorage.setItem(KEY, String(window.scrollY));
+            }
+        };
 
-            document.addEventListener("astro:before-preparation", saveIfOnIndex);
-            window.addEventListener("pagehide", saveIfOnIndex);
+        document.addEventListener("astro:before-preparation", saveIfOnIndex);
+        window.addEventListener("pagehide", saveIfOnIndex);
 
-            document.addEventListener("astro:page-load", () => {
-                currentPath = location.pathname;
-                if (currentPath !== "/") return;
-                const raw = sessionStorage.getItem(KEY);
-                if (raw === null) return;
-                const y = parseInt(raw, 10);
-                if (Number.isFinite(y)) {
-                    window.scrollTo({ top: y, left: 0, behavior: "instant" });
-                }
-            });
-        </script>
-    </body>
-</html>
+        document.addEventListener("astro:page-load", () => {
+            currentPath = location.pathname;
+            if (currentPath !== "/") return;
+            const raw = sessionStorage.getItem(KEY);
+            if (raw === null) return;
+            const y = parseInt(raw, 10);
+            if (Number.isFinite(y)) {
+                window.scrollTo({ top: y, left: 0, behavior: "instant" });
+            }
+        });
+    </script>
+</Base>
