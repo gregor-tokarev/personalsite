@@ -1,0 +1,42 @@
+---
+import "../../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import MusicPlayer from "../../components/MusicPlayer.astro";
+import Posts from "../../components/Posts.astro";
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <meta
+            name="description"
+            content="Thoughts and writing by Gregor Tokarev."
+        />
+        <link
+            rel="preload"
+            href="/fonts/cantarell-400-latin.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+        />
+        <title>thoughts — Gregor Tokarev</title>
+        <ClientRouter />
+    </head>
+    <body class="min-h-screen bg-[#a8e0df]">
+        <MusicPlayer />
+        <main class="mx-auto max-w-3xl space-y-12 px-6 py-24 md:py-40">
+            <a
+                href="/"
+                class="inline-block text-sm text-mauve-600 hover:text-mauve-800"
+            >
+                ← Back
+            </a>
+
+            <Posts />
+        </main>
+    </body>
+</html>

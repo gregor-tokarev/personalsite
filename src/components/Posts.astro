@@ -1,9 +1,19 @@
 ---
 import { getCollection } from "astro:content";
 
-const posts = (await getCollection("posts")).sort(
+interface Props {
+    limit?: number;
+    heading?: string;
+}
+
+const { limit, heading = "thoughts" } = Astro.props;
+
+const allPosts = (await getCollection("posts")).sort(
     (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
+
+const posts = limit ? allPosts.slice(0, limit) : allPosts;
+const hasMore = limit !== undefined && allPosts.length > limit;
 
 const fmt = new Intl.DateTimeFormat("en-US", {
     month: "short",
@@ -12,7 +22,8 @@ const fmt = new Intl.DateTimeFormat("en-US", {
 });
 ---
 
-<section data-posts>
+<section data-posts class="flex flex-col gap-8">
+    <h2 class="text-xl font-semibold text-mauve-800">{heading}</h2>
     <div class="relative flex flex-col gap-1 -mx-4" data-posts-list>
         <span
             aria-hidden="true"
@@ -43,6 +54,14 @@ const fmt = new Intl.DateTimeFormat("en-US", {
             </a>
         ))}
     </div>
+    {hasMore && (
+        <a
+            href="/b"
+            class="self-start text-sm text-mauve-700 underline decoration-mauve-800/15 underline-offset-2 decoration-2 hover:decoration-mauve-800/60"
+        >
+            more →
+        </a>
+    )}
 </section>
 
 <style>
