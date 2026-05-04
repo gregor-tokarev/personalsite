@@ -3,6 +3,7 @@ title: "Lorem Ipsum Dolor Sit Amet"
 description: "A meandering note on consectetur, adipiscing, and the small pleasures of well-shaped paragraphs."
 date: 2025-11-12
 category: "Writing"
+draft: true
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor

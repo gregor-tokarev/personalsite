@@ -1,0 +1,27 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base
+    title="Page not found — Gregor Tokarev"
+    description="The requested page could not be found."
+    canonicalPath={false}
+    noindex
+>
+    <main
+        id="main"
+        class="mx-auto flex min-h-screen max-w-2xl flex-col justify-center gap-6 px-6 py-24"
+    >
+        <p class="text-sm font-semibold text-mauve-600">404</p>
+        <h1 class="text-3xl font-bold text-mauve-800">Page not found</h1>
+        <p class="text-mauve-700">
+            The page you are looking for is not available.
+        </p>
+        <a
+            href="/"
+            class="self-start text-mauve-700 underline decoration-mauve-800/40 underline-offset-2 decoration-2 hover:decoration-mauve-800/80"
+        >
+            Back home
+        </a>
+    </main>
+</Base>

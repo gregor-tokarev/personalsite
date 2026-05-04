@@ -2,8 +2,6 @@
 import { Image, getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import projectOne from "../assets/projects/voxfusion.png";
-import projectTwo from "../assets/projects/profile-left.png";
-import projectThree from "../assets/projects/profile-right.png";
 
 interface Project {
     title: string;
@@ -18,18 +16,6 @@ const projects: Project[] = [
         meta: "2026 · macos dictating app",
         image: projectOne,
         link: "https://voxfusion.io",
-    },
-    {
-        title: "Sit Amet Consectetur",
-        meta: "2024 · Interaction design",
-        image: projectTwo,
-        link: "https://example.com",
-    },
-    {
-        title: "Adipiscing Elit",
-        meta: "2023 · 3D rendering",
-        image: projectThree,
-        link: "https://example.com",
     },
 ];
 

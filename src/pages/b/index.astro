@@ -1,9 +1,18 @@
 ---
+import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import Posts from "../../components/Posts.astro";
+
+const posts = (await getCollection("posts")).filter((p) => !p.data.draft);
+const hasPosts = posts.length > 0;
 ---
 
-<Base title="Thoughts — Gregor Tokarev" description="Thoughts and writing by Gregor Tokarev.">
+<Base
+    title="Thoughts — Gregor Tokarev"
+    description="Notes and writing by Gregor Tokarev on software engineering and tools."
+    canonicalPath="/b/"
+    noindex={!hasPosts}
+>
     <main id="main" class="mx-auto max-w-3xl space-y-12 px-6 py-24 md:py-40">
         <a
             href="/"
@@ -12,6 +21,17 @@ import Posts from "../../components/Posts.astro";
             ←&nbsp;Back
         </a>
 
-        <Posts heading="Thoughts" />
+        <header class="space-y-3">
+            <h1 class="text-3xl font-bold text-mauve-800">Thoughts</h1>
+            <p class="text-mauve-700">
+                Notes on software engineering, tools, and product craft.
+            </p>
+        </header>
+
+        {hasPosts ? (
+            <Posts heading="Latest" />
+        ) : (
+            <p class="text-mauve-700">No public notes are published yet.</p>
+        )}
     </main>
 </Base>

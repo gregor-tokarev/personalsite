@@ -8,12 +8,13 @@ interface Props {
 
 const { limit, heading = "Thoughts" } = Astro.props;
 
-const allPosts = (await getCollection("posts")).sort(
-    (a, b) => b.data.date.getTime() - a.data.date.getTime(),
-);
+const allPosts = (await getCollection("posts"))
+    .filter((p) => !p.data.draft)
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 const posts = limit ? allPosts.slice(0, limit) : allPosts;
 const hasMore = limit !== undefined && allPosts.length > limit;
+const hasPosts = posts.length > 0;
 
 const fmt = new Intl.DateTimeFormat("en-US", {
     month: "short",
@@ -22,47 +23,55 @@ const fmt = new Intl.DateTimeFormat("en-US", {
 });
 ---
 
-<section data-posts class="flex flex-col gap-8" aria-labelledby="posts-heading">
-    <h2 id="posts-heading" class="text-xl font-semibold text-mauve-800">{heading}</h2>
-    <div class="relative flex flex-col gap-1 -mx-4" data-posts-list>
-        <span
-            aria-hidden="true"
-            class="hover-lens pointer-events-none absolute left-0 top-0 rounded-2xl opacity-0 transition-[transform,width,height,opacity] duration-300 ease-out"
-            data-hover-bg
-        ></span>
+{hasPosts ? (
+    <section
+        data-posts
+        class="flex flex-col gap-8"
+        aria-labelledby="posts-heading"
+    >
+        <h2 id="posts-heading" class="text-xl font-semibold text-mauve-800">
+            {heading}
+        </h2>
+        <div class="relative flex flex-col gap-1 -mx-4" data-posts-list>
+            <span
+                aria-hidden="true"
+                class="hover-lens pointer-events-none absolute left-0 top-0 rounded-2xl opacity-0 transition-[transform,width,height,opacity] duration-300 ease-out"
+                data-hover-bg
+            ></span>
 
-        {posts.map((p) => (
+            {posts.map((p) => (
+                <a
+                    href={`/b/${p.id}/`}
+                    data-post-link
+                    class="post-link relative flex flex-col gap-1 px-4 py-3 no-underline text-mauve-800 md:flex-row md:items-baseline md:gap-8"
+                >
+                    <span class="text-sm w-28 shrink-0 tabular-nums whitespace-nowrap text-mauve-600">
+                        <time datetime={p.data.date.toISOString()}>{fmt.format(p.data.date)}</time>
+                    </span>
+                    <span class="flex min-w-0 flex-col gap-1">
+                        <span
+                            class="underline decoration-mauve-800/40 underline-offset-2 decoration-2 line-clamp-2"
+                            transition:name={`post-title-${p.id}`}
+                        >
+                            {p.data.title}
+                        </span>
+                        <span class="text-sm text-mauve-600 line-clamp-2">
+                            {p.data.description}
+                        </span>
+                    </span>
+                </a>
+            ))}
+        </div>
+        {hasMore ? (
             <a
-                href={`/b/${p.id}`}
-                data-post-link
-                class="post-link relative flex flex-col gap-1 px-4 py-3 no-underline text-mauve-800 md:flex-row md:items-baseline md:gap-8"
+                href="/b/"
+                class="self-start text-sm text-mauve-700 underline decoration-mauve-800/40 underline-offset-2 decoration-2 hover:decoration-mauve-800/80"
             >
-                <span class="text-sm w-28 shrink-0 tabular-nums whitespace-nowrap text-mauve-600">
-                    <time datetime={p.data.date.toISOString()}>{fmt.format(p.data.date)}</time>
-                </span>
-                <span class="flex min-w-0 flex-col gap-1">
-                    <span
-                        class="underline decoration-mauve-800/40 underline-offset-2 decoration-2 line-clamp-2"
-                        transition:name={`post-title-${p.id}`}
-                    >
-                        {p.data.title}
-                    </span>
-                    <span class="text-sm text-mauve-600 line-clamp-2">
-                        {p.data.description}
-                    </span>
-                </span>
+                More&nbsp;→
             </a>
-        ))}
-    </div>
-    {hasMore && (
-        <a
-            href="/b"
-            class="self-start text-sm text-mauve-700 underline decoration-mauve-800/40 underline-offset-2 decoration-2 hover:decoration-mauve-800/80"
-        >
-            More&nbsp;→
-        </a>
-    )}
-</section>
+        ) : null}
+    </section>
+) : null}
 
 <style>
     .hover-lens {
