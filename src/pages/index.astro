@@ -48,5 +48,30 @@ import Posts from "../components/Posts.astro";
 
             <Posts limit={5} />
         </main>
+
+        <script>
+            const KEY = "index-scroll-y";
+            let currentPath = location.pathname;
+
+            const saveIfOnIndex = () => {
+                if (currentPath === "/") {
+                    sessionStorage.setItem(KEY, String(window.scrollY));
+                }
+            };
+
+            document.addEventListener("astro:before-preparation", saveIfOnIndex);
+            window.addEventListener("pagehide", saveIfOnIndex);
+
+            document.addEventListener("astro:page-load", () => {
+                currentPath = location.pathname;
+                if (currentPath !== "/") return;
+                const raw = sessionStorage.getItem(KEY);
+                if (raw === null) return;
+                const y = parseInt(raw, 10);
+                if (Number.isFinite(y)) {
+                    window.scrollTo({ top: y, left: 0, behavior: "instant" });
+                }
+            });
+        </script>
     </body>
 </html>
