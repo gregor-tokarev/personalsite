@@ -1,17 +1,33 @@
 ---
-
+import "../styles/global.css";
+import MusicPlayer from "../components/MusicPlayer.astro";
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <link
+            rel="preload"
+            href="/fonts/cantarell-400-latin.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+        />
+        <title>Gregor Tokarev</title>
+    </head>
+    <body class="h-screen bg-[#50c4c3]">
+        <MusicPlayer />
+        <main class="mx-auto max-w-3xl pt-40">
+            <div class="space-y-5">
+                <h1 class="text-2xl font-bold text-mauve-800">Gregor Tokarev</h1>
+                <p class="text-mauve-700 text-md">
+                     Software engineer, care about
+                </p>
+            </div>
+        </main>
+    </body>
 </html>

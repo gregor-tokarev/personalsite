@@ -1,0 +1,250 @@
+---
+interface Props {
+    src?: string;
+    cover?: string;
+    title?: string;
+    artist?: string;
+}
+
+const {
+    src = "/audio/lofi.mp3",
+    cover = "/images/lofi-cover.jpg",
+    title = "Midnight Drive",
+    artist = "Lofi Beats",
+} = Astro.props;
+---
+
+<div
+    class="music-player fixed top-6 left-1/2 -translate-x-1/2 z-50 font-sans"
+    data-collapsed
+    role="region"
+    aria-label="Music player"
+>
+    <audio src={src} preload="metadata" loop></audio>
+
+    <div class="shell relative bg-[#0b0b0b] text-white overflow-hidden">
+        <div class="pill-content absolute inset-0 flex items-center pl-1.5 pr-4 py-1.5 cursor-pointer" data-expand-trigger>
+            <img src={cover} alt="" class="w-[26px] h-[26px] rounded-full object-cover shrink-0" />
+            <span aria-hidden="true" class="bars ml-auto inline-flex items-end gap-[1px] h-3.5">
+                <span class="block w-[1px] bg-emerald-300 rounded-[1px] h-[10%]"></span>
+                <span class="block w-[1px] bg-emerald-300 rounded-[1px] h-[10%]"></span>
+                <span class="block w-[1px] bg-emerald-300 rounded-[1px] h-[10%]"></span>
+                <span class="block w-[1px] bg-emerald-300 rounded-[1px] h-[10%]"></span>
+                <span class="block w-[1px] bg-emerald-300 rounded-[1px] h-[10%]"></span>
+                <span class="block w-[1px] bg-emerald-300 rounded-[1px] h-[10%]"></span>
+                <span class="block w-[1px] bg-emerald-300 rounded-[1px] h-[10%]"></span>
+                <span class="block w-[1px] bg-emerald-300 rounded-[1px] h-[10%]"></span>
+            </span>
+        </div>
+
+        <div class="card-content absolute inset-0 p-3">
+            <div class="flex items-center gap-2.5 mb-2.5">
+                <img src={cover} alt={`${title} cover`} class="w-11 h-11 rounded-lg object-cover shrink-0" />
+                <div class="min-w-0">
+                    <div class="text-[13px] font-semibold whitespace-nowrap overflow-hidden text-ellipsis">{title}</div>
+                    <div class="text-[11px] text-neutral-400 whitespace-nowrap overflow-hidden text-ellipsis">{artist}</div>
+                </div>
+            </div>
+
+            <div class="mb-2.5" role="progressbar" aria-label="Track progress">
+                <div class="flex justify-between text-[10px] text-neutral-400 mb-1 tabular-nums">
+                    <span class="time-current">0:00</span>
+                    <span class="time-total">0:00</span>
+                </div>
+                <div class="progress-bar relative h-[3px] bg-neutral-800 rounded-full overflow-hidden cursor-pointer">
+                    <div class="progress-fill h-full w-0 bg-white rounded-full transition-[width] duration-100 ease-linear"></div>
+                </div>
+            </div>
+
+            <div class="flex justify-center items-center gap-[18px]">
+                <button
+                    type="button"
+                    aria-label="Rewind 15 seconds"
+                    class="ctrl prev inline-flex items-center justify-center bg-transparent border-0 text-white cursor-pointer p-1.5 rounded-lg transition-colors duration-150 hover:bg-white/10 disabled:opacity-[0.35] disabled:cursor-not-allowed"
+                >
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12a8.5 8.5 0 1 0 2.5-6"/><polyline points="3 3 3 7.5 7.5 7.5"/><text x="12" y="15.6" text-anchor="middle" font-size="7" font-weight="700" fill="currentColor" stroke="none" font-family="ui-sans-serif, system-ui, sans-serif">15</text></svg>
+                </button>
+                <button
+                    type="button"
+                    aria-label="Play"
+                    class="ctrl play inline-flex items-center justify-center border-0 cursor-pointer transition-colors duration-150 bg-white text-[#0b0b0b] w-[38px] h-[38px] rounded-full hover:bg-neutral-100"
+                >
+                    <svg class="play-icon block" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M8 6.2v11.6a1.6 1.6 0 0 0 2.45 1.35l9-5.8a1.6 1.6 0 0 0 0-2.7l-9-5.8A1.6 1.6 0 0 0 8 6.2z"/></svg>
+                    <svg class="pause-icon hidden" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><rect x="5.5" y="5" width="5" height="14" rx="2.5"/><rect x="13.5" y="5" width="5" height="14" rx="2.5"/></svg>
+                </button>
+                <button
+                    type="button"
+                    aria-label="Forward 15 seconds"
+                    class="ctrl next inline-flex items-center justify-center bg-transparent border-0 text-white cursor-pointer p-1.5 rounded-lg transition-colors duration-150 hover:bg-white/10 disabled:opacity-[0.35] disabled:cursor-not-allowed"
+                >
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 1 1-2.5-6"/><polyline points="21 3 21 7.5 16.5 7.5"/><text x="12" y="15.6" text-anchor="middle" font-size="7" font-weight="700" fill="currentColor" stroke="none" font-family="ui-sans-serif, system-ui, sans-serif">15</text></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .music-player {
+        --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+        --ease-spring-open: cubic-bezier(0.34, 1.85, 0.5, 1);
+        --ease-spring-close-w: cubic-bezier(0.34, 1.7, 0.5, 1);
+        --ease-spring-close-h: cubic-bezier(0.34, 1.15, 0.5, 1);
+        --dur-close: 320ms;
+        --dur-open: 380ms;
+    }
+
+    .shell {
+        width: 170px;
+        height: 36px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.15);
+        will-change: width, height;
+        transition:
+            width var(--dur-close) var(--ease-spring-close-w),
+            height var(--dur-close) var(--ease-spring-close-h),
+            box-shadow var(--dur-close) var(--ease-out);
+    }
+    .music-player[data-expanded] .shell {
+        width: 280px;
+        height: 156px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), 0 4px 12px rgba(0, 0, 0, 0.2);
+        transition:
+            width var(--dur-open) var(--ease-spring-open),
+            height var(--dur-open) var(--ease-spring-open),
+            box-shadow var(--dur-open) var(--ease-out);
+    }
+
+    .music-player[data-collapsed] .shell:hover {
+        transform: scale(1.03);
+        transition:
+            width var(--dur-close) var(--ease-out),
+            height var(--dur-close) var(--ease-out),
+            box-shadow var(--dur-close) var(--ease-out),
+            transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .pill-content {
+        opacity: 1;
+        transition: opacity 140ms var(--ease-out) 120ms;
+    }
+    .music-player[data-expanded] .pill-content {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 100ms var(--ease-out) 0ms;
+    }
+
+    .card-content {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 140ms var(--ease-out) 0ms;
+    }
+    .music-player[data-expanded] .card-content {
+        opacity: 1;
+        pointer-events: auto;
+        transition: opacity 180ms var(--ease-out) 160ms;
+    }
+
+    @keyframes bar {
+        0%, 100% { height: 25%; }
+        50% { height: 100%; }
+    }
+    .music-player[data-playing] .bars > span {
+        animation: bar 900ms ease-in-out infinite;
+    }
+    .music-player[data-playing] .bars > span:nth-child(1) { animation-delay: 0ms; }
+    .music-player[data-playing] .bars > span:nth-child(2) { animation-delay: 110ms; }
+    .music-player[data-playing] .bars > span:nth-child(3) { animation-delay: 220ms; }
+    .music-player[data-playing] .bars > span:nth-child(4) { animation-delay: 330ms; }
+    .music-player[data-playing] .bars > span:nth-child(5) { animation-delay: 440ms; }
+    .music-player[data-playing] .bars > span:nth-child(6) { animation-delay: 330ms; }
+    .music-player[data-playing] .bars > span:nth-child(7) { animation-delay: 220ms; }
+    .music-player[data-playing] .bars > span:nth-child(8) { animation-delay: 110ms; }
+
+    .music-player[data-playing] .play-icon { display: none; }
+    .music-player[data-playing] .pause-icon { display: block; }
+
+    @media (prefers-reduced-motion: reduce) {
+        .shell, .pill-content, .card-content {
+            transition-duration: 120ms !important;
+        }
+    }
+</style>
+
+<script>
+    function initPlayer(root: HTMLElement) {
+        const audio = root.querySelector("audio") as HTMLAudioElement;
+        const trigger = root.querySelector("[data-expand-trigger]") as HTMLElement;
+        const playBtn = root.querySelector(".ctrl.play") as HTMLButtonElement;
+        const prevBtn = root.querySelector(".ctrl.prev") as HTMLButtonElement;
+        const nextBtn = root.querySelector(".ctrl.next") as HTMLButtonElement;
+        const fill = root.querySelector(".progress-fill") as HTMLElement;
+        const bar = root.querySelector(".progress-bar") as HTMLElement;
+        const tCur = root.querySelector(".time-current") as HTMLElement;
+        const tTot = root.querySelector(".time-total") as HTMLElement;
+
+        const fmt = (s: number) => {
+            if (!isFinite(s)) return "0:00";
+            const m = Math.floor(s / 60);
+            const r = Math.floor(s % 60).toString().padStart(2, "0");
+            return `${m}:${r}`;
+        };
+
+        const setExpanded = (open: boolean) => {
+            if (open) {
+                root.removeAttribute("data-collapsed");
+                root.setAttribute("data-expanded", "");
+            } else {
+                root.removeAttribute("data-expanded");
+                root.setAttribute("data-collapsed", "");
+            }
+        };
+
+        trigger.addEventListener("click", () => setExpanded(true));
+
+        document.addEventListener("click", (e) => {
+            if (root.hasAttribute("data-expanded") && !root.contains(e.target as Node)) {
+                setExpanded(false);
+            }
+        });
+
+        playBtn.addEventListener("click", () => {
+            if (audio.paused) audio.play();
+            else audio.pause();
+        });
+
+        audio.addEventListener("play", () => {
+            root.setAttribute("data-playing", "");
+            playBtn.setAttribute("aria-label", "Pause");
+        });
+        audio.addEventListener("pause", () => {
+            root.removeAttribute("data-playing");
+            playBtn.setAttribute("aria-label", "Play");
+        });
+
+        const setDuration = () => {
+            tTot.textContent = fmt(audio.duration);
+        };
+        if (audio.readyState >= 1 && isFinite(audio.duration)) setDuration();
+        audio.addEventListener("loadedmetadata", setDuration);
+
+        audio.addEventListener("timeupdate", () => {
+            const pct = (audio.currentTime / audio.duration) * 100;
+            fill.style.width = `${pct}%`;
+            tCur.textContent = fmt(audio.currentTime);
+        });
+        bar.addEventListener("click", (e) => {
+            const rect = bar.getBoundingClientRect();
+            const ratio = (e.clientX - rect.left) / rect.width;
+            audio.currentTime = ratio * audio.duration;
+        });
+
+        const seek = (delta: number) => {
+            audio.currentTime = Math.max(0, Math.min(audio.duration || 0, audio.currentTime + delta));
+        };
+        prevBtn.addEventListener("click", () => seek(-15));
+        nextBtn.addEventListener("click", () => seek(15));
+    }
+
+    document.querySelectorAll<HTMLElement>(".music-player").forEach(initPlayer);
+</script>
