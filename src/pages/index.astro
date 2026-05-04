@@ -2,27 +2,6 @@
 import "../styles/global.css";
 import MusicPlayer from "../components/MusicPlayer.astro";
 import Projects from "../components/Projects.astro";
-import projectOne from "../assets/projects/voxfusion.png";
-import projectTwo from "../assets/projects/profile-left.png";
-import projectThree from "../assets/projects/profile-right.png";
-
-const projects = [
-    {
-        title: "voxfusion",
-        meta: "2026 · macos dictating app",
-        image: projectOne,
-    },
-    {
-        title: "Sit Amet Consectetur",
-        meta: "2024 · Interaction design",
-        image: projectTwo,
-    },
-    {
-        title: "Adipiscing Elit",
-        meta: "2023 · 3D rendering",
-        image: projectThree,
-    },
-];
 ---
 
 <html lang="en">
@@ -53,7 +32,7 @@ const projects = [
             </div>
 
             <div class="mt-20">
-                <Projects projects={projects} />
+                <Projects />
             </div>
         </main>
     </body>
