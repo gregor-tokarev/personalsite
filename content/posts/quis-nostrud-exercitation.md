@@ -3,7 +3,7 @@ title: "Quis Nostrud Exercitation"
 description: "Notes on ullamco laboris, the shape of a good morning, and why some tools earn a place on your desk."
 date: 2025-09-03
 category: "Tools"
-draft: true
+draft: false
 ---
 
 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
