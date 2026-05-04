@@ -103,7 +103,8 @@ const {
         transition:
             width var(--dur-close) var(--ease-spring-close-w),
             height var(--dur-close) var(--ease-spring-close-h),
-            box-shadow var(--dur-close) var(--ease-out);
+            box-shadow var(--dur-close) var(--ease-out),
+            transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
     }
     .music-player[data-expanded] .shell {
         width: 280px;
@@ -117,11 +118,6 @@ const {
 
     .music-player[data-collapsed] .shell:hover {
         transform: scale(1.03);
-        transition:
-            width var(--dur-close) var(--ease-out),
-            height var(--dur-close) var(--ease-out),
-            box-shadow var(--dur-close) var(--ease-out),
-            transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .pill-content {
