@@ -2,7 +2,7 @@
 
 ## Why this exists
 
-Code reviews catch the *outbound* leg of a workflow — "click X on page A, navigate to page B, complete action". They miss the *return* leg — "go back to page A, did the new state appear?"
+Code reviews catch the _outbound_ leg of a workflow — "click X on page A, navigate to page B, complete action". They miss the _return_ leg — "go back to page A, did the new state appear?"
 
 The bug pattern: a mutation on page B creates/changes data tied to a parent context A, but B's mutation only invalidates B's own query. A's cached state is stale on return. The user sees an empty list, thinks the action failed, retries, creates a duplicate (or worse — gives up and assumes the system is broken).
 
@@ -72,18 +72,18 @@ Build this list during Phase 2 (Discovery). Each entry is a candidate for the Ph
 
 Examples for vite-flare-starter:
 
-| Outbound (A → B) | Mutation on B | Inbound (B → A) | What A must reflect |
-|---|---|---|---|
-| Project page → Start chat | Conversation created with projectId | Breadcrumb back | New conversation in project's list |
-| Spaces list → enter space → send message | Message persisted | Browser back | Last-message timestamp updated |
-| Inbox → click finding (opens chat) | Finding marked read | Browser back | Unread count decreases on bell |
-| Approvals → approve | Approval status → decided | Sidebar Approvals | Item gone from "Pending" tab |
-| Approvals page approve | Approval status → decided | Sidebar Inbox | Item also gone from Inbox unified view |
-| Inbox bulk-approve | Approval(s) status → decided | Header bell | Unread count decreases |
-| Skills → save edit (with diff approval) | Skill body updated | Skills list page | Updated body shows on next select |
-| Connections → connect Google | OAuth + connection persisted | Browser back to /connections | New connection appears in list |
-| Routines /new → submit | Routine created | Sidebar Routines | New routine appears in list |
-| Settings → API tokens → create | Token created | Same page | List updates without reload |
+| Outbound (A → B)                         | Mutation on B                       | Inbound (B → A)              | What A must reflect                    |
+| ---------------------------------------- | ----------------------------------- | ---------------------------- | -------------------------------------- |
+| Project page → Start chat                | Conversation created with projectId | Breadcrumb back              | New conversation in project's list     |
+| Spaces list → enter space → send message | Message persisted                   | Browser back                 | Last-message timestamp updated         |
+| Inbox → click finding (opens chat)       | Finding marked read                 | Browser back                 | Unread count decreases on bell         |
+| Approvals → approve                      | Approval status → decided           | Sidebar Approvals            | Item gone from "Pending" tab           |
+| Approvals page approve                   | Approval status → decided           | Sidebar Inbox                | Item also gone from Inbox unified view |
+| Inbox bulk-approve                       | Approval(s) status → decided        | Header bell                  | Unread count decreases                 |
+| Skills → save edit (with diff approval)  | Skill body updated                  | Skills list page             | Updated body shows on next select      |
+| Connections → connect Google             | OAuth + connection persisted        | Browser back to /connections | New connection appears in list         |
+| Routines /new → submit                   | Routine created                     | Sidebar Routines             | New routine appears in list            |
+| Settings → API tokens → create           | Token created                       | Same page                    | List updates without reload            |
 
 If any of these is NOT exercised in Phase 3, the audit is `Incomplete` for that surface.
 
@@ -93,7 +93,7 @@ When you can't manually walk every workflow, these heuristics surface candidates
 
 ### Heuristic 1 — Cross-key invalidation
 
-Grep the codebase for `useMutation` and check what it invalidates. If the mutation can affect data shown on a *different* page that uses a *different* query key, the mutation MUST invalidate both.
+Grep the codebase for `useMutation` and check what it invalidates. If the mutation can affect data shown on a _different_ page that uses a _different_ query key, the mutation MUST invalidate both.
 
 ```bash
 # Find every mutation
@@ -104,6 +104,7 @@ grep -A 10 'useMutation' src/client/modules/X/hooks/Y.ts | grep invalidateQuerie
 ```
 
 For each mutation, ask:
+
 - "What query keys consume the data this mutation affects?"
 - "Are ALL of those keys invalidated?"
 
@@ -114,6 +115,7 @@ The classic miss: mutation invalidates `['inbox']` only, but the same data also 
 Audit every UI badge / unread-count / pip indicator at the top of the layout. Each one is consumer of a query that ANY mutation across the app might invalidate.
 
 Common badges that drift:
+
 - Notification bell unread count
 - Inbox unread tab count
 - Approvals pending count

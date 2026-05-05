@@ -11,11 +11,13 @@ Evaluate whether users can understand the system, follow their work through it, 
 A "thread" is a sequence of actions that makes up a real task in the user's day. Before evaluating, identify the main threads:
 
 **Examples for an insurance app:**
+
 - Thread 1: Client calls about a renewal → find their policy → review details → draft renewal email → send
 - Thread 2: New enquiry comes in → create client record → add policy details → set follow-up
 - Thread 3: Morning routine → check what needs attention today → work through the list
 
 **Examples for a project management app:**
+
 - Thread 1: Start the day → see what's assigned to me → pick a task → update progress → mark done
 - Thread 2: Client asks for a status update → find the project → see overall progress → send summary
 - Thread 3: New project comes in → create it → break into tasks → assign team → set deadlines
@@ -30,25 +32,25 @@ A "thread" is a sequence of actions that makes up a real task in the user's day.
 
 Follow each thread end to end. At every step, evaluate:
 
-| Question | What you're checking |
-|----------|---------------------|
-| **Do I know where to start?** | Is the entry point for this thread obvious from the dashboard or nav? |
-| **Does the next step suggest itself?** | After each action, is the logical next step visible or do I have to hunt? |
-| **Can I see my progress?** | Is there any indication of how far through the workflow I am? |
-| **Can I leave and come back?** | If I get interrupted, can I find my place again tomorrow? |
-| **Does it end clearly?** | When the thread is complete, do I know it's done? Is there a confirmation or just... nothing? |
+| Question                               | What you're checking                                                                          |
+| -------------------------------------- | --------------------------------------------------------------------------------------------- |
+| **Do I know where to start?**          | Is the entry point for this thread obvious from the dashboard or nav?                         |
+| **Does the next step suggest itself?** | After each action, is the logical next step visible or do I have to hunt?                     |
+| **Can I see my progress?**             | Is there any indication of how far through the workflow I am?                                 |
+| **Can I leave and come back?**         | If I get interrupted, can I find my place again tomorrow?                                     |
+| **Does it end clearly?**               | When the thread is complete, do I know it's done? Is there a confirmation or just... nothing? |
 
 ## Wayfinding
 
 Can the user orient themselves at any moment?
 
-| Signal | What to check |
-|--------|--------------|
-| **Current location** | Does the nav/sidebar highlight where I am? Is there a breadcrumb? |
-| **Context from URL** | Does the URL tell me where I am? (e.g. `/clients/jenny-obrien/policies` vs `/app/page/3`) |
-| **Page title/heading** | Does the heading tell me what I can do here, not just what the page is called? |
-| **Back navigation** | Can I always get back to where I came from? Is there a clear "up" direction? |
-| **Section grouping** | Are related pages grouped together in the nav? Does the grouping match how I think about my work? |
+| Signal                 | What to check                                                                                     |
+| ---------------------- | ------------------------------------------------------------------------------------------------- |
+| **Current location**   | Does the nav/sidebar highlight where I am? Is there a breadcrumb?                                 |
+| **Context from URL**   | Does the URL tell me where I am? (e.g. `/clients/jenny-obrien/policies` vs `/app/page/3`)         |
+| **Page title/heading** | Does the heading tell me what I can do here, not just what the page is called?                    |
+| **Back navigation**    | Can I always get back to where I came from? Is there a clear "up" direction?                      |
+| **Section grouping**   | Are related pages grouped together in the nav? Does the grouping match how I think about my work? |
 
 ### Wayfinding Red Flags
 
@@ -62,19 +64,20 @@ Can the user orient themselves at any moment?
 
 The app should guide users through visual design, not just labels.
 
-| Cue type | What to look for |
-|----------|-----------------|
-| **Primary action prominence** | Is the main thing I should do on this page visually dominant? (Size, colour, position) |
-| **Status indicators** | Can I tell at a glance which items need attention? (Colour coding, badges, icons) |
-| **Empty state guidance** | When a section has no data, does it tell me what to do? ("No policies yet — create one") |
-| **Progressive disclosure** | Does the app show me what I need now and hide complexity until I need it? |
-| **Affordances** | Do clickable things look clickable? Do input fields look like input fields? |
-| **Grouping and proximity** | Are related actions near each other? Is there visual separation between unrelated things? |
-| **Notification/attention magnets** | Are there badges, counts, or indicators that pull me toward things that need action? |
+| Cue type                           | What to look for                                                                          |
+| ---------------------------------- | ----------------------------------------------------------------------------------------- |
+| **Primary action prominence**      | Is the main thing I should do on this page visually dominant? (Size, colour, position)    |
+| **Status indicators**              | Can I tell at a glance which items need attention? (Colour coding, badges, icons)         |
+| **Empty state guidance**           | When a section has no data, does it tell me what to do? ("No policies yet — create one")  |
+| **Progressive disclosure**         | Does the app show me what I need now and hide complexity until I need it?                 |
+| **Affordances**                    | Do clickable things look clickable? Do input fields look like input fields?               |
+| **Grouping and proximity**         | Are related actions near each other? Is there visual separation between unrelated things? |
+| **Notification/attention magnets** | Are there badges, counts, or indicators that pull me toward things that need action?      |
 
 ### Nudge Quality Check
 
 For each page, ask:
+
 1. If I squint at this page, what draws my eye first? Is that the right thing?
 2. Are there visual "dead zones" where important actions are hidden?
 3. Does the colour/weight hierarchy match the importance hierarchy?
@@ -84,14 +87,14 @@ For each page, ask:
 
 The transitions between pages are where comprehension breaks down most often.
 
-| Transition | What to check |
-|-----------|--------------|
-| **After creating something** | Am I taken to the thing I just created? Or dumped back at a list? |
-| **After saving/updating** | Is there confirmation? Can I see what changed? |
-| **After deleting** | Where do I end up? Does the list update? Is the deleted item gone? |
-| **Navigating from a list to a detail** | Does the detail page have context about where I came from? Can I get back to the filtered list? |
-| **Moving between sections** | If I'm working on a client and switch to emails, does the email section know which client I was looking at? |
-| **Deep linking** | If someone sends me a link to a specific record, do I have enough context when I land there? |
+| Transition                             | What to check                                                                                               |
+| -------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| **After creating something**           | Am I taken to the thing I just created? Or dumped back at a list?                                           |
+| **After saving/updating**              | Is there confirmation? Can I see what changed?                                                              |
+| **After deleting**                     | Where do I end up? Does the list update? Is the deleted item gone?                                          |
+| **Navigating from a list to a detail** | Does the detail page have context about where I came from? Can I get back to the filtered list?             |
+| **Moving between sections**            | If I'm working on a client and switch to emails, does the email section know which client I was looking at? |
+| **Deep linking**                       | If someone sends me a link to a specific record, do I have enough context when I land there?                |
 
 ### Continuity Red Flags
 
@@ -114,13 +117,13 @@ Does the app's structure match how the user thinks about their work?
 
 ### Common Model Mismatches
 
-| App says | User thinks |
-|----------|------------|
-| "Create Record" | "Add a new client" |
-| "Entities" | "People" or "Companies" |
-| "Workflow" | "What I need to do today" |
-| "Submit" | "Save" or "Send" or "Done" — submit to where? |
-| "Dashboard" | "My overview" or "What needs attention" |
+| App says        | User thinks                                   |
+| --------------- | --------------------------------------------- |
+| "Create Record" | "Add a new client"                            |
+| "Entities"      | "People" or "Companies"                       |
+| "Workflow"      | "What I need to do today"                     |
+| "Submit"        | "Save" or "Send" or "Done" — submit to where? |
+| "Dashboard"     | "My overview" or "What needs attention"       |
 
 ## Productivity Assessment
 

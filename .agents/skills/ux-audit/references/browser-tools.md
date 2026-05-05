@@ -2,10 +2,10 @@
 
 ## Tool Selection
 
-| Tool | Use for | Auth | Setup |
-|------|---------|------|-------|
-| **Chrome MCP** | Authenticated apps with a human at the keyboard — uses real logged-in Chrome session | Full — uses your logged-in Chrome session | Claude Code extension in Chrome |
-| **Playwright MCP / `playwright-cli`** | Public / unauthenticated sites, OR authenticated apps via test-auth cookie injection (see below) | None / scripted | MCP plugin / npm package |
+| Tool                                  | Use for                                                                                          | Auth                                      | Setup                           |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------- | ------------------------------- |
+| **Chrome MCP**                        | Authenticated apps with a human at the keyboard — uses real logged-in Chrome session             | Full — uses your logged-in Chrome session | Claude Code extension in Chrome |
+| **Playwright MCP / `playwright-cli`** | Public / unauthenticated sites, OR authenticated apps via test-auth cookie injection (see below) | None / scripted                           | MCP plugin / npm package        |
 
 **Rule**: For authenticated apps, prefer Chrome MCP when a human is at the keyboard. For headless / autonomous runs (cron, CI, sub-agent, no human), use the test-auth cookie-injection path below. **Don't silently fall back to a fresh unauthed Playwright session for an authenticated app — the audit becomes worthless.**
 
@@ -34,12 +34,12 @@ Email is locked to `*@test.<anything>.local` so the endpoint can never accidenta
 
 **When to use which**:
 
-| Scenario | Use |
-|---|---|
-| Human is at the keyboard, Chrome already signed in | Chrome MCP |
-| Headless / cron / CI / sub-agent, project has `/api/test-auth/*` | Playwright + cookie injection |
-| Headless and project has no test-auth endpoint | Stop. Ask the user to add one (it's ~80 lines), or run on an authenticated dev server with the user signed in |
-| Public / unauth sites | Playwright MCP or playwright-cli |
+| Scenario                                                         | Use                                                                                                           |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Human is at the keyboard, Chrome already signed in               | Chrome MCP                                                                                                    |
+| Headless / cron / CI / sub-agent, project has `/api/test-auth/*` | Playwright + cookie injection                                                                                 |
+| Headless and project has no test-auth endpoint                   | Stop. Ask the user to add one (it's ~80 lines), or run on an authenticated dev server with the user signed in |
+| Public / unauth sites                                            | Playwright MCP or playwright-cli                                                                              |
 
 ## Screenshot sizing — Retina 2x trap
 
@@ -61,12 +61,12 @@ done
 
 Capture-time prevention (preferred):
 
-| Tool | Default DPR | Note |
-|---|---|---|
-| chrome-devtools-mcp `take_screenshot` | 2x | Resize after, OR use `fullPage: false` to bound height |
-| `mcp__claude-in-chrome__computer` action=screenshot | 2x | Follows OS DPR |
-| `mcp__claude-in-chrome__gif_creator` | 2x frames | Encoder downsamples but still heavy |
-| `playwright-cli` / Playwright MCP | 1x (CSS pixels) | **Prefer this when a reference screenshot is the goal** |
+| Tool                                                | Default DPR     | Note                                                    |
+| --------------------------------------------------- | --------------- | ------------------------------------------------------- |
+| chrome-devtools-mcp `take_screenshot`               | 2x              | Resize after, OR use `fullPage: false` to bound height  |
+| `mcp__claude-in-chrome__computer` action=screenshot | 2x              | Follows OS DPR                                          |
+| `mcp__claude-in-chrome__gif_creator`                | 2x frames       | Encoder downsamples but still heavy                     |
+| `playwright-cli` / Playwright MCP                   | 1x (CSS pixels) | **Prefer this when a reference screenshot is the goal** |
 
 The user-global `~/.claude/rules/screenshot-sizing.md` covers the full pattern. There's also a `PreToolUse` hook on `Read` that auto-resizes oversized images — it's a safety net, not a substitute for capture-time discipline.
 
@@ -84,33 +84,33 @@ This is the baseline (standard MacBook resolution). Responsive sweeps then test 
 
 ## Chrome MCP Commands
 
-| Action | Tool |
-|--------|------|
-| See current tabs | `mcp__claude-in-chrome__tabs_context_mcp` |
-| Open new tab | `mcp__claude-in-chrome__tabs_create_mcp` with URL |
-| Read page content | `mcp__claude-in-chrome__read_page` |
-| Get page text | `mcp__claude-in-chrome__get_page_text` |
-| Click element | `mcp__claude-in-chrome__computer` with click action |
-| Fill form field | `mcp__claude-in-chrome__form_input` |
-| Navigate | `mcp__claude-in-chrome__navigate` |
-| Take screenshot | `mcp__claude-in-chrome__computer` with screenshot action |
-| Run JavaScript | `mcp__claude-in-chrome__javascript_tool` |
-| Resize window | `mcp__claude-in-chrome__resize_window` |
-| Record GIF | `mcp__claude-in-chrome__gif_creator` |
+| Action            | Tool                                                     |
+| ----------------- | -------------------------------------------------------- |
+| See current tabs  | `mcp__claude-in-chrome__tabs_context_mcp`                |
+| Open new tab      | `mcp__claude-in-chrome__tabs_create_mcp` with URL        |
+| Read page content | `mcp__claude-in-chrome__read_page`                       |
+| Get page text     | `mcp__claude-in-chrome__get_page_text`                   |
+| Click element     | `mcp__claude-in-chrome__computer` with click action      |
+| Fill form field   | `mcp__claude-in-chrome__form_input`                      |
+| Navigate          | `mcp__claude-in-chrome__navigate`                        |
+| Take screenshot   | `mcp__claude-in-chrome__computer` with screenshot action |
+| Run JavaScript    | `mcp__claude-in-chrome__javascript_tool`                 |
+| Resize window     | `mcp__claude-in-chrome__resize_window`                   |
+| Record GIF        | `mcp__claude-in-chrome__gif_creator`                     |
 
 **Important**: Call `tabs_context_mcp` first to see what tabs exist. Avoid triggering JS alerts/confirms — they block the extension.
 
 ## Playwright MCP Commands
 
-| Action | Tool |
-|--------|------|
-| Navigate | `mcp__plugin_playwright_playwright__browser_navigate` |
-| Take screenshot | `mcp__plugin_playwright_playwright__browser_take_screenshot` |
-| Click | `mcp__plugin_playwright_playwright__browser_click` |
-| Fill form | `mcp__plugin_playwright_playwright__browser_fill_form` |
-| Get page snapshot | `mcp__plugin_playwright_playwright__browser_snapshot` |
-| Resize | `mcp__plugin_playwright_playwright__browser_resize` |
-| Run code | `mcp__plugin_playwright_playwright__browser_run_code` |
+| Action            | Tool                                                         |
+| ----------------- | ------------------------------------------------------------ |
+| Navigate          | `mcp__plugin_playwright_playwright__browser_navigate`        |
+| Take screenshot   | `mcp__plugin_playwright_playwright__browser_take_screenshot` |
+| Click             | `mcp__plugin_playwright_playwright__browser_click`           |
+| Fill form         | `mcp__plugin_playwright_playwright__browser_fill_form`       |
+| Get page snapshot | `mcp__plugin_playwright_playwright__browser_snapshot`        |
+| Resize            | `mcp__plugin_playwright_playwright__browser_resize`          |
+| Run code          | `mcp__plugin_playwright_playwright__browser_run_code`        |
 
 ## playwright-cli Commands
 

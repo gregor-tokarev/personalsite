@@ -1,6 +1,7 @@
 # Component Animation Patterns
 
 ## Contents
+
 - [Buttons](#buttons)
 - [Popovers and dropdowns](#popovers-and-dropdowns)
 - [Tooltips](#tooltips)
@@ -45,10 +46,18 @@ Scale in from the trigger point, not from center. The default `transform-origin:
 }
 
 /* Data attribute fallback */
-.popover[data-side="top"]    { transform-origin: bottom center; }
-.popover[data-side="bottom"] { transform-origin: top center; }
-.popover[data-side="left"]   { transform-origin: center right; }
-.popover[data-side="right"]  { transform-origin: center left; }
+.popover[data-side="top"] {
+  transform-origin: bottom center;
+}
+.popover[data-side="bottom"] {
+  transform-origin: top center;
+}
+.popover[data-side="left"] {
+  transform-origin: center right;
+}
+.popover[data-side="right"] {
+  transform-origin: center left;
+}
 ```
 
 Start at `scale(0.88)`, never `scale(0)`. Nothing in the real world appears from nothing.
@@ -57,8 +66,9 @@ Start at `scale(0.88)`, never `scale(0)`. Nothing in the real world appears from
 .menu {
   transform: scale(0.88);
   opacity: 0;
-  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
-              opacity 200ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 200ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .menu[data-open="true"] {
   transform: scale(1);
@@ -72,7 +82,9 @@ Delay before first appearance (300–500ms) to prevent accidental activation. On
 
 ```css
 .tooltip {
-  transition: transform 125ms ease-out, opacity 125ms ease-out;
+  transition:
+    transform 125ms ease-out,
+    opacity 125ms ease-out;
   transform-origin: var(--transform-origin);
 }
 .tooltip[data-starting-style],
@@ -118,8 +130,9 @@ Use `@starting-style` for entry animations without JavaScript:
 .modal {
   opacity: 1;
   transform: scale(1);
-  transition: opacity 250ms cubic-bezier(0.22, 1, 0.36, 1),
-              transform 250ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    opacity 250ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 250ms cubic-bezier(0.22, 1, 0.36, 1);
 
   @starting-style {
     opacity: 0;
@@ -138,8 +151,9 @@ Enter and exit from the same direction for spatial consistency (makes swipe-to-d
 .toast {
   transform: translate3d(0, 6px, 0);
   opacity: 0;
-  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
-              opacity 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .toast[data-open="true"] {
   transform: translate3d(0, 0, 0);
@@ -157,16 +171,23 @@ Keep stagger delays short (30–50ms per item). Total stagger should stay under 
 .item {
   opacity: 0;
   transform: translateY(8px);
-  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
-              opacity 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .list[data-open="true"] .item {
   opacity: 1;
   transform: translateY(0);
 }
-.list[data-open="true"] .item:nth-child(2) { transition-delay: 50ms; }
-.list[data-open="true"] .item:nth-child(3) { transition-delay: 100ms; }
-.list[data-open="true"] .item:nth-child(4) { transition-delay: 150ms; }
+.list[data-open="true"] .item:nth-child(2) {
+  transition-delay: 50ms;
+}
+.list[data-open="true"] .item:nth-child(3) {
+  transition-delay: 100ms;
+}
+.list[data-open="true"] .item:nth-child(4) {
+  transition-delay: 150ms;
+}
 ```
 
 ```tsx
@@ -184,7 +205,9 @@ Gate hover animations behind a media query to avoid false positives on touch dev
 ```css
 @media (hover: hover) and (pointer: fine) {
   .link {
-    transition: color 200ms ease, opacity 200ms ease;
+    transition:
+      color 200ms ease,
+      opacity 200ms ease;
   }
   .link:hover {
     opacity: 0.8;

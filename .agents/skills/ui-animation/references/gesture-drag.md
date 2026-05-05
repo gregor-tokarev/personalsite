@@ -3,6 +3,7 @@
 Patterns for drag, swipe, and gesture interactions where the user directly manipulates elements.
 
 ## Contents
+
 - [Momentum-based dismissal](#momentum-based-dismissal)
 - [Boundary damping](#boundary-damping)
 - [Pointer capture](#pointer-capture)

@@ -14,11 +14,11 @@ Springs feel more natural than duration-based animations because they simulate r
 
 ## Spring parameters
 
-| Parameter | What it controls | Typical range |
-|---|---|---|
-| `stiffness` | Speed of movement (higher = faster) | 100–500 |
-| `damping` | Resistance (lower = more bounce) | 15–40 |
-| `mass` | Weight feel (higher = slower, heavier) | 0.5–2 |
+| Parameter   | What it controls                       | Typical range |
+| ----------- | -------------------------------------- | ------------- |
+| `stiffness` | Speed of movement (higher = faster)    | 100–500       |
+| `damping`   | Resistance (lower = more bounce)       | 15–40         |
+| `mass`      | Weight feel (higher = slower, heavier) | 0.5–2         |
 
 ## Configuration presets
 
@@ -30,12 +30,12 @@ Springs feel more natural than duration-based animations because they simulate r
 
 **Traditional physics (more control):**
 
-| Preset | stiffness | damping | Use case |
-|---|---|---|---|
-| Snappy (Apple default) | 500 | 40 | General UI, no bounce |
-| Bouncy | 300 | 20 | Playful elements, notifications |
-| Gentle | 200 | 30 | Page transitions, large elements |
-| Stiff | 700 | 50 | Small precise movements |
+| Preset                 | stiffness | damping | Use case                         |
+| ---------------------- | --------- | ------- | -------------------------------- |
+| Snappy (Apple default) | 500       | 40      | General UI, no bounce            |
+| Bouncy                 | 300       | 20      | Playful elements, notifications  |
+| Gentle                 | 200       | 30      | Page transitions, large elements |
+| Stiff                  | 700       | 50      | Small precise movements          |
 
 Keep bounce subtle (0.1–0.3) when used. Avoid bounce in most UI contexts.
 

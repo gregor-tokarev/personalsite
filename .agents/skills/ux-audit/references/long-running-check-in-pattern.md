@@ -11,14 +11,14 @@ For audits and other autonomous work expected to run >30 minutes, set up a compa
 
 ## When it's worth it
 
-| Task duration | Check-in loop? |
-|---------------|----------------|
-| < 15 min | No — finishes before the first check-in fires |
-| 15–30 min | Optional — probably not worth the setup overhead |
-| 30–60 min | Recommended — catches drift, preserves partial progress |
-| 1+ hours | Strongly recommended — without it, context fragility is real |
+| Task duration | Check-in loop?                                               |
+| ------------- | ------------------------------------------------------------ |
+| < 15 min      | No — finishes before the first check-in fires                |
+| 15–30 min     | Optional — probably not worth the setup overhead             |
+| 30–60 min     | Recommended — catches drift, preserves partial progress      |
+| 1+ hours      | Strongly recommended — without it, context fragility is real |
 
-Not a replacement for the skill's own internal loop-to-exhaustion. A *complement* that adds journalling and supervision on top.
+Not a replacement for the skill's own internal loop-to-exhaustion. A _complement_ that adds journalling and supervision on top.
 
 ## Setup
 
@@ -56,4 +56,4 @@ Same mechanism (scheduled prompt), same benefit (keep long-running work grounded
 
 ## Gotcha
 
-Don't mistake this for a work-doing loop. If the `/loop` fires and the main session isn't already running the audit, the check-in prompt will land in an idle session and probably start a new audit — wrong shape. This pattern only works when the main session is actively working when the check-in fires. Set the loop up *after* starting the audit, not before.
+Don't mistake this for a work-doing loop. If the `/loop` fires and the main session isn't already running the audit, the check-in prompt will land in an idle session and probably start a new audit — wrong shape. This pattern only works when the main session is actively working when the check-in fires. Set the loop up _after_ starting the audit, not before.

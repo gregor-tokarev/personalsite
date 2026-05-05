@@ -25,15 +25,15 @@ If no file is found, default behaviour applies: every console error / warning is
 ```yaml
 # .jez/audit-config.yml
 console_allow:
-  - "[Sentry] DSN not configured"      # dev-only info log
-  - "Lighthouse Tools is loaded"       # browser extension chatter
-  - "/^Download the React DevTools/"   # leading + trailing slash = regex
-  - "[HMR] Waiting for update signal"  # vite dev-mode noise
+  - "[Sentry] DSN not configured" # dev-only info log
+  - "Lighthouse Tools is loaded" # browser extension chatter
+  - "/^Download the React DevTools/" # leading + trailing slash = regex
+  - "[HMR] Waiting for update signal" # vite dev-mode noise
 
 network_allow:
-  - "GET https://o*.ingest.sentry.io"  # Sentry probe — 401 expected when DSN missing
-  - "GET /api/auth/get-session 401"    # unauth-on-load probe pattern
-  - "/^GET .*\\.hot-update\\.json/"    # vite HMR check requests
+  - "GET https://o*.ingest.sentry.io" # Sentry probe — 401 expected when DSN missing
+  - "GET /api/auth/get-session 401" # unauth-on-load probe pattern
+  - "/^GET .*\\.hot-update\\.json/" # vite HMR check requests
 
 # Optional — affordable noise floors per surface
 surface_overrides:
@@ -49,23 +49,18 @@ JSON equivalent (same keys, same semantics):
 
 ```json
 {
-  "console_allow": [
-    "[Sentry] DSN not configured",
-    "/^Download the React DevTools/"
-  ],
-  "network_allow": [
-    "GET /api/auth/get-session 401"
-  ]
+  "console_allow": ["[Sentry] DSN not configured", "/^Download the React DevTools/"],
+  "network_allow": ["GET /api/auth/get-session 401"]
 }
 ```
 
 ## Allowlist semantics
 
-| Pattern syntax | Match type | Example |
-|---|---|---|
-| `"plain string"` | Substring match against the message / URL | `"VoiceClient: protocol mismatch"` matches anywhere in the message |
-| `"/regex/"` | Full regex match (delimiter slashes required) | `"/^\\[Sentry\\]/"` matches messages starting with `[Sentry]` |
-| `"GET /path 403"` for network | Method + URL substring + status | Matches a `GET` to any URL containing `/path` returning `403` |
+| Pattern syntax                | Match type                                    | Example                                                            |
+| ----------------------------- | --------------------------------------------- | ------------------------------------------------------------------ |
+| `"plain string"`              | Substring match against the message / URL     | `"VoiceClient: protocol mismatch"` matches anywhere in the message |
+| `"/regex/"`                   | Full regex match (delimiter slashes required) | `"/^\\[Sentry\\]/"` matches messages starting with `[Sentry]`      |
+| `"GET /path 403"` for network | Method + URL substring + status               | Matches a `GET` to any URL containing `/path` returning `403`      |
 
 Allowlisted entries are still recorded in the Interaction Manifest (transparency) but suppressed from the findings count.
 
@@ -82,7 +77,7 @@ Hard Gates:
   Layout collapse:       0   GREEN ✓
 ```
 
-If the reader thinks an allowlisted entry shouldn't be allowed, they can review `.jez/audit-config.yml` and contest the entry — every entry should have a one-line comment explaining *why* it's allowed.
+If the reader thinks an allowlisted entry shouldn't be allowed, they can review `.jez/audit-config.yml` and contest the entry — every entry should have a one-line comment explaining _why_ it's allowed.
 
 ## When to add an allowlist entry
 
@@ -99,7 +94,7 @@ NOT legitimate reasons:
 - "Tests are flaky" → fix the test or remove the warning, don't allowlist
 - "We don't know what's causing it" → don't allowlist unknown noise; investigate
 
-When you find yourself wanting to allowlist something for the first time on a project, add it to the file with a one-line comment explaining *why* it's allowed. Future audits should be able to re-justify each entry.
+When you find yourself wanting to allowlist something for the first time on a project, add it to the file with a one-line comment explaining _why_ it's allowed. Future audits should be able to re-justify each entry.
 
 ## Audit-the-allowlist (quarterly)
 
@@ -116,7 +111,7 @@ Stale allowlists hide real bugs. The discipline mirrors how teams manage `.eslin
 
 Some apps have surfaces with materially different noise profiles. Examples:
 
-- An admin dashboard that *must* stay perfectly clean
+- An admin dashboard that _must_ stay perfectly clean
 - A dev playground / sandbox surface where warnings are expected
 - A demo / showcase area that runs a noisy third-party widget
 

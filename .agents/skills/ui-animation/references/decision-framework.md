@@ -6,12 +6,12 @@ Before writing any animation code, answer these four questions in order.
 
 **How often will users see this animation?**
 
-| Frequency | Examples | Decision |
-|---|---|---|
-| 100+ times/day | Keyboard shortcuts, command palette toggle | No animation. Ever. |
-| Tens of times/day | Hover effects, list navigation | Remove or drastically reduce |
-| Occasional | Modals, drawers, toasts | Standard animation |
-| Rare / first-time | Onboarding, feedback forms, celebrations | Can add delight |
+| Frequency         | Examples                                   | Decision                     |
+| ----------------- | ------------------------------------------ | ---------------------------- |
+| 100+ times/day    | Keyboard shortcuts, command palette toggle | No animation. Ever.          |
+| Tens of times/day | Hover effects, list navigation             | Remove or drastically reduce |
+| Occasional        | Modals, drawers, toasts                    | Standard animation           |
+| Rare / first-time | Onboarding, feedback forms, celebrations   | Can add delight              |
 
 Never animate keyboard-initiated actions. They repeat hundreds of times daily — animation makes them feel slow and disconnected.
 
@@ -19,12 +19,12 @@ Never animate keyboard-initiated actions. They repeat hundreds of times daily �
 
 Answer "why does this animate?" before writing code.
 
-| Purpose | Description | Example |
-|---|---|---|
-| **Feedback** | Confirms user action was received | Button scale on press, toggle state |
-| **Orientation** | Shows spatial relationship | Drawer slides from edge, menu scales from trigger |
-| **Continuity** | Preserves context across state changes | Page transitions, layout shifts |
-| **Delight** | Adds personality (use sparingly) | Stagger reveals, spring overshoot |
+| Purpose         | Description                            | Example                                           |
+| --------------- | -------------------------------------- | ------------------------------------------------- |
+| **Feedback**    | Confirms user action was received      | Button scale on press, toggle state               |
+| **Orientation** | Shows spatial relationship             | Drawer slides from edge, menu scales from trigger |
+| **Continuity**  | Preserves context across state changes | Page transitions, layout shifts                   |
+| **Delight**     | Adds personality (use sparingly)       | Stagger reveals, spring overshoot                 |
 
 If the purpose is just "it looks cool" and the user will see it often, don't animate.
 
@@ -46,13 +46,13 @@ Use custom easing curves. Avoid `ease-in` for UI.
 
 ## 4. How fast should it be?
 
-| Element | Duration |
-|---|---|
-| Button press feedback | 100–160ms |
-| Tooltips, small popovers | 125–200ms |
-| Dropdowns, selects | 150–250ms |
-| Modals, drawers | 200–350ms |
-| Page transitions | 250–400ms |
+| Element                  | Duration     |
+| ------------------------ | ------------ |
+| Button press feedback    | 100–160ms    |
+| Tooltips, small popovers | 125–200ms    |
+| Dropdowns, selects       | 150–250ms    |
+| Modals, drawers          | 200–350ms    |
+| Page transitions         | 250–400ms    |
 | Illustrative / marketing | Up to 1000ms |
 
 **Rule: keep routine UI animation under 300ms.**

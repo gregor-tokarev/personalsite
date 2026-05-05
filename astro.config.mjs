@@ -1,14 +1,14 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
-import tailwindcss from '@tailwindcss/vite';
+import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://tokarev.work',
-  output: 'static',
-  trailingSlash: 'always',
+  site: "https://tokarev.work",
+  output: "static",
+  trailingSlash: "always",
   vite: {
-    plugins: [tailwindcss()]
-  }
+    plugins: [tailwindcss()],
+  },
 });

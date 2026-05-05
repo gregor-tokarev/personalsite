@@ -20,42 +20,42 @@ Surfaces audited: N / M routes
 Interaction Manifest: [complete / incomplete: X of Y required entries]
 
 Hard Gates:
-  Console errors:        [count]   [GREEN ✓ / RED ✗]   ([N] allowlisted)
-  Console warnings:      [count]   [GREEN ✓ / RED ✗]   ([N] allowlisted)
-  Network 5xx:           [count]   [GREEN ✓ / RED ✗]
-  Network 403/404 auth:  [count]   [GREEN ✓ / RED ✗]   ([N] allowlisted)
-  Layout collapse:       [count]   [GREEN ✓ / RED ✗]
-  axe-core Critical:     [count]   [GREEN ✓ / RED ✗]   ([N] allowlisted)
-  axe-core Serious:      [count]   [GREEN ✓ / RED ✗]   ([N] allowlisted)
+Console errors: [count] [GREEN ✓ / RED ✗] ([N] allowlisted)
+Console warnings: [count] [GREEN ✓ / RED ✗] ([N] allowlisted)
+Network 5xx: [count] [GREEN ✓ / RED ✗]
+Network 403/404 auth: [count] [GREEN ✓ / RED ✗] ([N] allowlisted)
+Layout collapse: [count] [GREEN ✓ / RED ✗]
+axe-core Critical: [count] [GREEN ✓ / RED ✗] ([N] allowlisted)
+axe-core Serious: [count] [GREEN ✓ / RED ✗] ([N] allowlisted)
 
 Performance (pragmatic, sampled on /[representative-route]):
-  LCP:   [N]s    [GREEN ✓ / RED ✗]   (threshold 4.0s)
-  CLS:   [N]     [GREEN ✓ / RED ✗]   (threshold 0.25)
-  INP:   [N]ms   [GREEN ✓ / RED ✗]   (threshold 500ms)
-  TTI:   [N]s    [GREEN ✓ / RED ✗]   (threshold 5.0s)
+LCP: [N]s [GREEN ✓ / RED ✗] (threshold 4.0s)
+CLS: [N] [GREEN ✓ / RED ✗] (threshold 0.25)
+INP: [N]ms [GREEN ✓ / RED ✗] (threshold 500ms)
+TTI: [N]s [GREEN ✓ / RED ✗] (threshold 5.0s)
 
 Findings:
-  Critical: [count]
-  High:     [count]
-  Medium:   [count]
-  Low:      [count]
+Critical: [count]
+High: [count]
+Medium: [count]
+Low: [count]
 
 Time per phase (audit-the-audit meta-check):
-  Phase 1 (pre-flight):   [N]m
-  Phase 2 (discovery):    [N]m
-  Phase 3 (walkthrough):  [N]m   ← exhaustive must be ≥ 5m
-  Phase 4 (polish):       [N]m
-  Phase 5 (stress):       [N]m
-  Total:                  [N]m
+Phase 1 (pre-flight): [N]m
+Phase 2 (discovery): [N]m
+Phase 3 (walkthrough): [N]m ← exhaustive must be ≥ 5m
+Phase 4 (polish): [N]m
+Phase 5 (stress): [N]m
+Total: [N]m
 
 Manifest plausibility:
-  Manifest entries:       [N]
-  Time span first→last:   [N]m
-  Median gap between:     [N]s   ← if < 0.5s, audit didn't actually
-                                   interact; verdict → Incomplete
-  Screenshots captured:   [N]    ← ≥ 2 per audited route
-  Console reads:          [N]    ← ≥ 1 per audited route
-  Network probes:         [N]    ← ≥ 1 per audited route
+Manifest entries: [N]
+Time span first→last: [N]m
+Median gap between: [N]s ← if < 0.5s, audit didn't actually
+interact; verdict → Incomplete
+Screenshots captured: [N] ← ≥ 2 per audited route
+Console reads: [N] ← ≥ 1 per audited route
+Network probes: [N] ← ≥ 1 per audited route
 ═══════════════════════════════════════════════════════════
 
 **Date**: YYYY-MM-DD
@@ -71,18 +71,19 @@ Manifest plausibility:
 
 ## Coverage
 
-| Dimension | Tested | Total | % | Notes |
-|-----------|--------|-------|---|-------|
-| Routes | 14 | 14 | 100% | |
-| Interactive elements | 187 | 203 | 92% | 16 untested on /app/billing |
-| Threads walked | 4 | 4 | 100% | |
-| Scenarios completed (of 9) | 8 | 9 | 89% | Destructive Confidence skipped — no test account |
-| Multi-pane stress combos | 24 | 24 | 100% | 6 viewports × 4 pane combos |
-| Component states sampled (of 6) | 4 | 6 | 67% | Partial loaded + Disabled not reproducible on all components |
-| Stress recipes | 13 | 15 | 87% | RTL + Print skipped (don't apply) |
-| Live Interaction Smoke controls | 47 | 47 | 100% | |
+| Dimension                       | Tested | Total | %    | Notes                                                        |
+| ------------------------------- | ------ | ----- | ---- | ------------------------------------------------------------ |
+| Routes                          | 14     | 14    | 100% |                                                              |
+| Interactive elements            | 187    | 203   | 92%  | 16 untested on /app/billing                                  |
+| Threads walked                  | 4      | 4     | 100% |                                                              |
+| Scenarios completed (of 9)      | 8      | 9     | 89%  | Destructive Confidence skipped — no test account             |
+| Multi-pane stress combos        | 24     | 24    | 100% | 6 viewports × 4 pane combos                                  |
+| Component states sampled (of 6) | 4      | 6     | 67%  | Partial loaded + Disabled not reproducible on all components |
+| Stress recipes                  | 13     | 15    | 87%  | RTL + Print skipped (don't apply)                            |
+| Live Interaction Smoke controls | 47     | 47    | 100% |                                                              |
 
 **Elements not tested** (and why):
+
 - /app/billing — 16 elements — requires paid plan, not available on test account
 - Pagination on /app/clients — insufficient test data
 
@@ -101,6 +102,7 @@ Each finding follows this format. **A finding without reproduction + evidence + 
 - **Persona**: SME owner
 
 **Reproduce**:
+
 1. Sign in
 2. Open any existing space
 3. Open the members panel (👥 icon top-right, default on md+)
@@ -111,6 +113,7 @@ Each finding follows this format. **A finding without reproduction + evidence + 
 **Expected**: text wraps at word boundaries within the available column width (≥ 260px).
 
 **Evidence**:
+
 - `.jez/audit-evidence/2026-04-29/spaces-1280-3panes.png`
 - `.jez/audit-evidence/2026-04-29/spaces-1280-3panes-devtools.png`
 - Console: 0 errors at point of capture
@@ -128,10 +131,11 @@ Each finding follows this format. **A finding without reproduction + evidence + 
 
 - **Layer**: Feedback
 - **Severity**: High (auto via console budget Hard Gate)
-- **Surface**: any /dashboard/chat/* route
+- **Surface**: any /dashboard/chat/\* route
 - **Persona**: any
 
 **Reproduce**:
+
 1. Sign in
 2. Navigate to /dashboard/chat
 3. Open browser console
@@ -166,6 +170,7 @@ Each finding follows this format. **A finding without reproduction + evidence + 
 ### Low (polish)
 
 #### [L-1] [Short title]
+
 [Same format as above, abbreviated for polish-class findings]
 
 ## Thread Results
@@ -187,13 +192,14 @@ Each finding follows this format. **A finding without reproduction + evidence + 
 [repeat]
 
 ## Interaction Manifest summary
-
 ```
+
 INTERACTION MANIFEST — Coverage
-  Total entries logged: 84
-  Required minimum: 84 (14 pages × 6 entries)
-  Pages with complete manifest: 14 / 14
-  Pages with incomplete manifest: 0
+Total entries logged: 84
+Required minimum: 84 (14 pages × 6 entries)
+Pages with complete manifest: 14 / 14
+Pages with incomplete manifest: 0
+
 ```
 
 Detailed manifest per page is at `.jez/audit-evidence/2026-04-29/manifests/`. Verdict cannot be Pass without complete coverage.
@@ -435,4 +441,4 @@ See [playwright-killer-flows.md](playwright-killer-flows.md) for starter test co
 - **Medium** — Friction; user succeeds with extra effort. OR weak hover delta. OR inconsistent border radii / icon families. OR pattern-level token violations.
 - **Low** — Polish. 1-2px alignment. Single-instance off-scale spacing. Letter-spacing on uppercase missing.
 
-A console error or layout collapse is automatically High *minimum*. The category "Medium console warning" does not exist in this skill.
+A console error or layout collapse is automatically High _minimum_. The category "Medium console warning" does not exist in this skill.

@@ -20,16 +20,16 @@ await page.evaluate(async () => {
   // Inject axe-core if not present
   if (!window.axe) {
     await new Promise((resolve, reject) => {
-      const s = document.createElement('script')
-      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/axe-core/4.10.0/axe.min.js'
-      s.onload = resolve
-      s.onerror = reject
-      document.head.appendChild(s)
-    })
+      const s = document.createElement("script");
+      s.src = "https://cdnjs.cloudflare.com/ajax/libs/axe-core/4.10.0/axe.min.js";
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
   }
-  const results = await window.axe.run()
+  const results = await window.axe.run();
   return {
-    violations: results.violations.map(v => ({
+    violations: results.violations.map((v) => ({
       id: v.id,
       impact: v.impact,
       description: v.description,
@@ -40,29 +40,29 @@ await page.evaluate(async () => {
     })),
     incomplete: results.incomplete.length,
     passes: results.passes.length,
-  }
-})
+  };
+});
 ```
 
 ## Severity mapping
 
 axe reports `impact` per violation. Map to audit severity:
 
-| axe `impact` | Audit severity | Hard-gate? |
-|---|---|---|
-| `critical` | Critical | YES — audit auto-fails |
-| `serious` | High | YES — audit auto-fails |
-| `moderate` | Medium | No — finding, not gate |
-| `minor` | Low | No — finding, not gate |
+| axe `impact` | Audit severity | Hard-gate?             |
+| ------------ | -------------- | ---------------------- |
+| `critical`   | Critical       | YES — audit auto-fails |
+| `serious`    | High           | YES — audit auto-fails |
+| `moderate`   | Medium         | No — finding, not gate |
+| `minor`      | Low            | No — finding, not gate |
 
 ## Hard-gate threshold
 
 Add to the SKILL.md hard gates table:
 
-| Gate | Threshold | Severity if violated |
-|---|---|---|
-| axe-core Critical violations | > 0 | Critical |
-| axe-core Serious violations | > 0 | High |
+| Gate                         | Threshold | Severity if violated |
+| ---------------------------- | --------- | -------------------- |
+| axe-core Critical violations | > 0       | Critical             |
+| axe-core Serious violations  | > 0       | High                 |
 
 A page with > 0 axe Critical or > 0 axe Serious cannot pass the audit. axe Moderate / Minor accumulate as Medium / Low findings respectively.
 
@@ -73,10 +73,10 @@ Some axe rules fire on intentional design choices that aren't real bugs (e.g. `l
 ```yaml
 axe:
   ignore_rules:
-    - landmark-one-main   # iframe-style embed pages
-    - region              # legacy wrapper, refactor scheduled 2026-Q3
+    - landmark-one-main # iframe-style embed pages
+    - region # legacy wrapper, refactor scheduled 2026-Q3
   ignore_pages:
-    - /dashboard/components  # builder-mode, intentional
+    - /dashboard/components # builder-mode, intentional
     - /dashboard/style-guide # builder-mode, intentional
 ```
 

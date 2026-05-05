@@ -3,6 +3,7 @@
 `clip-path` is one of the most powerful animation tools in CSS. It is hardware-accelerated and creates effects impossible with `opacity` and `transform` alone.
 
 ## Contents
+
 - [The inset shape](#the-inset-shape)
 - [Tab colour transitions](#tab-colour-transitions)
 - [Hold-to-delete](#hold-to-delete)
@@ -15,10 +16,14 @@
 
 ```css
 /* Fully hidden from right */
-.hidden { clip-path: inset(0 100% 0 0); }
+.hidden {
+  clip-path: inset(0 100% 0 0);
+}
 
 /* Fully visible */
-.visible { clip-path: inset(0 0 0 0); }
+.visible {
+  clip-path: inset(0 0 0 0);
+}
 ```
 
 Animate between states with a CSS transition:
@@ -80,8 +85,10 @@ export function RevealImage({ src, alt }: { src: string; alt: string }) {
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1, rootMargin: "-100px" }
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
+      { threshold: 0.1, rootMargin: "-100px" },
     );
     io.observe(el);
     return () => io.disconnect();

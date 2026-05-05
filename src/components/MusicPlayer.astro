@@ -36,31 +36,68 @@ const {
             aria-expanded="false"
             aria-controls="music-player-card"
         >
-            <Image src={cover} alt="" width={52} height={52} format="webp" class="w-[26px] h-[26px] rounded-full object-cover shrink-0" />
+            <Image
+                src={cover}
+                alt=""
+                width={52}
+                height={52}
+                format="webp"
+                class="w-[26px] h-[26px] rounded-full object-cover shrink-0"
+            />
         </button>
 
-        <span aria-hidden="true" class="bars absolute right-4 top-[18px] -translate-y-1/2 inline-flex items-end gap-[1px] h-3.5 z-10 pointer-events-none">
-            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
-            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
-            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
-            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
-            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
-            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
-            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
-            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"></span>
+        <span
+            aria-hidden="true"
+            class="bars absolute right-4 top-[18px] -translate-y-1/2 inline-flex items-end gap-[1px] h-3.5 z-10 pointer-events-none"
+        >
+            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"
+            ></span>
+            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"
+            ></span>
+            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"
+            ></span>
+            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"
+            ></span>
+            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"
+            ></span>
+            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"
+            ></span>
+            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"
+            ></span>
+            <span class="block w-[1px] bg-white/80 rounded-[1px] h-[10%]"
+            ></span>
         </span>
 
         <div id="music-player-card" class="card-content absolute inset-0 p-3">
             <div class="flex items-center gap-2.5 mb-2.5 pr-6">
-                <Image src={cover} alt="" width={88} height={88} format="webp" class="w-11 h-11 rounded-lg object-cover shrink-0" />
+                <Image
+                    src={cover}
+                    alt=""
+                    width={88}
+                    height={88}
+                    format="webp"
+                    class="w-11 h-11 rounded-lg object-cover shrink-0"
+                />
                 <div class="min-w-0">
-                    <div translate="no" class="text-[13px] font-semibold whitespace-nowrap overflow-hidden text-ellipsis">{title}</div>
-                    <div translate="no" class="text-[11px] text-neutral-400 whitespace-nowrap overflow-hidden text-ellipsis">{artist}</div>
+                    <div
+                        translate="no"
+                        class="text-[13px] font-semibold whitespace-nowrap overflow-hidden text-ellipsis"
+                    >
+                        {title}
+                    </div>
+                    <div
+                        translate="no"
+                        class="text-[11px] text-neutral-400 whitespace-nowrap overflow-hidden text-ellipsis"
+                    >
+                        {artist}
+                    </div>
                 </div>
             </div>
 
             <div class="mb-2.5">
-                <div class="flex justify-between text-[10px] text-neutral-400 mb-1 tabular-nums">
+                <div
+                    class="flex justify-between text-[10px] text-neutral-400 mb-1 tabular-nums"
+                >
                     <span class="time-current">0:00</span>
                     <span class="time-total">0:00</span>
                 </div>
@@ -74,7 +111,10 @@ const {
                     aria-valuenow="0"
                     aria-valuetext="0 seconds"
                 >
-                    <div class="progress-fill h-full w-0 bg-white rounded-full transition-[width] duration-100 ease-linear"></div>
+                    <div
+                        class="progress-fill h-full w-0 bg-white rounded-full transition-[width] duration-100 ease-linear"
+                    >
+                    </div>
                 </div>
             </div>
 
@@ -86,7 +126,29 @@ const {
                     data-hotkey="J"
                     class="ctrl prev inline-flex items-center justify-center bg-transparent border-0 text-white cursor-pointer p-1.5 rounded-lg transition-[background-color,transform] duration-150 hover:bg-white/10"
                 >
-                    <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12a8.5 8.5 0 1 0 2.5-6"/><polyline points="3 3 3 7.5 7.5 7.5"/><text x="12" y="15.6" text-anchor="middle" font-size="7" font-weight="700" fill="currentColor" stroke="none" font-family="ui-sans-serif, system-ui, sans-serif">15</text></svg>
+                    <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        width="20"
+                        height="20"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        ><path d="M3.5 12a8.5 8.5 0 1 0 2.5-6"></path><polyline
+                            points="3 3 3 7.5 7.5 7.5"></polyline><text
+                            x="12"
+                            y="15.6"
+                            text-anchor="middle"
+                            font-size="7"
+                            font-weight="700"
+                            fill="currentColor"
+                            stroke="none"
+                            font-family="ui-sans-serif, system-ui, sans-serif"
+                            >15</text
+                        ></svg
+                    >
                 </button>
                 <button
                     type="button"
@@ -95,8 +157,36 @@ const {
                     data-hotkey="K"
                     class="ctrl play inline-flex items-center justify-center border-0 cursor-pointer transition-[background-color] duration-150 bg-white text-[#141022] w-[38px] h-[38px] rounded-full hover:bg-neutral-100"
                 >
-                    <svg aria-hidden="true" class="play-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M8 6.2v11.6a1.6 1.6 0 0 0 2.45 1.35l9-5.8a1.6 1.6 0 0 0 0-2.7l-9-5.8A1.6 1.6 0 0 0 8 6.2z"/></svg>
-                    <svg aria-hidden="true" class="pause-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><rect x="5.5" y="5" width="5" height="14" rx="2.5"/><rect x="13.5" y="5" width="5" height="14" rx="2.5"/></svg>
+                    <svg
+                        aria-hidden="true"
+                        class="play-icon"
+                        viewBox="0 0 24 24"
+                        width="22"
+                        height="22"
+                        fill="currentColor"
+                        stroke="currentColor"
+                        stroke-width="2.4"
+                        stroke-linejoin="round"
+                        stroke-linecap="round"
+                        ><path
+                            d="M8 6.2v11.6a1.6 1.6 0 0 0 2.45 1.35l9-5.8a1.6 1.6 0 0 0 0-2.7l-9-5.8A1.6 1.6 0 0 0 8 6.2z"
+                        ></path></svg
+                    >
+                    <svg
+                        aria-hidden="true"
+                        class="pause-icon"
+                        viewBox="0 0 24 24"
+                        width="22"
+                        height="22"
+                        fill="currentColor"
+                        ><rect x="5.5" y="5" width="5" height="14" rx="2.5"
+                        ></rect><rect
+                            x="13.5"
+                            y="5"
+                            width="5"
+                            height="14"
+                            rx="2.5"></rect></svg
+                    >
                 </button>
                 <button
                     type="button"
@@ -105,7 +195,29 @@ const {
                     data-hotkey="L"
                     class="ctrl next inline-flex items-center justify-center bg-transparent border-0 text-white cursor-pointer p-1.5 rounded-lg transition-[background-color,transform] duration-150 hover:bg-white/10"
                 >
-                    <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 1 1-2.5-6"/><polyline points="21 3 21 7.5 16.5 7.5"/><text x="12" y="15.6" text-anchor="middle" font-size="7" font-weight="700" fill="currentColor" stroke="none" font-family="ui-sans-serif, system-ui, sans-serif">15</text></svg>
+                    <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        width="20"
+                        height="20"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        ><path d="M20.5 12a8.5 8.5 0 1 1-2.5-6"></path><polyline
+                            points="21 3 21 7.5 16.5 7.5"></polyline><text
+                            x="12"
+                            y="15.6"
+                            text-anchor="middle"
+                            font-size="7"
+                            font-weight="700"
+                            fill="currentColor"
+                            stroke="none"
+                            font-family="ui-sans-serif, system-ui, sans-serif"
+                            >15</text
+                        ></svg
+                    >
                 </button>
             </div>
         </div>
@@ -148,7 +260,9 @@ const {
         width: 170px;
         height: 36px;
         border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.15);
+        box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.25),
+            0 2px 6px rgba(0, 0, 0, 0.15);
         will-change: width, height;
         transition:
             width var(--dur-close) var(--ease-spring-close-w),
@@ -159,7 +273,9 @@ const {
     .music-player[data-expanded] .shell {
         width: 280px;
         height: 156px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), 0 4px 12px rgba(0, 0, 0, 0.2);
+        box-shadow:
+            0 20px 60px rgba(0, 0, 0, 0.35),
+            0 4px 12px rgba(0, 0, 0, 0.2);
         transition:
             width var(--dur-open) var(--ease-spring-open),
             height var(--dur-open) var(--ease-spring-open),
@@ -192,8 +308,13 @@ const {
     }
 
     @keyframes bar {
-        0%, 100% { height: 25%; }
-        50% { height: 100%; }
+        0%,
+        100% {
+            height: 25%;
+        }
+        50% {
+            height: 100%;
+        }
     }
     .bars > span {
         transition: height 360ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -201,14 +322,30 @@ const {
     .music-player[data-playing] .bars > span {
         animation: bar 900ms ease-in-out infinite;
     }
-    .music-player[data-playing] .bars > span:nth-child(1) { animation-delay: 0ms; }
-    .music-player[data-playing] .bars > span:nth-child(2) { animation-delay: 110ms; }
-    .music-player[data-playing] .bars > span:nth-child(3) { animation-delay: 220ms; }
-    .music-player[data-playing] .bars > span:nth-child(4) { animation-delay: 330ms; }
-    .music-player[data-playing] .bars > span:nth-child(5) { animation-delay: 440ms; }
-    .music-player[data-playing] .bars > span:nth-child(6) { animation-delay: 330ms; }
-    .music-player[data-playing] .bars > span:nth-child(7) { animation-delay: 220ms; }
-    .music-player[data-playing] .bars > span:nth-child(8) { animation-delay: 110ms; }
+    .music-player[data-playing] .bars > span:nth-child(1) {
+        animation-delay: 0ms;
+    }
+    .music-player[data-playing] .bars > span:nth-child(2) {
+        animation-delay: 110ms;
+    }
+    .music-player[data-playing] .bars > span:nth-child(3) {
+        animation-delay: 220ms;
+    }
+    .music-player[data-playing] .bars > span:nth-child(4) {
+        animation-delay: 330ms;
+    }
+    .music-player[data-playing] .bars > span:nth-child(5) {
+        animation-delay: 440ms;
+    }
+    .music-player[data-playing] .bars > span:nth-child(6) {
+        animation-delay: 330ms;
+    }
+    .music-player[data-playing] .bars > span:nth-child(7) {
+        animation-delay: 220ms;
+    }
+    .music-player[data-playing] .bars > span:nth-child(8) {
+        animation-delay: 110ms;
+    }
 
     .ctrl.play {
         position: relative;
@@ -240,14 +377,26 @@ const {
     }
 
     @keyframes nudge-back {
-        0%   { transform: rotate(0deg); }
-        35%  { transform: rotate(-20deg); }
-        100% { transform: rotate(0deg); }
+        0% {
+            transform: rotate(0deg);
+        }
+        35% {
+            transform: rotate(-20deg);
+        }
+        100% {
+            transform: rotate(0deg);
+        }
     }
     @keyframes nudge-fwd {
-        0%   { transform: rotate(0deg); }
-        35%  { transform: rotate(20deg); }
-        100% { transform: rotate(0deg); }
+        0% {
+            transform: rotate(0deg);
+        }
+        35% {
+            transform: rotate(20deg);
+        }
+        100% {
+            transform: rotate(0deg);
+        }
     }
     .ctrl.prev svg,
     .ctrl.next svg {
@@ -287,7 +436,11 @@ const {
         color: #fff;
         border: 1px solid rgba(255, 255, 255, 0.12);
         border-radius: 6px;
-        font: 600 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+        font:
+            600 11px/1 ui-monospace,
+            SFMono-Regular,
+            Menlo,
+            monospace;
         letter-spacing: 0.04em;
         box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
         opacity: 0;
@@ -319,7 +472,9 @@ const {
         if (root.dataset.playerReady) return;
         root.dataset.playerReady = "1";
         const audio = root.querySelector("audio") as HTMLAudioElement;
-        const trigger = root.querySelector("[data-expand-trigger]") as HTMLButtonElement;
+        const trigger = root.querySelector(
+            "[data-expand-trigger]",
+        ) as HTMLButtonElement;
         const playBtn = root.querySelector(".ctrl.play") as HTMLButtonElement;
         const prevBtn = root.querySelector(".ctrl.prev") as HTMLButtonElement;
         const nextBtn = root.querySelector(".ctrl.next") as HTMLButtonElement;
@@ -331,7 +486,9 @@ const {
         const fmt = (s: number) => {
             if (!isFinite(s)) return "0:00";
             const m = Math.floor(s / 60);
-            const r = Math.floor(s % 60).toString().padStart(2, "0");
+            const r = Math.floor(s % 60)
+                .toString()
+                .padStart(2, "0");
             return `${m}:${r}`;
         };
 
@@ -355,7 +512,10 @@ const {
         });
 
         document.addEventListener("pointerdown", (e) => {
-            if (root.hasAttribute("data-expanded") && !root.contains(e.target as Node)) {
+            if (
+                root.hasAttribute("data-expanded") &&
+                !root.contains(e.target as Node)
+            ) {
                 setExpanded(false);
             }
         });
@@ -373,15 +533,21 @@ const {
 
         const barEls = root.querySelectorAll<HTMLElement>(".bars > span");
         audio.addEventListener("play", () => {
-            barEls.forEach((b) => { b.style.height = ""; });
+            barEls.forEach((b) => {
+                b.style.height = "";
+            });
             root.setAttribute("data-playing", "");
             playBtn.setAttribute("aria-label", "Pause");
         });
         audio.addEventListener("pause", () => {
-            barEls.forEach((b) => { b.style.height = getComputedStyle(b).height; });
+            barEls.forEach((b) => {
+                b.style.height = getComputedStyle(b).height;
+            });
             root.removeAttribute("data-playing");
             requestAnimationFrame(() => {
-                barEls.forEach((b) => { b.style.height = "10%"; });
+                barEls.forEach((b) => {
+                    b.style.height = "10%";
+                });
             });
             playBtn.setAttribute("aria-label", "Play");
         });
@@ -397,7 +563,10 @@ const {
             if (!isFinite(dur) || dur <= 0) return;
             const pct = Math.round((audio.currentTime / dur) * 100);
             bar.setAttribute("aria-valuenow", String(pct));
-            bar.setAttribute("aria-valuetext", `${fmt(audio.currentTime)} of ${fmt(dur)}`);
+            bar.setAttribute(
+                "aria-valuetext",
+                `${fmt(audio.currentTime)} of ${fmt(dur)}`,
+            );
         };
 
         audio.addEventListener("timeupdate", () => {
@@ -408,7 +577,8 @@ const {
         });
         const seekToRatio = (ratio: number) => {
             if (!isFinite(audio.duration)) return;
-            audio.currentTime = Math.max(0, Math.min(1, ratio)) * audio.duration;
+            audio.currentTime =
+                Math.max(0, Math.min(1, ratio)) * audio.duration;
             updateProgressAria();
         };
         bar.addEventListener("click", (e) => {
@@ -428,7 +598,10 @@ const {
                 case "ArrowRight":
                 case "ArrowUp":
                     e.preventDefault();
-                    audio.currentTime = Math.min(audio.duration, audio.currentTime + step);
+                    audio.currentTime = Math.min(
+                        audio.duration,
+                        audio.currentTime + step,
+                    );
                     updateProgressAria();
                     break;
                 case "Home":
@@ -443,7 +616,10 @@ const {
         });
 
         const seek = (delta: number) => {
-            audio.currentTime = Math.max(0, Math.min(audio.duration || 0, audio.currentTime + delta));
+            audio.currentTime = Math.max(
+                0,
+                Math.min(audio.duration || 0, audio.currentTime + delta),
+            );
         };
         const spinIcon = (btn: HTMLButtonElement) => {
             const svg = btn.querySelector("svg");
@@ -453,11 +629,19 @@ const {
             void (svg as SVGElement).getBoundingClientRect();
             svg.classList.add("spin");
         };
-        prevBtn.addEventListener("click", () => { seek(-15); spinIcon(prevBtn); });
-        nextBtn.addEventListener("click", () => { seek(15); spinIcon(nextBtn); });
+        prevBtn.addEventListener("click", () => {
+            seek(-15);
+            spinIcon(prevBtn);
+        });
+        nextBtn.addEventListener("click", () => {
+            seek(15);
+            spinIcon(nextBtn);
+        });
         [prevBtn, nextBtn].forEach((btn) => {
             const svg = btn.querySelector("svg");
-            svg?.addEventListener("animationend", () => svg.classList.remove("spin"));
+            svg?.addEventListener("animationend", () =>
+                svg.classList.remove("spin"),
+            );
         });
 
         const hint = root.querySelector(".hotkey-hint") as HTMLElement;
@@ -479,13 +663,17 @@ const {
             // already open and left/top transition smoothly to the new spot.
             positionHint(btn);
             if (currentHintBtn === null) {
-                try { hint.showPopover(); } catch {}
+                try {
+                    hint.showPopover();
+                } catch {}
             }
             currentHintBtn = btn;
         };
         const hideHint = () => {
             currentHintBtn = null;
-            try { hint.hidePopover(); } catch {}
+            try {
+                hint.hidePopover();
+            } catch {}
         };
         [prevBtn, playBtn, nextBtn].forEach((btn) => {
             btn.addEventListener("pointerenter", (e) => {
@@ -503,7 +691,10 @@ const {
         const collapseObserver = new MutationObserver(() => {
             if (!root.hasAttribute("data-expanded")) hideHint();
         });
-        collapseObserver.observe(root, { attributes: true, attributeFilter: ["data-expanded", "data-collapsed"] });
+        collapseObserver.observe(root, {
+            attributes: true,
+            attributeFilter: ["data-expanded", "data-collapsed"],
+        });
 
         const flash = (btn: HTMLButtonElement) => {
             if (!root.hasAttribute("data-expanded")) return;
@@ -518,7 +709,12 @@ const {
         document.addEventListener("keydown", (e) => {
             if (e.ctrlKey || e.metaKey || e.altKey) return;
             const t = e.target as HTMLElement | null;
-            if (t && (t.isContentEditable || /^(input|textarea|select)$/i.test(t.tagName))) return;
+            if (
+                t &&
+                (t.isContentEditable ||
+                    /^(input|textarea|select)$/i.test(t.tagName))
+            )
+                return;
             const k = e.key.toLowerCase();
             if (k === "k") {
                 e.preventDefault();
@@ -537,7 +733,9 @@ const {
     }
 
     const runPlayer = () =>
-        document.querySelectorAll<HTMLElement>(".music-player").forEach(initPlayer);
+        document
+            .querySelectorAll<HTMLElement>(".music-player")
+            .forEach(initPlayer);
 
     runPlayer();
     document.addEventListener("astro:page-load", runPlayer);

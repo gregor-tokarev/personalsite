@@ -35,22 +35,22 @@ If the work doesn't include a complete Interaction Manifest, the only legal verd
 
 These auto-fail the audit. They cannot be downgraded.
 
-| Gate | Threshold | Severity if violated |
-|------|-----------|----------------------|
-| Console errors during walkthrough | > 0 | Critical |
-| Console warnings during walkthrough | > 0 | High |
-| Network 5xx | > 0 | Critical |
-| Network 403 / 404 on authenticated pages | > 0 | High |
-| Layout collapse at any tested viewport / pane combo | > 0 | High |
-| axe-core Critical violations on any audited page | > 0 | Critical |
-| axe-core Serious violations on any audited page | > 0 | High |
-| LCP on representative route (pragmatic budget) | > 4.0s | High |
-| CLS on representative route | > 0.25 | High |
-| INP on representative route | > 500ms | High |
-| Required Interaction Manifest entry missing | n/a | Incomplete |
-| Manifest median gap between entries < 0.5s | n/a | Incomplete (didn't actually interact) |
+| Gate                                                | Threshold | Severity if violated                  |
+| --------------------------------------------------- | --------- | ------------------------------------- |
+| Console errors during walkthrough                   | > 0       | Critical                              |
+| Console warnings during walkthrough                 | > 0       | High                                  |
+| Network 5xx                                         | > 0       | Critical                              |
+| Network 403 / 404 on authenticated pages            | > 0       | High                                  |
+| Layout collapse at any tested viewport / pane combo | > 0       | High                                  |
+| axe-core Critical violations on any audited page    | > 0       | Critical                              |
+| axe-core Serious violations on any audited page     | > 0       | High                                  |
+| LCP on representative route (pragmatic budget)      | > 4.0s    | High                                  |
+| CLS on representative route                         | > 0.25    | High                                  |
+| INP on representative route                         | > 500ms   | High                                  |
+| Required Interaction Manifest entry missing         | n/a       | Incomplete                            |
+| Manifest median gap between entries < 0.5s          | n/a       | Incomplete (didn't actually interact) |
 
-A console warning is High *minimum*. A 5xx is Critical *automatically*. There is no "Medium console error" — that category does not exist in this skill.
+A console warning is High _minimum_. A 5xx is Critical _automatically_. There is no "Medium console error" — that category does not exist in this skill.
 
 axe-core thresholds are run **per page** (>1 violation on any single page fails). Performance thresholds are run **once on a representative route** (per-page is overkill); pragmatic budget is well above broken, well below CWV-strict. Full thresholds + rationale in [references/performance-budget.md](references/performance-budget.md). Full a11y wiring + severity mapping in [references/a11y-automation.md](references/a11y-automation.md).
 
@@ -84,11 +84,11 @@ Source the persona in this order:
 
 1. **Argument** — if the user provided one ("ux audit as a busy insurance broker")
 2. **Project personas** — read `.jez/audit-personas/<slug>.md`, `.jez/personas/default.md`, or `.jez/personas/<app-name>.md` if they exist
-3. **Ask once** — *"Who uses this app and what are they trying to get done?"*
+3. **Ask once** — _"Who uses this app and what are they trying to get done?"_
 
 Capture: role, tech comfort, time pressure, emotional state, device context. A good persona predicts what they'd miss ("A receptionist between phone calls won't scroll below the fold").
 
-Lock the persona by writing the chosen persona at the top of the audit report. Every finding must be defensible from this persona's perspective. If you catch yourself thinking *"a developer would know..."* — stop. Your persona doesn't.
+Lock the persona by writing the chosen persona at the top of the audit report. Every finding must be defensible from this persona's perspective. If you catch yourself thinking _"a developer would know..."_ — stop. Your persona doesn't.
 
 **Always also run the first-time-user lens** (mandatory, see Phase 3) on every multi-page feature, even when the explicit persona is something else. It's the single biggest blind spot for AI / internal tooling.
 
@@ -96,13 +96,13 @@ See [references/persona-lock.md](references/persona-lock.md) for the persona lib
 
 ### 2. Browser tool
 
-| Target | Tool | Why |
-|--------|------|-----|
-| **Authenticated app** | Chrome MCP | Uses your real logged-in Chrome session — OAuth, cookies, RBAC just work |
-| **Public site** | Playwright MCP | No login needed |
-| **Neither available** | **Stop** | Ask the user to connect Chrome MCP or install Playwright |
+| Target                | Tool           | Why                                                                      |
+| --------------------- | -------------- | ------------------------------------------------------------------------ |
+| **Authenticated app** | Chrome MCP     | Uses your real logged-in Chrome session — OAuth, cookies, RBAC just work |
+| **Public site**       | Playwright MCP | No login needed                                                          |
+| **Neither available** | **Stop**       | Ask the user to connect Chrome MCP or install Playwright                 |
 
-Do **not** silently fall back to a fresh Playwright session for an authenticated app — the audit is worthless if you can't log in. If Chrome MCP isn't connected, stop and say: *"Open Chrome, click Connect in the Claude extension, then rerun."*
+Do **not** silently fall back to a fresh Playwright session for an authenticated app — the audit is worthless if you can't log in. If Chrome MCP isn't connected, stop and say: _"Open Chrome, click Connect in the Claude extension, then rerun."_
 
 See [references/browser-tools.md](references/browser-tools.md) for commands.
 
@@ -152,7 +152,7 @@ How to find them: ask the user, read CLAUDE.md / README, infer from top-level na
 
 ### Element inventory
 
-For each route as you reach it, list every interactive element. Build inventories lazily — per-page as you traverse, not all up-front. This drives the coverage metric: *"tested 29 of 31 elements on /app/clients"*.
+For each route as you reach it, list every interactive element. Build inventories lazily — per-page as you traverse, not all up-front. This drives the coverage metric: _"tested 29 of 31 elements on /app/clients"_.
 
 ## Phase 3 — Walkthrough (the audit itself)
 
@@ -198,7 +198,7 @@ For each thread:
 4. **Track the cost** — click count, decision points, dead ends, interrupt recovery (close tab at step 3, return at step 4 — did state survive?)
 5. **Hand screenshots to a sub-agent for review** at the end of each thread.
 
-At the end of each thread, answer (as the persona): *Did it end clearly? Would I come back? One thing to make this twice as easy?*
+At the end of each thread, answer (as the persona): _Did it end clearly? Would I come back? One thing to make this twice as easy?_
 
 See [references/walkthrough-checklist.md](references/walkthrough-checklist.md) and [references/workflow-comprehension.md](references/workflow-comprehension.md).
 
@@ -214,16 +214,16 @@ Pane combinations are where the worst layout bugs hide — including the 2026-04
 
 For apps with sidebars, members panels, threads, drawers, sheets:
 
-| Viewport | Panes | What to capture |
-|----------|-------|-----------------|
-| 1920 | All open | Baseline — should always work |
-| 1440 | All open | Common dev resolution |
-| 1280 | All open | Where layout collapses start |
-| 1024 | All open | Tablet landscape — high-bug zone |
-| 1024 | 2-pane (drop one) | Verify graceful degradation |
-| 1024 | 1-pane (mobile-style) | Should fold cleanly |
-| 768 | All collapsible closed | Tablet portrait |
-| 375 | Mobile baseline | Mobile |
+| Viewport | Panes                  | What to capture                  |
+| -------- | ---------------------- | -------------------------------- |
+| 1920     | All open               | Baseline — should always work    |
+| 1440     | All open               | Common dev resolution            |
+| 1280     | All open               | Where layout collapses start     |
+| 1024     | All open               | Tablet landscape — high-bug zone |
+| 1024     | 2-pane (drop one)      | Verify graceful degradation      |
+| 1024     | 1-pane (mobile-style)  | Should fold cleanly              |
+| 768      | All collapsible closed | Tablet portrait                  |
+| 375      | Mobile baseline        | Mobile                           |
 
 For each combination: scroll the longest content, capture a screenshot, run the layout-detection JS to flag overflow / clipping / vertical-text-stacks (every character on its own line), and verify min-content widths.
 
@@ -231,18 +231,18 @@ Detail + automation snippets in [references/multi-pane-stress.md](references/mul
 
 ### First-time-user lens (mandatory)
 
-Beyond the locked persona, every multi-page feature must pass the **first-time user** check. This catches the single biggest UX failure mode in internal/AI tooling: features built by the people who designed them work *for them*, but a brand-new user landing on the same screen has no idea what any of the controls mean.
+Beyond the locked persona, every multi-page feature must pass the **first-time user** check. This catches the single biggest UX failure mode in internal/AI tooling: features built by the people who designed them work _for them_, but a brand-new user landing on the same screen has no idea what any of the controls mean.
 
-Adopt the persona of *someone signing in to this app for the very first time, with no prior context, no source access, no internal documentation*. For each screen ask:
+Adopt the persona of _someone signing in to this app for the very first time, with no prior context, no source access, no internal documentation_. For each screen ask:
 
-| Question | What it catches |
-|---|---|
-| Could I complete the task without reading the code or docs? | Hidden technical knowledge baked into the form |
-| Are field labels in plain language, not internal vocabulary? | `agentClass`, `slug`, `webhook_id` leaking into UI |
-| Do dropdowns / pickers show **what each option does**, not just an ID? | Snake_case enums, raw class names, opaque slugs |
-| Are defaults sensible enough to keep them and move on? | Required fields with no defaults, mandatory ID inputs |
-| Is there a discoverable list of valid values when something needs to be entered? | Free-text inputs where a combobox should be |
-| If I'd say "click Skip" because I don't understand a setting, that's a UX bug. | Optional-but-confusing settings exposed as primary inputs |
+| Question                                                                         | What it catches                                           |
+| -------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| Could I complete the task without reading the code or docs?                      | Hidden technical knowledge baked into the form            |
+| Are field labels in plain language, not internal vocabulary?                     | `agentClass`, `slug`, `webhook_id` leaking into UI        |
+| Do dropdowns / pickers show **what each option does**, not just an ID?           | Snake_case enums, raw class names, opaque slugs           |
+| Are defaults sensible enough to keep them and move on?                           | Required fields with no defaults, mandatory ID inputs     |
+| Is there a discoverable list of valid values when something needs to be entered? | Free-text inputs where a combobox should be               |
+| If I'd say "click Skip" because I don't understand a setting, that's a UX bug.   | Optional-but-confusing settings exposed as primary inputs |
 
 When the lens fires, log a finding even if the screen technically works. Common fixes: replace text inputs with pickers, surface metadata, auto-derive values, hide internal IDs under "Advanced", add inline guidance.
 
@@ -367,16 +367,16 @@ All ten, always. They catch what screen-by-screen testing misses. Full protocols
 
 Beyond scenarios, run every relevant recipe in [references/stress-test-recipes.md](references/stress-test-recipes.md):
 
-| Stress | What it catches |
-|--------|-----------------|
-| Empty / saturated / long content | Edge layouts AI rarely sees during dev |
-| Race conditions (double-click, fast-type-then-blur, slow network) | Optimistic UI bugs, debounce failures |
-| Slow network (3G throttle) | Loading states, skeleton rhythm, timeout UX |
-| Reduced motion (`prefers-reduced-motion: reduce`) | Animations that ignore the preference |
-| i18n (long German, RTL Arabic, CJK widths) | Layout assumptions about text length |
-| Offline mode | Retry / queue / dirty-state UX |
-| Print stylesheet | Forgotten media query |
-| High-contrast mode | Forced-colors media query handling |
+| Stress                                                               | What it catches                                                                                                                                                                                                                                    |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Empty / saturated / long content                                     | Edge layouts AI rarely sees during dev                                                                                                                                                                                                             |
+| Race conditions (double-click, fast-type-then-blur, slow network)    | Optimistic UI bugs, debounce failures                                                                                                                                                                                                              |
+| Slow network (3G throttle)                                           | Loading states, skeleton rhythm, timeout UX                                                                                                                                                                                                        |
+| Reduced motion (`prefers-reduced-motion: reduce`)                    | Animations that ignore the preference                                                                                                                                                                                                              |
+| i18n (long German, RTL Arabic, CJK widths)                           | Layout assumptions about text length                                                                                                                                                                                                               |
+| Offline mode                                                         | Retry / queue / dirty-state UX                                                                                                                                                                                                                     |
+| Print stylesheet                                                     | Forgotten media query                                                                                                                                                                                                                              |
+| High-contrast mode                                                   | Forced-colors media query handling                                                                                                                                                                                                                 |
 | **Real-flavour data battery** (mandatory for any form-accepting app) | Validation that strips characters silently (apostrophe, accents, RTL); length truncation without warning; SQL/XSS canaries not escaped; file uploads that don't fit (.heic, 8000×8000 PNG, 50MB PDF). AI-built UIs are notoriously dev-data clean. |
 
 ## Phase 6 — Verdict
@@ -429,13 +429,13 @@ The verdict block's "Time per phase" + "Manifest plausibility" rows are not deco
 
 Auto-Incomplete triggers:
 
-| Signal | Implies | Action |
-|---|---|---|
-| Phase 3 took < 1m for an exhaustive audit | Agent skipped the walkthrough | Verdict → Incomplete |
-| Median gap between manifest entries < 0.5s | Entries logged in bulk, no real interaction | Verdict → Incomplete |
-| Screenshots fewer than 2 × routes audited | Most pages didn't get before/after captures | Verdict → Incomplete |
-| Console reads fewer than 1 × routes audited | Pages weren't checked for warnings | Verdict → Incomplete |
-| Manifest first→last span < 5m for exhaustive | Whole audit was rushed | Verdict → Incomplete |
+| Signal                                       | Implies                                     | Action               |
+| -------------------------------------------- | ------------------------------------------- | -------------------- |
+| Phase 3 took < 1m for an exhaustive audit    | Agent skipped the walkthrough               | Verdict → Incomplete |
+| Median gap between manifest entries < 0.5s   | Entries logged in bulk, no real interaction | Verdict → Incomplete |
+| Screenshots fewer than 2 × routes audited    | Most pages didn't get before/after captures | Verdict → Incomplete |
+| Console reads fewer than 1 × routes audited  | Pages weren't checked for warnings          | Verdict → Incomplete |
+| Manifest first→last span < 5m for exhaustive | Whole audit was rushed                      | Verdict → Incomplete |
 
 These are non-negotiable. A clean Pass with implausible timings is rejected — the agent must redo the audit with real interaction.
 
@@ -483,9 +483,10 @@ Full report structure in [references/report-template.md](references/report-templ
 
 After the report, offer the loop:
 
-> *"Found N Critical and M High issues. Fix them now and re-verify?"*
+> _"Found N Critical and M High issues. Fix them now and re-verify?"_
 
 If yes:
+
 1. Group findings by file/area
 2. Patch each one
 3. **Re-walk just the affected slice** (not the whole app) — including the original interaction that surfaced the bug, with a fresh screenshot
@@ -509,13 +510,14 @@ Anti-pattern: appending the second model's report verbatim to the first. Produce
 The audit is heavy. For per-change pre-deploy checks, recommend a project rule in CLAUDE.md:
 
 > **Before declaring any UI change "done", run the 30-second dogfood drill:**
+>
 > 1. Open the affected page
 > 2. Type into any input
 > 3. Click the primary action
 > 4. Watch the next state for 2 seconds
 > 5. Open a related view (thread, modal, detail)
 > 6. Read the console
-> If any step shows unexpected behaviour, the change isn't done.
+>    If any step shows unexpected behaviour, the change isn't done.
 
 Six steps, ~30 seconds. Catches behavioural bugs that surface immediately. Pair with the full ux-audit weekly.
 
@@ -539,26 +541,26 @@ For audits expected to run > 30 minutes, set up a 15-min `/loop` check-in alongs
 
 ## Reference files
 
-| When | Read |
-|------|------|
-| Persona library + writing protocol | [references/persona-lock.md](references/persona-lock.md) |
-| Audit-config allowlist format + semantics + surface overrides | [references/audit-config.md](references/audit-config.md) |
-| Interaction Manifest template + replay protocol | [references/interaction-manifest.md](references/interaction-manifest.md) |
-| Multi-pane stress matrix + automation snippets | [references/multi-pane-stress.md](references/multi-pane-stress.md) |
-| Per-screen evaluation questions, layout-detection JS | [references/walkthrough-checklist.md](references/walkthrough-checklist.md) |
-| Wayfinding, mental model, page-to-page continuity | [references/workflow-comprehension.md](references/workflow-comprehension.md) |
-| Full protocol for each of the 10 scenarios | [references/scenario-tests.md](references/scenario-tests.md) |
-| Extended stress recipes (race, slow network, reduced motion, i18n) | [references/stress-test-recipes.md](references/stress-test-recipes.md) |
-| Component-level perfection checklist (6 categories + 6 states) | [references/perfection-checklist.md](references/perfection-checklist.md) |
-| AI-tell catalogue, optical centring, design-token discipline | [references/visual-polish.md](references/visual-polish.md) |
-| Silent-failure controls + SDK contract checks | [references/live-interaction-smoke.md](references/live-interaction-smoke.md) |
-| Playwright killer-flow test starters | [references/playwright-killer-flows.md](references/playwright-killer-flows.md) |
-| Report format, verdict block, severity rubric, reproduction-step format | [references/report-template.md](references/report-template.md) |
-| Browser tool commands and viewport notes | [references/browser-tools.md](references/browser-tools.md) |
-| Round-trip workflow integrity (A→B→A pattern) | [references/round-trip-workflows.md](references/round-trip-workflows.md) |
-| Automated accessibility (axe-core injection + severity mapping) | [references/a11y-automation.md](references/a11y-automation.md) |
-| Pragmatic performance budget (LCP/CLS/INP via Performance API) | [references/performance-budget.md](references/performance-budget.md) |
-| Long-running audit supervision via 15-min `/loop` | [references/long-running-check-in-pattern.md](references/long-running-check-in-pattern.md) |
+| When                                                                    | Read                                                                                       |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| Persona library + writing protocol                                      | [references/persona-lock.md](references/persona-lock.md)                                   |
+| Audit-config allowlist format + semantics + surface overrides           | [references/audit-config.md](references/audit-config.md)                                   |
+| Interaction Manifest template + replay protocol                         | [references/interaction-manifest.md](references/interaction-manifest.md)                   |
+| Multi-pane stress matrix + automation snippets                          | [references/multi-pane-stress.md](references/multi-pane-stress.md)                         |
+| Per-screen evaluation questions, layout-detection JS                    | [references/walkthrough-checklist.md](references/walkthrough-checklist.md)                 |
+| Wayfinding, mental model, page-to-page continuity                       | [references/workflow-comprehension.md](references/workflow-comprehension.md)               |
+| Full protocol for each of the 10 scenarios                              | [references/scenario-tests.md](references/scenario-tests.md)                               |
+| Extended stress recipes (race, slow network, reduced motion, i18n)      | [references/stress-test-recipes.md](references/stress-test-recipes.md)                     |
+| Component-level perfection checklist (6 categories + 6 states)          | [references/perfection-checklist.md](references/perfection-checklist.md)                   |
+| AI-tell catalogue, optical centring, design-token discipline            | [references/visual-polish.md](references/visual-polish.md)                                 |
+| Silent-failure controls + SDK contract checks                           | [references/live-interaction-smoke.md](references/live-interaction-smoke.md)               |
+| Playwright killer-flow test starters                                    | [references/playwright-killer-flows.md](references/playwright-killer-flows.md)             |
+| Report format, verdict block, severity rubric, reproduction-step format | [references/report-template.md](references/report-template.md)                             |
+| Browser tool commands and viewport notes                                | [references/browser-tools.md](references/browser-tools.md)                                 |
+| Round-trip workflow integrity (A→B→A pattern)                           | [references/round-trip-workflows.md](references/round-trip-workflows.md)                   |
+| Automated accessibility (axe-core injection + severity mapping)         | [references/a11y-automation.md](references/a11y-automation.md)                             |
+| Pragmatic performance budget (LCP/CLS/INP via Performance API)          | [references/performance-budget.md](references/performance-budget.md)                       |
+| Long-running audit supervision via 15-min `/loop`                       | [references/long-running-check-in-pattern.md](references/long-running-check-in-pattern.md) |
 
 ## Tips
 

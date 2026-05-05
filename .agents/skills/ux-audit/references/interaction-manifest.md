@@ -16,14 +16,14 @@ The manifest closes that gap. It's a non-negotiable proof requirement. Skipping 
 
 A manifest is complete when, for every page audited, all six required entry types are logged with proof:
 
-| Required entry | What it looks like | Proof artefact |
-|---|---|---|
-| **Type into ≥ 1 input** | Real text, not just clicked | `textarea.value` after typing, screenshot |
-| **Trigger ≥ 1 primary action** | Send / Save / Submit / Create / Publish | Network request fired, screenshot before + after |
-| **Open ≥ 1 modal or detail pane** | Click a row, open a thread, open a settings panel | Screenshot of opened state |
-| **Console read after primary action** | `read_console_messages` call | Output captured (0 warnings or list of warnings) |
-| **Screenshot before AND after primary action** | Two screenshots, ideally same viewport | Files written, paths logged |
-| **Verify expected post-action state** | Input cleared, success toast, route change, list updated | Assertion logged with selector + expected value |
+| Required entry                                 | What it looks like                                       | Proof artefact                                   |
+| ---------------------------------------------- | -------------------------------------------------------- | ------------------------------------------------ |
+| **Type into ≥ 1 input**                        | Real text, not just clicked                              | `textarea.value` after typing, screenshot        |
+| **Trigger ≥ 1 primary action**                 | Send / Save / Submit / Create / Publish                  | Network request fired, screenshot before + after |
+| **Open ≥ 1 modal or detail pane**              | Click a row, open a thread, open a settings panel        | Screenshot of opened state                       |
+| **Console read after primary action**          | `read_console_messages` call                             | Output captured (0 warnings or list of warnings) |
+| **Screenshot before AND after primary action** | Two screenshots, ideally same viewport                   | Files written, paths logged                      |
+| **Verify expected post-action state**          | Input cleared, success toast, route change, list updated | Assertion logged with selector + expected value  |
 
 Six types per page, one row per check. Multi-pane stress adds more entries; scenarios add more entries. The minimum is six per audited route.
 
@@ -81,6 +81,7 @@ INTERACTION MANIFEST — /dashboard/spaces/marketing-pod
 ## Required entry types in detail
 
 ### TYPE
+
 - Real text into an input. Not just a click on the input.
 - For password fields, type a fake password (something like `audit-test-123!`).
 - For email fields, type a valid-format fake address.
@@ -88,22 +89,26 @@ INTERACTION MANIFEST — /dashboard/spaces/marketing-pod
 - Verify the input received the text (`getByRole('textbox').toHaveValue(...)`).
 
 ### PICK
+
 - Optional but common: dropdown selection, autocomplete pick, file upload, date picker, mention picker.
 - Required if the page has any picker/combobox/autocomplete that's part of the primary flow.
 - Verify the picked value is reflected in the form / display.
 
 ### SUBMIT
+
 - The primary action: Send, Save, Submit, Create, Publish, Pay, Share, Send invitation.
 - Click it. Watch the network, watch the DOM.
 - Capture screenshot before AND after.
 - Capture the network request: URL, method, status code, latency.
 
 ### OPEN
+
 - Click into a row, open a modal, open a detail pane, open a thread, open a settings panel.
 - Captures the "what happens after this lands" view.
 - Required because most layout / pane interaction bugs are only visible after opening.
 
 ### ASSERT
+
 - Each ASSERT is a yes/no check on observed state.
 - Common assertions:
   - Input cleared after submit
@@ -117,11 +122,13 @@ INTERACTION MANIFEST — /dashboard/spaces/marketing-pod
 - Failed assertions become findings.
 
 ### CONSOLE
+
 - After every SUBMIT (and ideally every state change), read the console.
 - Tool: `mcp__claude-in-chrome__read_console_messages` or Playwright `page.on('console', ...)`.
 - Any warning or error becomes a finding (Hard Gate).
 
 ### NETWORK
+
 - Inventory at the end of each page session.
 - Status code distribution: 2xx, 3xx, 4xx, 5xx counts.
 - Any 5xx = Critical. Any 403/404 on an authenticated page = High.
@@ -143,6 +150,7 @@ A page can have multiple findings; the manifest captures all of them in order.
 ## Example manifest entries for common page types
 
 ### List page (clients, projects, messages)
+
 - TYPE into search
 - ASSERT search filters the list
 - OPEN one item (click row)
@@ -150,6 +158,7 @@ A page can have multiple findings; the manifest captures all of them in order.
 - CONSOLE read
 
 ### Form page (settings, create new X)
+
 - TYPE into every required field with realistic data
 - TYPE into one optional field
 - PICK any required dropdown
@@ -159,6 +168,7 @@ A page can have multiple findings; the manifest captures all of them in order.
 - CONSOLE read
 
 ### Conversation / thread page
+
 - TYPE a message
 - SUBMIT (Send)
 - ASSERT input cleared
@@ -168,6 +178,7 @@ A page can have multiple findings; the manifest captures all of them in order.
 - CONSOLE read
 
 ### Dashboard (multi-widget)
+
 - For each widget: read content, screenshot, OPEN any drill-down
 - TYPE into any inline filter / search
 - CONSOLE read after each interaction (dashboards are notorious for racy data fetches)
@@ -200,11 +211,11 @@ If your manifest is full of `READ`, `INSPECT`, `QUERY`, you've drifted to sweep 
 
 ## How this maps to the verdict
 
-| Manifest state | Allowed verdicts |
-|----------------|------------------|
-| Complete (≥ 6 entries per page, all phases run) | Pass / Conditional Pass / Fail |
-| Incomplete on any page | Incomplete (cannot upgrade to Pass) |
-| Console hard gate breached | Fail (cannot be Pass / Conditional) |
-| Network 5xx hard gate breached | Fail (Critical) |
+| Manifest state                                  | Allowed verdicts                    |
+| ----------------------------------------------- | ----------------------------------- |
+| Complete (≥ 6 entries per page, all phases run) | Pass / Conditional Pass / Fail      |
+| Incomplete on any page                          | Incomplete (cannot upgrade to Pass) |
+| Console hard gate breached                      | Fail (cannot be Pass / Conditional) |
+| Network 5xx hard gate breached                  | Fail (Critical)                     |
 
 Hard gates auto-fail. Incomplete manifest auto-blocks Pass. Together they make "audit said clean while bugs were live" structurally difficult.

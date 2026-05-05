@@ -6,7 +6,7 @@ This file is starter examples + patterns. Adapt to the project's stack (TanStack
 
 ## Why kill flow tests beat broader test suites
 
-Most apps don't have time to write comprehensive E2E suites. The 80/20 is: write tests for the bugs that *would have hurt most* if they shipped. The 6 bugs found in vite-flare-starter on 2026-04-29 are exactly that class — each has a one-line Playwright assertion that would have blocked the deploy.
+Most apps don't have time to write comprehensive E2E suites. The 80/20 is: write tests for the bugs that _would have hurt most_ if they shipped. The 6 bugs found in vite-flare-starter on 2026-04-29 are exactly that class — each has a one-line Playwright assertion that would have blocked the deploy.
 
 **Aim**: 10-15 tests, each ~10-30 lines, one per killer flow. Run on every deploy. Total runtime < 2 minutes.
 
@@ -31,19 +31,19 @@ Run via `pnpm test:e2e` (or `npm`). CI runs on every PR and on every main push.
 Catches: send button doesn't clear input, save button doesn't reset form, submit-then-redirect leaves stale form data.
 
 ```ts
-import { test, expect } from '@playwright/test';
-import { signIn } from './fixtures';
+import { test, expect } from "@playwright/test";
+import { signIn } from "./fixtures";
 
-test('spaces: send clears input', async ({ page }) => {
+test("spaces: send clears input", async ({ page }) => {
   await signIn(page);
-  await page.goto('/dashboard/spaces/test-space');
+  await page.goto("/dashboard/spaces/test-space");
 
   const input = page.locator('textarea[placeholder*="message"]');
-  await input.fill('hello world');
+  await input.fill("hello world");
   await page.locator('button[aria-label="Send"]').click();
 
   // Critical assertion: input cleared within 1s
-  await expect(input).toHaveValue('', { timeout: 1000 });
+  await expect(input).toHaveValue("", { timeout: 1000 });
 });
 ```
 
@@ -52,18 +52,18 @@ test('spaces: send clears input', async ({ page }) => {
 Catches: vertical-text stacking, panel squeeze, min-content failures. Reproduces the multi-pane bug.
 
 ```ts
-test('spaces: thread does not collapse timeline below readable width', async ({ page }) => {
+test("spaces: thread does not collapse timeline below readable width", async ({ page }) => {
   await signIn(page);
   await page.setViewportSize({ width: 1280, height: 800 });
-  await page.goto('/dashboard/spaces/test-space');
+  await page.goto("/dashboard/spaces/test-space");
 
   // Open the members panel + the thread aside
   await page.locator('[data-pane-trigger="members"]').click();
-  await page.locator('[data-message-id]').first().click();
+  await page.locator("[data-message-id]").first().click();
 
   // The main column should never be < 200px wide
-  const main = page.locator('main');
-  const width = await main.evaluate(el => el.getBoundingClientRect().width);
+  const main = page.locator("main");
+  const width = await main.evaluate((el) => el.getBoundingClientRect().width);
   expect(width).toBeGreaterThan(200);
 });
 ```
@@ -88,20 +88,20 @@ for (const vw of viewports) {
 Catches: lurking warnings, deprecation notices, protocol mismatches. The 2026-04-29 VoiceClient warning was visible weeks before the audit caught it.
 
 ```ts
-test('chat: console emits no warnings on mount', async ({ page }) => {
+test("chat: console emits no warnings on mount", async ({ page }) => {
   const messages: { type: string; text: string }[] = [];
-  page.on('console', msg => {
-    if (['warning', 'error'].includes(msg.type())) {
+  page.on("console", (msg) => {
+    if (["warning", "error"].includes(msg.type())) {
       messages.push({ type: msg.type(), text: msg.text() });
     }
   });
 
   await signIn(page);
-  await page.goto('/dashboard/chat');
-  await page.waitForLoadState('networkidle');
+  await page.goto("/dashboard/chat");
+  await page.waitForLoadState("networkidle");
 
   // Allowlist known unfixable warnings (e.g. third-party tracker)
-  const filtered = messages.filter(m => !m.text.includes('[allowed-warning]'));
+  const filtered = messages.filter((m) => !m.text.includes("[allowed-warning]"));
   expect(filtered, JSON.stringify(filtered, null, 2)).toEqual([]);
 });
 ```
@@ -111,30 +111,32 @@ test('chat: console emits no warnings on mount', async ({ page }) => {
 Catches: @-mention double-insert, optimistic UI duplicating items, double-click submission.
 
 ```ts
-test('spaces: @-mention does not duplicate', async ({ page }) => {
+test("spaces: @-mention does not duplicate", async ({ page }) => {
   await signIn(page);
-  await page.goto('/dashboard/spaces/test-space');
+  await page.goto("/dashboard/spaces/test-space");
 
-  await page.locator('textarea').type('@ass');
-  await page.locator('text=@assistant').first().click();
+  await page.locator("textarea").type("@ass");
+  await page.locator("text=@assistant").first().click();
 
   // After picking, exactly one mention pill in the input parts
   const pills = page.locator('[data-slot="mention-pill"]');
   await expect(pills).toHaveCount(1);
 });
 
-test('spaces: send does not duplicate on double-click', async ({ page }) => {
+test("spaces: send does not duplicate on double-click", async ({ page }) => {
   await signIn(page);
-  await page.goto('/dashboard/spaces/test-space');
+  await page.goto("/dashboard/spaces/test-space");
 
-  await page.locator('textarea').fill('test message');
+  await page.locator("textarea").fill("test message");
   const send = page.locator('button[aria-label="Send"]');
 
   // Double-click in rapid succession
   await Promise.all([send.click(), send.click()]);
 
   // Only one new message appears
-  await expect(page.locator('[data-message-id]:has-text("test message")')).toHaveCount(1, { timeout: 2000 });
+  await expect(page.locator('[data-message-id]:has-text("test message")')).toHaveCount(1, {
+    timeout: 2000,
+  });
 });
 ```
 
@@ -143,23 +145,23 @@ test('spaces: send does not duplicate on double-click', async ({ page }) => {
 Catches: silent SDK contract violations, missing options, wrong endpoints.
 
 ```ts
-test('approve action sends decision to server', async ({ page }) => {
+test("approve action sends decision to server", async ({ page }) => {
   await signIn(page);
 
   let approvalRequest: any = null;
-  page.on('request', req => {
-    if (req.url().includes('/api/tool-approvals')) {
+  page.on("request", (req) => {
+    if (req.url().includes("/api/tool-approvals")) {
       approvalRequest = { method: req.method(), payload: req.postDataJSON() };
     }
   });
 
-  await page.goto('/dashboard/chat');
+  await page.goto("/dashboard/chat");
   await page.locator('button:has-text("Approve")').first().click();
 
   // Verify request actually fired with the decision
   await expect.poll(() => approvalRequest).toBeTruthy();
-  expect(approvalRequest.method).toBe('POST');
-  expect(approvalRequest.payload).toMatchObject({ decision: 'approved' });
+  expect(approvalRequest.method).toBe("POST");
+  expect(approvalRequest.payload).toMatchObject({ decision: "approved" });
 });
 ```
 
@@ -168,22 +170,22 @@ test('approve action sends decision to server', async ({ page }) => {
 Catches: onboarding gaps, mandatory fields without defaults, jargon labels. Directly maps to the first-time-user lens.
 
 ```ts
-test('first-time user: can create their first space in 3 clicks', async ({ page }) => {
+test("first-time user: can create their first space in 3 clicks", async ({ page }) => {
   // Use a fresh signup, not a seeded test account
-  await page.goto('/signup');
-  await page.locator('input[name="email"]').fill('audit-test@example.com');
-  await page.locator('input[name="password"]').fill('audit-test-123!');
+  await page.goto("/signup");
+  await page.locator('input[name="email"]').fill("audit-test@example.com");
+  await page.locator('input[name="password"]').fill("audit-test-123!");
   await page.locator('button:has-text("Sign up")').click();
 
   await page.waitForURL(/\/dashboard/);
 
   // From the dashboard, count clicks to space creation
   let clickCount = 0;
-  page.on('click', () => clickCount++);
+  page.on("click", () => clickCount++);
 
   // The expected path
   await page.locator('button:has-text("Create space")').click();
-  await page.locator('input[name="name"]').fill('My first space');
+  await page.locator('input[name="name"]').fill("My first space");
   await page.locator('button:has-text("Create")').click();
 
   // Verify the space exists
@@ -197,32 +199,38 @@ test('first-time user: can create their first space in 3 clicks', async ({ page 
 Catches: 5xx on the wire that the user never sees.
 
 ```ts
-test('save shows error toast on server failure', async ({ page }) => {
+test("save shows error toast on server failure", async ({ page }) => {
   await signIn(page);
-  await page.route('**/api/settings', route => route.fulfill({ status: 500, body: 'server error' }));
-  await page.goto('/dashboard/settings');
+  await page.route("**/api/settings", (route) =>
+    route.fulfill({ status: 500, body: "server error" }),
+  );
+  await page.goto("/dashboard/settings");
 
   await page.locator('button:has-text("Save")').click();
 
   // User MUST see the error
-  await expect(page.locator('[role="alert"]')).toContainText(/error|failed|try again/i, { timeout: 3000 });
+  await expect(page.locator('[role="alert"]')).toContainText(/error|failed|try again/i, {
+    timeout: 3000,
+  });
 });
 ```
 
 ## Auth helpers (fixtures.ts)
 
 ```ts
-import type { Page } from '@playwright/test';
+import type { Page } from "@playwright/test";
 
 export async function signIn(page: Page) {
-  await page.goto('/signin');
-  await page.locator('input[name="email"]').fill(process.env.TEST_USER_EMAIL ?? 'test@example.com');
-  await page.locator('input[name="password"]').fill(process.env.TEST_USER_PASSWORD ?? 'test-password');
+  await page.goto("/signin");
+  await page.locator('input[name="email"]').fill(process.env.TEST_USER_EMAIL ?? "test@example.com");
+  await page
+    .locator('input[name="password"]')
+    .fill(process.env.TEST_USER_PASSWORD ?? "test-password");
   await page.locator('button[type="submit"]').click();
   await page.waitForURL(/\/dashboard/);
 }
 
-export async function seedSpace(page: Page, name = 'test-space') {
+export async function seedSpace(page: Page, name = "test-space") {
   // POST to test-only seed endpoint, OR use UI flow.
   // ...
 }
@@ -231,23 +239,29 @@ export async function seedSpace(page: Page, name = 'test-space') {
 ## Playwright config (playwright.config.ts)
 
 ```ts
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
-  testDir: './e2e',
+  testDir: "./e2e",
   fullyParallel: true,
   retries: process.env.CI ? 2 : 0,
-  reporter: 'html',
+  reporter: "html",
   use: {
-    baseURL: process.env.PLAYWRIGHT_BASE_URL ?? 'http://localhost:5173',
-    trace: 'on-first-retry',
-    video: 'retain-on-failure',
-    screenshot: 'only-on-failure',
+    baseURL: process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:5173",
+    trace: "on-first-retry",
+    video: "retain-on-failure",
+    screenshot: "only-on-failure",
   },
   projects: [
-    { name: 'chromium-desktop', use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 } } },
-    { name: 'chromium-laptop', use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 800 } } },
-    { name: 'mobile', use: { ...devices['iPhone 13'] } },
+    {
+      name: "chromium-desktop",
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } },
+    },
+    {
+      name: "chromium-laptop",
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 800 } },
+    },
+    { name: "mobile", use: { ...devices["iPhone 13"] } },
   ],
 });
 ```
@@ -289,12 +303,14 @@ Run on every PR. Block merge on failure.
 ## Cadence — what to write tests for
 
 Write a test the moment you find a bug that:
+
 - Wasn't caught by the audit (audit failure → new test)
 - Is "obvious in hindsight" (vertical text, send-not-clearing — these surfaces deserve tests forever)
 - Touches money / data integrity / auth
 - Has shipped twice in regression form (third regression must become a test)
 
 Don't write tests for:
+
 - Visual polish that's not load-bearing (use visual regression instead)
 - Features that change weekly (test would churn faster than it adds value)
 - Things that are obvious from a unit test (component API, function output)
