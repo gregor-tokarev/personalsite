@@ -8,7 +8,7 @@ interface Entry {
 const entries: Entry[] = [
     {
         years: "2024 – Now",
-        body: "Fullstack engineer at Wildberries, promoted to team lead. Leading the migration from Node.js to Go on a team whose work saves the company ≈ 1 bn ₽ a day.",
+        body: "Fullstack engineer at Wildberries, promoted to team lead. Leading the migration from Node.js to Go on a team whose work saves the company ≈ 1bn ₽ a day.",
         current: true,
     },
     {
@@ -17,7 +17,7 @@ const entries: Entry[] = [
     },
     {
         years: "2021 – 2022",
-        body: "Frontend engineer at Kostylworks, a Berlin studio. Led the redesign of litnet.com.",
+        body: "Frontend engineer at Kostylworks. Led the redesign of litnet.com.",
     },
     {
         years: "2020 – 2021",
@@ -26,24 +26,23 @@ const entries: Entry[] = [
 ];
 ---
 
-<section
-    class="flex flex-col gap-8"
-    aria-labelledby="experience-heading"
->
+<section class="flex flex-col gap-8" aria-labelledby="experience-heading">
     <h2 id="experience-heading" class="text-xl font-semibold text-mauve-800">
         Experience
     </h2>
-    {entries.map((e) => (
-        <div class="flex flex-col gap-1 md:flex-row md:gap-8 lg:gap-16">
-            <span
-                class:list={[
-                    "text-sm w-28 shrink-0 tabular-nums whitespace-nowrap md:pt-1",
-                    e.current ? "text-mauve-800" : "text-mauve-600",
-                ]}
-            >
-                {e.years}
-            </span>
-            <p class="text-base leading-relaxed text-mauve-800">{e.body}</p>
-        </div>
-    ))}
+    {
+        entries.map((e) => (
+            <div class="flex flex-col gap-1 md:flex-row md:gap-8 lg:gap-16">
+                <span
+                    class:list={[
+                        "text-sm w-28 shrink-0 tabular-nums whitespace-nowrap md:pt-1",
+                        e.current ? "text-mauve-800" : "text-mauve-600",
+                    ]}
+                >
+                    {e.years}
+                </span>
+                <p class="text-base leading-relaxed text-mauve-800">{e.body}</p>
+            </div>
+        ))
+    }
 </section>
