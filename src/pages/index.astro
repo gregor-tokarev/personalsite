@@ -5,6 +5,8 @@ import Experience from "../components/Experience.astro";
 import Posts from "../components/Posts.astro";
 import Socials from "../components/Socials.astro";
 import HoverLens from "../components/HoverLens.astro";
+import { Image } from "astro:assets";
+import myPhoto from "../assets/myself/myself.png";
 import { personJsonLd, site, websiteJsonLd } from "../lib/site";
 ---
 
@@ -22,13 +24,23 @@ import { personJsonLd, site, websiteJsonLd } from "../lib/site";
         <HoverLens />
 
         <div class="space-y-20 md:space-y-[120px]">
-            <div class="space-y-4">
-                <h1 class="text-3xl font-bold text-mauve-800">Gregor Tokarev</h1>
-                <p class="text-mauve-700 text-base md:text-lg">
-                    Software engineer who cares about his craft more than
-                    anything else in life.
-                </p>
-                <Socials />
+            <div class="flex flex-col lg:flex-row align-top gap-4">
+                <div class="space-y-4">
+                    <h1 class="text-3xl font-bold text-mauve-800">
+                        Gregor Tokarev
+                    </h1>
+                    <p class="text-mauve-700 text-base md:text-lg">
+                        Software engineer. I started programming at 12. Landed
+                        my first paid job at 15. Since then, I care about my
+                        craft more then anything else.
+                    </p>
+                    <Socials />
+                </div>
+                <Image
+                    src={myPhoto}
+                    alt="My photo"
+                    class="md:w-[280px] md:h-[380px] h-[220px] shrink-0 object-cover object-[center_30%] md:object-center"
+                />
             </div>
 
             <Projects />

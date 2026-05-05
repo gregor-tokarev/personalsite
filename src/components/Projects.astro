@@ -1,7 +1,8 @@
 ---
 import { Image, getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
-import projectOne from "../assets/projects/voxfusion.png";
+import voxfusion from "../assets/projects/voxfusion.png";
+import yttui from "../assets/projects/yttui.png";
 
 interface Project {
     title: string;
@@ -13,21 +14,15 @@ interface Project {
 const projects: Project[] = [
     {
         title: "voxfusion",
-        meta: "2026 · macos dictating app",
-        image: projectOne,
+        meta: "Macos dictating app",
+        image: voxfusion,
         link: "https://voxfusion.io",
     },
     {
-        title: "example one",
-        meta: "2025 · example project",
-        image: projectOne,
-        link: "https://example.com",
-    },
-    {
-        title: "example two",
-        meta: "2024 · example project",
-        image: projectOne,
-        link: "https://example.com",
+        title: "Youtrack TUI",
+        meta: "Terminal UI for Youtrack",
+        image: yttui,
+        link: "https://github.com/gregor-tokarev/youtracktui",
     },
 ];
 
@@ -54,34 +49,30 @@ const previews = await Promise.all(
 );
 ---
 
-{previews.map((img) => (
-    <link rel="preload" as="image" href={img.src} />
-))}
+{previews.map((img) => <link rel="preload" as="image" href={img.src} />)}
 
-<section
-    class="relative"
-    data-projects
-    aria-labelledby="projects-heading"
->
+<section class="relative" data-projects aria-labelledby="projects-heading">
     <h2 id="projects-heading" class="sr-only">Projects</h2>
     <div class="relative flex flex-col gap-1 -mx-4 w-fit" data-projects-list>
-        {projects.map((p, i) => (
-            <a
-                href={p.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-project-link
-                data-hover-target
-                data-index={i}
-                class="project-link relative flex w-fit flex-col gap-1 px-4 py-2 no-underline text-mauve-800"
-            >
-                <span class="underline decoration-mauve-800/40 underline-offset-2 decoration-2">
-                    {p.title}
-                    <span class="sr-only"> (opens in a new tab)</span>
-                </span>
-                <span class="text-sm text-mauve-600">{p.meta}</span>
-            </a>
-        ))}
+        {
+            projects.map((p, i) => (
+                <a
+                    href={p.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-project-link
+                    data-hover-target
+                    data-index={i}
+                    class="project-link relative flex w-fit flex-col gap-1 px-4 py-2 no-underline text-mauve-800"
+                >
+                    <span class="underline decoration-mauve-800/40 underline-offset-2 decoration-2">
+                        {p.title}
+                        <span class="sr-only"> (opens in a new tab)</span>
+                    </span>
+                    <span class="text-sm text-mauve-600">{p.meta}</span>
+                </a>
+            ))
+        }
     </div>
 
     <div
@@ -89,20 +80,22 @@ const previews = await Promise.all(
         data-preview-wrapper
         aria-hidden="true"
     >
-        {projects.map((p, i) => (
-            <Image
-                src={p.image}
-                alt=""
-                width={displays[i].width * 2}
-                height={displays[i].height * 2}
-                format="webp"
-                loading="eager"
-                data-preview
-                data-index={i}
-                class="preview-img absolute top-0 left-0 max-w-none rounded-xl object-cover transition-[opacity,filter,transform] duration-300 ease-out"
-                style={`width:${displays[i].width}px; height:${displays[i].height}px;`}
-            />
-        ))}
+        {
+            projects.map((p, i) => (
+                <Image
+                    src={p.image}
+                    alt=""
+                    width={displays[i].width * 2}
+                    height={displays[i].height * 2}
+                    format="webp"
+                    loading="eager"
+                    data-preview
+                    data-index={i}
+                    class="preview-img absolute top-0 left-0 max-w-none rounded-xl object-cover transition-[opacity,filter,transform] duration-300 ease-out"
+                    style={`width:${displays[i].width}px; height:${displays[i].height}px;`}
+                />
+            ))
+        }
     </div>
 </section>
 
@@ -144,13 +137,17 @@ const previews = await Promise.all(
         if (root.dataset.projectsReady) return;
         root.dataset.projectsReady = "1";
         const list = root.querySelector<HTMLElement>("[data-projects-list]");
-        const links = root.querySelectorAll<HTMLAnchorElement>("[data-project-link]");
-        const previews = root.querySelectorAll<HTMLImageElement>("[data-preview]");
+        const links = root.querySelectorAll<HTMLAnchorElement>(
+            "[data-project-link]",
+        );
+        const previews =
+            root.querySelectorAll<HTMLImageElement>("[data-preview]");
         if (!list || !links.length) return;
 
         const showPreview = (idx: string | undefined) => {
             previews.forEach((img) => {
-                if (img.dataset.index === idx) img.setAttribute("data-active", "");
+                if (img.dataset.index === idx)
+                    img.setAttribute("data-active", "");
                 else img.removeAttribute("data-active");
             });
         };
@@ -180,7 +177,9 @@ const previews = await Promise.all(
     }
 
     const runProjects = () =>
-        document.querySelectorAll<HTMLElement>("[data-projects]").forEach(initProjects);
+        document
+            .querySelectorAll<HTMLElement>("[data-projects]")
+            .forEach(initProjects);
 
     runProjects();
     document.addEventListener("astro:page-load", runProjects);
