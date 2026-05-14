@@ -32,6 +32,7 @@ const {
             type="button"
             class="pill-content absolute inset-0 flex items-center pl-1.5 pr-4 py-1.5 bg-transparent border-0 text-white cursor-pointer"
             data-expand-trigger
+            data-umami-event="music_player_toggle"
             aria-label="Expand music player"
             aria-expanded="false"
             aria-controls="music-player-card"
@@ -471,6 +472,14 @@ const {
     function initPlayer(root: HTMLElement) {
         if (root.dataset.playerReady) return;
         root.dataset.playerReady = "1";
+        const analytics = window as Window & {
+            umami?: {
+                track: (
+                    eventName: string,
+                    data?: Record<string, string | number | boolean>,
+                ) => void;
+            };
+        };
         const audio = root.querySelector("audio") as HTMLAudioElement;
         const trigger = root.querySelector(
             "[data-expand-trigger]",
@@ -527,8 +536,13 @@ const {
         });
 
         playBtn.addEventListener("click", () => {
-            if (audio.paused) audio.play();
-            else audio.pause();
+            if (audio.paused) {
+                analytics.umami?.track("music_play");
+                audio.play();
+            } else {
+                analytics.umami?.track("music_pause");
+                audio.pause();
+            }
         });
 
         const barEls = root.querySelectorAll<HTMLElement>(".bars > span");
@@ -583,6 +597,9 @@ const {
         };
         bar.addEventListener("click", (e) => {
             const rect = bar.getBoundingClientRect();
+            analytics.umami?.track("music_seek_bar", {
+                percent: Math.round(((e.clientX - rect.left) / rect.width) * 100),
+            });
             seekToRatio((e.clientX - rect.left) / rect.width);
         });
         bar.addEventListener("keydown", (e) => {
@@ -630,10 +647,18 @@ const {
             svg.classList.add("spin");
         };
         prevBtn.addEventListener("click", () => {
+            analytics.umami?.track("music_skip", {
+                direction: "backward",
+                seconds: 15,
+            });
             seek(-15);
             spinIcon(prevBtn);
         });
         nextBtn.addEventListener("click", () => {
+            analytics.umami?.track("music_skip", {
+                direction: "forward",
+                seconds: 15,
+            });
             seek(15);
             spinIcon(nextBtn);
         });

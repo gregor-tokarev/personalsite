@@ -64,6 +64,11 @@ const serializeJsonLd = (item: Record<string, unknown>) =>
         {jsonLdItems.map((item) => (
             <script type="application/ld+json" set:html={serializeJsonLd(item)} />
         ))}
+        <script
+            defer
+            src="https://cloud.umami.is/script.js"
+            data-website-id="a47028cb-12aa-460d-b901-a18ec76bc536"
+        ></script>
         <ClientRouter />
     </head>
     <body class="min-h-screen bg-[#39414e]">

@@ -60,6 +60,8 @@ const previews = await Promise.all(
                     href={p.link}
                     target="_blank"
                     rel="noopener noreferrer"
+                    data-umami-event="project_click"
+                    data-umami-event-project={p.title}
                     data-project-link
                     data-hover-target
                     data-index={i}

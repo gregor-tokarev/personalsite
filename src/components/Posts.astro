@@ -36,6 +36,8 @@ const fmt = new Intl.DateTimeFormat("en-US", {
             {posts.map((p) => (
                 <a
                     href={`/b/${p.id}/`}
+                    data-umami-event="post_click"
+                    data-umami-event-post={p.id}
                     data-hover-target
                     class="post-link relative flex flex-col gap-1 px-4 py-3 no-underline text-mauve-800 md:flex-row md:items-baseline md:gap-8"
                 >
@@ -59,6 +61,7 @@ const fmt = new Intl.DateTimeFormat("en-US", {
         {hasMore ? (
             <a
                 href="/b/"
+                data-umami-event="more_posts_click"
                 class="self-start text-sm text-mauve-700 underline decoration-mauve-800/40 underline-offset-2 decoration-2 hover:decoration-mauve-800/80"
             >
                 More&nbsp;→

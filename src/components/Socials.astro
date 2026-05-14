@@ -23,6 +23,8 @@ const socials: Social[] = [
                 href={s.href}
                 target="_blank"
                 rel="me noopener noreferrer"
+                data-umami-event="social_click"
+                data-umami-event-social={s.label}
                 data-hover-target
                 class="social-link relative flex items-center gap-1.5 px-3 py-1.5 no-underline text-mauve-800"
             >
