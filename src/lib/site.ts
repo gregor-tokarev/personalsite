@@ -5,7 +5,7 @@ export const site = {
     "Gregor Tokarev is a software engineer focused on full-stack product engineering, frontend systems, and thoughtful developer tools.",
   author: "Gregor Tokarev",
   locale: "en_US",
-  themeColor: "#39414e",
+  themeColor: "#525b69",
 };
 
 export const personJsonLd = {
