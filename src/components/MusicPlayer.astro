@@ -740,16 +740,15 @@ const {
                     /^(input|textarea|select)$/i.test(t.tagName))
             )
                 return;
-            const k = e.key.toLowerCase();
-            if (k === "k") {
+            if (e.code === "KeyK") {
                 e.preventDefault();
                 playBtn.click();
                 flash(playBtn);
-            } else if (k === "j") {
+            } else if (e.code === "KeyJ") {
                 e.preventDefault();
                 prevBtn.click();
                 flash(prevBtn);
-            } else if (k === "l") {
+            } else if (e.code === "KeyL") {
                 e.preventDefault();
                 nextBtn.click();
                 flash(nextBtn);
