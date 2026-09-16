@@ -8,6 +8,11 @@ export default defineConfig({
   site: "https://tokarev.work",
   output: "static",
   trailingSlash: "always",
+  server: {
+    host: true,
+    port: 4321,
+    allowedHosts: ["atlas.fleet"],
+  },
   vite: {
     plugins: [tailwindcss()],
   },
