@@ -1,13 +1,54 @@
 ---
+import { Picture } from "astro:assets";
 import Base from "../layouts/Base.astro";
-import Projects from "../components/Projects.astro";
-import Experience from "../components/Experience.astro";
-import Posts from "../components/Posts.astro";
-import Socials from "../components/Socials.astro";
-import HoverLens from "../components/HoverLens.astro";
-import { Image } from "astro:assets";
 import myPhoto from "../assets/myself/myself.png";
 import { personJsonLd, site, websiteJsonLd } from "../lib/site";
+
+interface Tool {
+    title: string;
+    pitch: string;
+    link: string;
+}
+
+const tools: Tool[] = [
+    {
+        title: "Request Eagle",
+        pitch: "An API client that opens in 0.2 seconds.",
+        link: "https://requesteagle.tokarev.work",
+    },
+    {
+        title: "skillsui",
+        pitch: "Your skills.sh skills, managed from the terminal.",
+        link: "https://github.com/gregor-tokarev/skillsui",
+    },
+    {
+        title: "voxfusion",
+        pitch: "You talk. It types. In any Mac app.",
+        link: "https://voxfusion.io",
+    },
+    {
+        title: "YouTrack TUI",
+        pitch: "YouTrack, without leaving the terminal.",
+        link: "https://github.com/gregor-tokarev/youtracktui",
+    },
+];
+
+interface Job {
+    company: string;
+    role: string;
+    years: string;
+}
+
+const jobs: Job[] = [
+    { company: "Wildberries", role: "Team lead", years: "2024 – now" },
+    { company: "Social Investment Fund", role: "Senior frontend engineer", years: "2022 – 2024" },
+    { company: "Kostylworks", role: "Frontend engineer", years: "2021 – 2022" },
+    { company: "Dabster", role: "Frontend engineer", years: "2020 – 2021" },
+];
+
+const link =
+    "underline decoration-accent/50 decoration-[1.5px] underline-offset-[3px] transition-colors duration-200";
+const row = "grid gap-x-6 py-[0.55rem] sm:grid-cols-[12.25rem_minmax(0,1fr)] sm:py-[0.35rem]";
 ---
 
 <Base
@@ -18,65 +59,123 @@ import { personJsonLd, site, websiteJsonLd } from "../lib/site";
 >
     <main
         id="main"
-        class="relative mx-auto max-w-3xl px-6 py-24 md:py-40"
-        data-hover-root
+        class="mx-auto max-w-[41rem] px-6 pt-[clamp(4rem,17vh,9.5rem)] pb-32 text-[1.0625rem] leading-[1.6] text-fg"
     >
-        <HoverLens />
+        <div class="sm:grid sm:grid-cols-[minmax(0,1fr)_9rem] sm:gap-x-10">
+            <Picture
+                src={myPhoto}
+                alt="Gregor Tokarev at a desk of CRT monitors, holding a cup of coffee"
+                formats={["avif"]}
+                fallbackFormat="webp"
+                width={432}
+                height={576}
+                fit="cover"
+                position="top"
+                widths={[144, 208, 288, 432]}
+                sizes="(min-width: 40rem) 144px, 104px"
+                loading="eager"
+                class="photo w-full"
+                pictureAttributes={{
+                    class: "mb-7 block w-26 sm:col-start-2 sm:row-span-3 sm:row-start-1 sm:mt-1.5 sm:mb-0 sm:w-full",
+                }}
+            />
 
-        <div class="space-y-20 md:space-y-[120px]">
-            <div class="flex flex-col lg:flex-row align-top gap-4">
-                <div class="space-y-4">
-                    <h1 class="text-3xl font-bold text-mauve-800">
-                        Gregor Tokarev
-                    </h1>
-                    <p class="text-mauve-700 text-base md:text-lg">
-                        Software engineer. I started programming at 12. Landed
-                        my first paid job at 15. Became team lead at the age of
-                        20. Currently, I work at the biggest e-commerce platform
-                        in Russia.
-                    </p>
-                    <p class="text-mauve-700 text-base md:text-lg">
-                        I care about my craft more than anything else.
-                    </p>
-                    <Socials />
-                </div>
-                <Image
-                    src={myPhoto}
-                    alt="My photo"
-                    class="md:w-[280px] md:h-[380px] h-[220px] shrink-0 object-cover object-[center_30%] md:object-center"
-                />
-            </div>
+            <header class="sm:col-start-1">
+                <h1 class="font-bold">{site.name}</h1>
+                <p class="text-muted">Software engineer</p>
+            </header>
 
-            <Projects />
+            <p class="mt-11 mb-4 text-[1.375rem] leading-[1.45] sm:col-start-1">
+                <strong class="font-bold text-accent">I build software that feels instant.</strong>
+                I lead a team whose work saves Russia’s biggest
+                <span class="whitespace-nowrap">e-commerce</span> platform ≈&nbsp;$360M
+                a&nbsp;month, and I make native,
+                <span class="whitespace-nowrap">keyboard-first</span> tools of my own.
+            </p>
 
-            <Experience />
-
-            <Posts limit={5} />
+            <p class="text-muted sm:col-start-1">
+                Say hello on
+                <a
+                    href="https://x.com/gregortokarev"
+                    target="_blank"
+                    rel="me noopener noreferrer"
+                    data-umami-event="social_click"
+                    data-umami-event-social="twitter"
+                    class:list={[link, "text-fg hover:decoration-accent"]}
+                >
+                    X<span class="sr-only"> (opens in a new tab)</span></a>
+                or
+                <a
+                    href="https://github.com/gregor-tokarev"
+                    target="_blank"
+                    rel="me noopener noreferrer"
+                    data-umami-event="social_click"
+                    data-umami-event-social="github"
+                    class:list={[link, "text-fg hover:decoration-accent"]}
+                >
+                    GitHub<span class="sr-only"> (opens in a new tab)</span></a>.
+            </p>
         </div>
+
+        <section class="mt-17" aria-labelledby="tools-heading">
+            <h2 id="tools-heading" class="mb-[0.6rem] text-muted">Tools</h2>
+            <ul class="group/list">
+                {
+                    tools.map((t) => (
+                        <li>
+                            <a
+                                href={t.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                data-umami-event="project_click"
+                                data-umami-event-project={t.title}
+                                class:list={[
+                                    row,
+                                    "group transition-opacity duration-200 group-hover/list:not-hover:opacity-50",
+                                ]}
+                            >
+                                <span>
+                                    <span class:list={[link, "group-hover:decoration-accent"]}>{t.title}</span>
+                                    <span class="sr-only"> (opens in a new tab)</span>
+                                </span>
+                                <span class="text-muted">{t.pitch}</span>
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </section>
+
+        <section class="mt-17" aria-labelledby="work-heading">
+            <h2 id="work-heading" class="mb-[0.6rem] text-muted">Work</h2>
+            <ul>
+                {
+                    jobs.map((j) => (
+                        <li class={row}>
+                            <span>{j.company}</span>
+                            <span class="text-muted">
+                                {j.role}, {j.years}
+                            </span>
+                        </li>
+                    ))
+                }
+            </ul>
+        </section>
     </main>
-
-    <script>
-        const KEY = "index-scroll-y";
-        let currentPath = location.pathname;
-
-        const saveIfOnIndex = () => {
-            if (currentPath === "/") {
-                sessionStorage.setItem(KEY, String(window.scrollY));
-            }
-        };
-
-        document.addEventListener("astro:before-preparation", saveIfOnIndex);
-        window.addEventListener("pagehide", saveIfOnIndex);
-
-        document.addEventListener("astro:page-load", () => {
-            currentPath = location.pathname;
-            if (currentPath !== "/") return;
-            const raw = sessionStorage.getItem(KEY);
-            if (raw === null) return;
-            const y = parseInt(raw, 10);
-            if (Number.isFinite(y)) {
-                window.scrollTo({ top: y, left: 0, behavior: "instant" });
-            }
-        });
-    </script>
 </Base>
+
+<style>
+    /* green monochrome so the page stays at three colours; full colour on hover */
+    .photo {
+        filter: grayscale(1) sepia(0.6) hue-rotate(70deg) saturate(0.8) brightness(0.92);
+        transition: filter 500ms ease;
+    }
+    .photo:hover {
+        filter: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .photo {
+            transition: none;
+        }
+    }
+</style>

@@ -1,7 +1,5 @@
 ---
 import "../styles/global.css";
-import { ClientRouter } from "astro:transitions";
-import MusicPlayer from "../components/MusicPlayer.astro";
 import { canonicalUrl, site } from "../lib/site";
 
 interface Props {
@@ -34,8 +32,8 @@ const serializeJsonLd = (item: Record<string, unknown>) =>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <link rel="icon" type="image/png" href="/favicon.png?v=20260505" />
-        <link rel="icon" href="/favicon.ico?v=20260505" />
+        <link rel="icon" type="image/png" href="/favicon.png?v=20261004" />
+        <link rel="icon" href="/favicon.ico?v=20261004" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content={site.themeColor} />
         <meta name="generator" content={Astro.generator} />
@@ -60,6 +58,13 @@ const serializeJsonLd = (item: Record<string, unknown>) =>
             type="font/woff2"
             crossorigin
         />
+        <link
+            rel="preload"
+            href="/fonts/cantarell-700-latin.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+        />
         <title>{title}</title>
         {jsonLdItems.map((item) => (
             <script type="application/ld+json" set:html={serializeJsonLd(item)} />
@@ -69,10 +74,8 @@ const serializeJsonLd = (item: Record<string, unknown>) =>
             src="https://cloud.umami.is/script.js"
             data-website-id="a47028cb-12aa-460d-b901-a18ec76bc536"
         ></script>
-        <ClientRouter />
     </head>
-    <body class="min-h-screen bg-[#525b69]">
-        <MusicPlayer />
+    <body class="min-h-screen bg-bg">
         <slot />
     </body>
 </html>
