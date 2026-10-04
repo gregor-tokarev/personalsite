@@ -7,6 +7,9 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   site: "https://tokarev.work",
   output: "static",
+  build: {
+    inlineStylesheets: "always",
+  },
   trailingSlash: "always",
   server: {
     host: true,

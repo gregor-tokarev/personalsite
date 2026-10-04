@@ -49,13 +49,25 @@
 @theme {
   --font-sans: "Cantarell", ui-sans-serif, system-ui, sans-serif;
 
-  --color-mauve-600: #a3b1bf;
-  --color-mauve-700: #fcfdfd;
-  --color-mauve-800: #cce9f4;
+  --color-bg: #28382f;
+  --color-fg: #f2f6f0;
+  --color-muted: #a9b9ad;
+  --color-accent: #a6e3b5;
 }
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-bg);
 }
 
 html {
@@ -84,7 +96,7 @@ a {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-mauve-800);
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
   border-radius: 4px;
 }

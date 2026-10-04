@@ -29,7 +29,7 @@ const fmt = new Intl.DateTimeFormat("en-US", {
         class="flex flex-col gap-8"
         aria-labelledby="posts-heading"
     >
-        <h2 id="posts-heading" class="text-xl font-semibold text-mauve-800">
+        <h2 id="posts-heading" class="text-xl font-semibold text-accent">
             {heading}
         </h2>
         <div class="flex flex-col gap-1 -mx-4">
@@ -39,19 +39,19 @@ const fmt = new Intl.DateTimeFormat("en-US", {
                     data-umami-event="post_click"
                     data-umami-event-post={p.id}
                     data-hover-target
-                    class="post-link relative flex flex-col gap-1 px-4 py-3 no-underline text-mauve-800 md:flex-row md:items-baseline md:gap-8"
+                    class="post-link relative flex flex-col gap-1 px-4 py-3 no-underline text-accent md:flex-row md:items-baseline md:gap-8"
                 >
-                    <span class="text-sm w-28 shrink-0 tabular-nums whitespace-nowrap text-mauve-600">
+                    <span class="text-sm w-28 shrink-0 tabular-nums whitespace-nowrap text-muted">
                         <time datetime={p.data.date.toISOString()}>{fmt.format(p.data.date)}</time>
                     </span>
                     <span class="flex min-w-0 flex-col gap-1">
                         <span
-                            class="underline decoration-mauve-800/40 underline-offset-2 decoration-2 line-clamp-2"
+                            class="underline decoration-accent/40 underline-offset-2 decoration-2 line-clamp-2"
                             transition:name={`post-title-${p.id}`}
                         >
                             {p.data.title}
                         </span>
-                        <span class="text-sm text-mauve-600 line-clamp-2">
+                        <span class="text-sm text-muted line-clamp-2">
                             {p.data.description}
                         </span>
                     </span>
@@ -62,7 +62,7 @@ const fmt = new Intl.DateTimeFormat("en-US", {
             <a
                 href="/b/"
                 data-umami-event="more_posts_click"
-                class="self-start text-sm text-mauve-700 underline decoration-mauve-800/40 underline-offset-2 decoration-2 hover:decoration-mauve-800/80"
+                class="self-start text-sm text-fg underline decoration-accent/40 underline-offset-2 decoration-2 hover:decoration-accent/80"
             >
                 More&nbsp;→
             </a>
@@ -72,7 +72,7 @@ const fmt = new Intl.DateTimeFormat("en-US", {
 
 <style>
     .post-link:focus-visible {
-        outline: 2px solid var(--color-mauve-800);
+        outline: 2px solid var(--color-accent);
         outline-offset: -2px;
         border-radius: 12px;
     }

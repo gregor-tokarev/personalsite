@@ -17,14 +17,14 @@ const hasPosts = posts.length > 0;
         <a
             href="/"
             data-umami-event="blog_back_click"
-            class="inline-block text-sm text-mauve-600 hover:text-mauve-800"
+            class="inline-block text-sm text-muted hover:text-accent"
         >
             ←&nbsp;Back
         </a>
 
         <header class="space-y-3">
-            <h1 class="text-3xl font-bold text-mauve-800">Thoughts</h1>
-            <p class="text-mauve-700">
+            <h1 class="text-3xl font-bold text-accent">Thoughts</h1>
+            <p class="text-fg">
                 Notes on software engineering, tools, and product craft.
             </p>
         </header>
@@ -32,7 +32,7 @@ const hasPosts = posts.length > 0;
         {hasPosts ? (
             <Posts heading="Latest" />
         ) : (
-            <p class="text-mauve-700">No public notes are published yet.</p>
+            <p class="text-fg">No public notes are published yet.</p>
         )}
     </main>
 </Base>
