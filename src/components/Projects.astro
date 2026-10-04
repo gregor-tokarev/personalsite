@@ -1,6 +1,7 @@
 ---
 import { Image, getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import requestEagle from "../assets/projects/request-eagle.png";
 import voxfusion from "../assets/projects/voxfusion.png";
 import yttui from "../assets/projects/yttui.png";
 
@@ -12,6 +13,12 @@ interface Project {
 }
 
 const projects: Project[] = [
+    {
+        title: "Request Eagle",
+        meta: "Native API client",
+        image: requestEagle,
+        link: "https://requesteagle.tokarev.work",
+    },
     {
         title: "voxfusion",
         meta: "macOS dictation app",
