@@ -1,8 +1,11 @@
 ---
 import { Picture } from "astro:assets";
 import Base from "../layouts/Base.astro";
+import Posts from "../components/Posts.astro";
 import myPhoto from "../assets/myself/myself.png";
+import { getPublishedPosts } from "../lib/posts";
 import { personJsonLd, site, websiteJsonLd } from "../lib/site";
+import { link, main, row } from "../lib/ui";
 
 interface Tool {
     title: string;
@@ -46,9 +49,10 @@ const jobs: Job[] = [
     { company: "Dabster", role: "Frontend engineer", years: "2020 – 2021" },
 ];
 
-const link =
-    "underline decoration-accent/50 decoration-[1.5px] underline-offset-[3px] transition-colors duration-200";
-const row = "grid gap-x-6 py-[0.55rem] sm:grid-cols-[12.25rem_minmax(0,1fr)] sm:py-[0.35rem]";
+const RECENT_POSTS = 5;
+const posts = await getPublishedPosts();
+const recentPosts = posts.slice(0, RECENT_POSTS);
+const hasMorePosts = posts.length > RECENT_POSTS;
 ---
 
 <Base
@@ -57,10 +61,7 @@ const row = "grid gap-x-6 py-[0.55rem] sm:grid-cols-[12.25rem_minmax(0,1fr)] sm:
     canonicalPath="/"
     jsonLd={[personJsonLd, websiteJsonLd]}
 >
-    <main
-        id="main"
-        class="mx-auto max-w-[41rem] px-6 pt-[clamp(4rem,17vh,9.5rem)] pb-32 text-[1.0625rem] leading-[1.6] text-fg"
-    >
+    <main id="main" class={main}>
         <div class="sm:grid sm:grid-cols-[minmax(0,1fr)_9rem] sm:gap-x-10">
             <Picture
                 src={myPhoto}
@@ -145,6 +146,29 @@ const row = "grid gap-x-6 py-[0.55rem] sm:grid-cols-[12.25rem_minmax(0,1fr)] sm:
                 }
             </ul>
         </section>
+
+        {
+            recentPosts.length > 0 && (
+                <section class="mt-17" aria-labelledby="thoughts-heading">
+                    <h2 id="thoughts-heading" class="mb-[0.6rem] text-muted">
+                        Thoughts
+                    </h2>
+                    <Posts posts={recentPosts} />
+                    {hasMorePosts && (
+                        <p class={row}>
+                            <span class="hidden sm:block" aria-hidden="true" />
+                            <a
+                                href="/b/"
+                                data-umami-event="more_posts_click"
+                                class:list={[link, "justify-self-start hover:decoration-accent"]}
+                            >
+                                All thoughts →
+                            </a>
+                        </p>
+                    )}
+                </section>
+            )
+        }
 
         <section class="mt-17" aria-labelledby="work-heading">
             <h2 id="work-heading" class="mb-[0.6rem] text-muted">Work</h2>

@@ -1,9 +1,11 @@
 ---
-import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
+import Masthead from "../../components/Masthead.astro";
 import Posts from "../../components/Posts.astro";
+import { getPublishedPosts } from "../../lib/posts";
+import { main } from "../../lib/ui";
 
-const posts = (await getCollection("posts")).filter((p) => !p.data.draft);
+const posts = await getPublishedPosts();
 const hasPosts = posts.length > 0;
 ---
 
@@ -13,26 +15,16 @@ const hasPosts = posts.length > 0;
     canonicalPath="/b/"
     noindex={!hasPosts}
 >
-    <main id="main" class="mx-auto max-w-3xl space-y-12 px-6 py-24 md:py-40">
-        <a
-            href="/"
-            data-umami-event="blog_back_click"
-            class="inline-block text-sm text-muted hover:text-accent"
-        >
-            ←&nbsp;Back
-        </a>
+    <main id="main" class={main}>
+        <Masthead />
 
-        <header class="space-y-3">
-            <h1 class="text-3xl font-bold text-accent">Thoughts</h1>
-            <p class="text-fg">
-                Notes on software engineering, tools, and product craft.
-            </p>
+        <header class="mt-11">
+            <h1 class="text-[1.375rem] leading-[1.45] font-bold text-accent">Thoughts</h1>
+            <p class="mt-1 text-muted">Notes on software engineering, tools, and product craft.</p>
         </header>
 
-        {hasPosts ? (
-            <Posts heading="Latest" />
-        ) : (
-            <p class="text-fg">No public notes are published yet.</p>
-        )}
+        <div class="mt-10">
+            {hasPosts ? <Posts posts={posts} descriptions /> : <p class="text-muted">Nothing is published yet.</p>}
+        </div>
     </main>
 </Base>

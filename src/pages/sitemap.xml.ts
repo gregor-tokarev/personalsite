@@ -1,5 +1,5 @@
-import { getCollection } from "astro:content";
 import type { APIRoute } from "astro";
+import { getPublishedPosts } from "../lib/posts";
 import { canonicalUrl } from "../lib/site";
 
 const escapeXml = (value: string) =>
@@ -11,9 +11,7 @@ const escapeXml = (value: string) =>
     .replace(/'/g, "&apos;");
 
 export const GET: APIRoute = async () => {
-  const posts = (await getCollection("posts"))
-    .filter((post) => !post.data.draft)
-    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+  const posts = await getPublishedPosts();
 
   const urls = [
     { loc: canonicalUrl("/") },
